@@ -3,4 +3,15 @@ node_modules/
 .DS_Store
 dist/
 build/
-.claude/
+
+# Claude Code: track shared skills and commands, ignore local/session state
+.claude/*
+!.claude/skills/
+!.claude/commands/
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
+
+# Python artifacts from skill scripts
+__pycache__/
+*.pyc
+.coverage
