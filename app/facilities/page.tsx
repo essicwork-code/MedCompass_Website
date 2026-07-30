@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import MarketingShell, { PageHero } from "@/components/MarketingShell";
@@ -46,7 +47,29 @@ export default function FacilitiesPage() {
       />
 
       <div className="mx-auto max-w-7xl px-4 py-14">
-        <ul className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-center">
+          <div className="overflow-hidden rounded-2xl">
+            <Image
+              src="/photos/dispatch-desk.jpg"
+              alt="A MedCompass dispatcher in a branded polo shirt on the phone at a desk with live trip-tracking monitors, with two more dispatchers working behind her"
+              width={1296}
+              height={832}
+              className="h-auto w-full"
+            />
+          </div>
+          <div>
+            <h2 className="font-display text-[clamp(1.5rem,2.6vw,2rem)] font-extrabold leading-tight text-deep">
+              A named dispatcher, not a phone tree
+            </h2>
+            <p className="mt-4 text-[1.02rem] leading-relaxed text-slate-soft">
+              When your coordinator calls, a specific person picks up who already has your
+              facility&rsquo;s trips on their screen. No hold music, no re-explaining who you are
+              every time.
+            </p>
+          </div>
+        </div>
+
+        <ul className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {FEATURES.map((f) => (
             <li key={f.h} className="rounded-2xl border border-line bg-white p-6">
               <h2 className="font-display text-[1.1rem] font-bold text-deep">{f.h}</h2>

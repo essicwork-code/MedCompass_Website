@@ -103,13 +103,22 @@ export default function ChatWidget() {
 
   return (
     <>
-      {/* Launcher. 56px square clears the 44px minimum comfortably. */}
+      {/*
+        Launcher. 56px square clears the 44px minimum comfortably.
+        bottom/right add the safe-area inset on top of the base offset so the
+        button clears an iPhone home indicator or a landscape notch instead of
+        sitting flush against it.
+      */}
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-controls="chat-panel"
-        className="fixed bottom-5 right-5 z-[60] flex h-14 w-14 items-center justify-center rounded-full bg-deep text-white shadow-[0_10px_30px_-8px_rgb(16_34_46/0.6)] transition-transform hover:scale-105"
+        style={{
+          bottom: "max(1.25rem, calc(env(safe-area-inset-bottom) + 0.75rem))",
+          right: "max(1.25rem, calc(env(safe-area-inset-right) + 0.75rem))",
+        }}
+        className="fixed z-[60] flex h-14 w-14 items-center justify-center rounded-full bg-deep text-white shadow-[0_10px_30px_-8px_rgb(16_34_46/0.6)] transition-transform hover:scale-105"
       >
         <span className="sr-only">{open ? "Close chat" : "Open chat with MedCompass"}</span>
         {open ? (
@@ -137,7 +146,14 @@ export default function ChatWidget() {
           ref={panelRef}
           role="dialog"
           aria-label="Chat with MedCompass"
-          className="fixed bottom-24 right-5 z-[60] flex h-[min(34rem,calc(100vh-8rem))] w-[min(24rem,calc(100vw-2.5rem))] flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-[0_24px_70px_-20px_rgb(16_34_46/0.5)]"
+          style={{
+            bottom: "max(6rem, calc(env(safe-area-inset-bottom) + 5.5rem))",
+            right: "max(1.25rem, calc(env(safe-area-inset-right) + 0.75rem))",
+          }}
+          // dvh (dynamic viewport height) tracks the visible area as the mobile
+          // browser's address bar collapses/expands, so the panel never
+          // measures itself against a taller viewport than what's on screen.
+          className="fixed z-[60] flex h-[min(34rem,calc(100dvh-8rem))] w-[min(24rem,calc(100vw-2.5rem))] flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-[0_24px_70px_-20px_rgb(16_34_46/0.5)]"
         >
           <header className="flex items-center gap-3 border-b border-line bg-deep px-4 py-3 text-white">
             <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/15 text-[0.8rem] font-bold">

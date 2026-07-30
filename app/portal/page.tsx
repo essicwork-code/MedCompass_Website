@@ -37,7 +37,7 @@ export default function PortalPage() {
 
   if (status === "loading") {
     return (
-      <div className="grid min-h-screen place-items-center bg-bone">
+      <div className="grid min-h-dvh grid-cols-1 place-items-center bg-bone">
         <p className="text-slate-soft">Loading your account…</p>
       </div>
     );
@@ -67,7 +67,7 @@ export default function PortalPage() {
   // empty client dashboard.
   if (can(account, "view.all_trips")) {
     return (
-      <div className="grid min-h-screen place-items-center bg-bone px-4">
+      <div className="grid min-h-dvh grid-cols-1 place-items-center bg-bone px-4">
         <div className="max-w-md rounded-2xl border border-line bg-white p-8 text-center">
           <h1 className="font-display text-[1.4rem] font-extrabold text-deep">
             You are signed in as staff
@@ -108,7 +108,7 @@ export default function PortalPage() {
       : "Your rides";
 
   return (
-    <div className="min-h-screen bg-bone">
+    <div className="min-h-dvh bg-bone">
       <header className="border-b border-line bg-white">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-3.5">
           <Link href="/">

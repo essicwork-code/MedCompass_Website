@@ -39,6 +39,9 @@ export const viewport: Viewport = {
   themeColor: "#0f4c75",
   // Never block zoom — a meaningful share of riders and families need it.
   maximumScale: 5,
+  // Lets content extend under notches/home indicators so env(safe-area-inset-*)
+  // resolves to a real value instead of 0 — needed by the fixed chat launcher.
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -32,9 +32,9 @@ const PHOTOS = [
   },
   {
     file: "care-handoff.jpg",
-    id: "photo-1765896387387-0538bc9f997e",
+    id: "photo-1765896387377-e293914d1e69",
     credit: "Unsplash",
-    alt: "A care worker sitting and talking with an older patient",
+    alt: "A caregiver in scrubs laughing together with an older woman",
     width: 1100,
   },
   {

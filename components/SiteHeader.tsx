@@ -58,8 +58,8 @@ export default function SiteHeader() {
           scrolled ? "shadow-[0_2px_16px_rgb(16_34_46/0.07)]" : ""
         }`}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-4 py-3">
-          <Link href="/" aria-label={`${COMPANY.name} home`}>
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 py-3 sm:gap-6">
+          <Link href="/" aria-label={`${COMPANY.name} home`} className="shrink-0">
             <Logo />
           </Link>
 
@@ -68,17 +68,23 @@ export default function SiteHeader() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-[0.95rem] font-medium text-slate-soft hover:text-deep"
+                className="whitespace-nowrap text-[0.95rem] font-medium text-slate-soft hover:text-deep"
               >
                 {item.label}
               </Link>
             ))}
           </nav>
 
-          <div className="flex items-center gap-2.5">
+          {/*
+            shrink-0 + whitespace-nowrap on every pill: without them a flex
+            item is allowed to shrink below its content width, which wraps
+            "Book a ride" onto two lines on narrow phones instead of just
+            letting the row scroll or the logo yield space first.
+          */}
+          <div className="flex shrink-0 items-center gap-2 sm:gap-2.5">
             <Link
               href="/track"
-              className="hidden sm:inline-flex items-center gap-2 rounded-full border-2 border-blue px-4 py-2 text-[0.9rem] font-semibold text-blue hover:bg-mist"
+              className="hidden shrink-0 items-center gap-2 whitespace-nowrap rounded-full border-2 border-blue px-4 py-2 text-[0.9rem] font-semibold text-blue hover:bg-mist sm:inline-flex"
             >
               <span className="relative flex h-2 w-2">
                 <span className="pulse-ring absolute inline-flex h-2 w-2 rounded-full bg-green" />
@@ -88,7 +94,7 @@ export default function SiteHeader() {
             </Link>
             <Link
               href="/book"
-              className="inline-flex items-center rounded-full bg-green px-5 py-2.5 text-[0.9rem] font-bold text-white hover:bg-[#4d8f28]"
+              className="inline-flex shrink-0 items-center whitespace-nowrap rounded-full bg-green px-4 py-2.5 text-[0.88rem] font-bold text-white hover:bg-[#4d8f28] sm:px-5 sm:text-[0.9rem]"
             >
               Book a ride
             </Link>

@@ -34,7 +34,13 @@ export default function SignInCard({
   const [error, setError] = useState<string | null>(null);
 
   return (
-    <div className="grid min-h-screen place-items-center bg-bone px-4 py-12">
+    // grid-cols-1 is load-bearing, not decorative: Tailwind's grid-cols-N
+    // utilities set `minmax(0, 1fr)`, which is what lets the single track
+    // shrink to the viewport. Without it, a plain `grid place-items-center`
+    // sizes its implicit column to the max-content width of whatever it
+    // contains — here, the unbreakable "email · password" strings below —
+    // and overflows the viewport instead of letting them ellipsis.
+    <div className="grid min-h-dvh grid-cols-1 place-items-center bg-bone px-4 py-12">
       <div className="w-full max-w-lg">
         <Link href="/" className="mb-8 flex justify-center">
           <Logo />

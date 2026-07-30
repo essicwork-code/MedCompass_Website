@@ -59,7 +59,7 @@ export default function AdminPage() {
 
   if (status === "loading") {
     return (
-      <div className="grid min-h-screen place-items-center bg-bone">
+      <div className="grid min-h-dvh grid-cols-1 place-items-center bg-bone">
         <p className="text-slate-soft">Loading console…</p>
       </div>
     );
@@ -88,7 +88,7 @@ export default function AdminPage() {
   // A client who reaches /admin is refused rather than shown an empty console.
   if (!can(account, "manage.dispatch")) {
     return (
-      <div className="grid min-h-screen place-items-center bg-bone px-4">
+      <div className="grid min-h-dvh grid-cols-1 place-items-center bg-bone px-4">
         <div className="max-w-md rounded-2xl border border-line bg-white p-8 text-center">
           <h1 className="font-display text-[1.4rem] font-extrabold text-deep">
             This area is for staff
@@ -141,7 +141,7 @@ export default function AdminPage() {
   if (can(account, "manage.staff")) tabs.push(["accounts", "Accounts"]);
 
   return (
-    <div className="min-h-screen bg-bone">
+    <div className="min-h-dvh bg-bone">
       <header className="border-b border-line bg-deep text-white">
         <div className="mx-auto flex max-w-[1600px] flex-wrap items-center justify-between gap-4 px-4 py-3">
           <div className="flex items-center gap-4">
