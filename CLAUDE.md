@@ -2,13 +2,41 @@
 
 ## Project context
 
-MedCompass is a healthcare-adjacent product. That single fact sets the weighting for
-everything below: users may be stressed, older, on poor connections, or using assistive
-tech, and **trust reads as competence, not spectacle**. Where a technique would trade
-clarity or access for impressiveness, clarity wins.
+MedCompass is a **non-emergency medical transportation (NEMT)** provider in the Chicago
+metro — wheelchair, ambulatory, stretcher, and bariatric transport. Tagline: *Safe •
+Reliable • On-Time Transportation*. The site is a marketing front end plus two portals:
+client trip tracking and admin dispatch. A Flutter driver app will consume the same API
+later.
 
-> If this framing is wrong — if MedCompass is a developer tool, an internal dashboard, or
-> a marketing-first brand site — say so and adjust the motion budget in §4 accordingly.
+**Current build is a demo — fake data, simulated vehicles, for show.** Nothing persists to
+a real database and no real PHI exists. Design the API shape as if it were real so the
+Flutter app and a future Postgres swap are drop-in, but do not over-engineer the storage.
+
+Two audiences, weighted in this order:
+1. **Adult children arranging transport for aging parents** — anxious, comparison-shopping,
+   deciding on trust. They are the conversion.
+2. **Discharge planners and dialysis-center coordinators** — repeat bookers who care about
+   reliability data and invoicing, not warmth.
+
+Because users are choosing a service rather than seeking urgent care, the motion budget in
+§4 can run a little richer than a clinical tool would allow — but the accessibility floor in
+§3 does not move. A meaningful share of end riders are elderly or use assistive tech.
+
+### Competitive position
+
+The two reference competitors (dreamcarerides.com, extendedcaretransport.com) both lack:
+live tracking, pricing transparency, a service-area map, and any customer portal. Both push
+users to a phone call. **Every one of those gaps is a feature here** — beating them means
+showing operational competence, not claiming it.
+
+### PHI boundary (applies even in the demo)
+
+Trip and appointment details are PHI. Keep the habit now so it isn't retrofitted later:
+- Never send patient names, conditions, or addresses to the map/tile provider — map layers
+  get trip IDs and coordinates only.
+- No shared logins. Roles are distinct: client, dispatcher, admin, driver.
+- Public share links are tokenized, expiring, and carry the minimum: vehicle position, ETA,
+  status. No name, no diagnosis, no destination facility name.
 
 ---
 

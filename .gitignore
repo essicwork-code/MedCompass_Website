@@ -1,8 +1,15 @@
 node_modules/
 .env
+.env*.local
 .DS_Store
 dist/
 build/
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
 
 # Claude Code: track shared skills and commands, ignore local/session state
 .claude/*

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="MedCompass compass mark">
+  <defs>
+    <linearGradient id="blDark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2E86C1"/><stop offset="1" stop-color="#0F4C75"/>
+    </linearGradient>
+    <linearGradient id="blLight" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7FC4E8"/><stop offset="1" stop-color="#2E86C1"/>
+    </linearGradient>
+    <linearGradient id="grDark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6AAE3C"/><stop offset="1" stop-color="#3F7F22"/>
+    </linearGradient>
+    <linearGradient id="grLight" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#B4DC6E"/><stop offset="1" stop-color="#6AAE3C"/>
+    </linearGradient>
+    <linearGradient id="ringBl" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4DA8DA"/><stop offset="1" stop-color="#0F4C75"/>
+    </linearGradient>
+    <linearGradient id="ringGr" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8DC63F"/><stop offset="1" stop-color="#3F7F22"/>
+    </linearGradient>
+  </defs>
+
+  <!-- outer ring: blue left arc, green right arc -->
+  <path d="M100 22 A78 78 0 0 0 100 178" fill="none" stroke="url(#ringBl)" stroke-width="9" stroke-linecap="round"/>
+  <path d="M100 22 A78 78 0 0 1 100 178" fill="none" stroke="url(#ringGr)" stroke-width="9" stroke-linecap="round"/>
+
+  <!-- diagonal minor points -->
+  <g>
+    <path d="M100 100 L142 58 L118 82 Z" fill="url(#grLight)"/>
+    <path d="M100 100 L142 58 L82 118 Z" fill="none"/>
+    <path d="M100 100 L58 58 L82 82 Z" fill="url(#blLight)"/>
+    <path d="M100 100 L58 142 L82 118 Z" fill="url(#blDark)"/>
+    <path d="M100 100 L142 142 L118 118 Z" fill="url(#grDark)"/>
+  </g>
+
+  <!-- cardinal points, each split into a light and dark facet -->
+  <g>
+    <!-- North -->
+    <path d="M100 14 L88 100 L100 100 Z" fill="url(#blLight)"/>
+    <path d="M100 14 L112 100 L100 100 Z" fill="url(#grDark)"/>
+    <!-- South -->
+    <path d="M100 186 L88 100 L100 100 Z" fill="url(#blDark)"/>
+    <path d="M100 186 L112 100 L100 100 Z" fill="url(#grDark)"/>
+    <!-- West -->
+    <path d="M14 100 L100 88 L100 100 Z" fill="url(#blLight)"/>
+    <path d="M14 100 L100 112 L100 100 Z" fill="url(#blDark)"/>
+    <!-- East -->
+    <path d="M186 100 L100 88 L100 100 Z" fill="url(#grLight)"/>
+    <path d="M186 100 L100 112 L100 100 Z" fill="url(#grDark)"/>
+  </g>
+
+  <!-- medical cross -->
+  <path d="M92 76 h16 v16 h16 v16 h-16 v16 h-16 v-16 h-16 v-16 h16 z" fill="#fff"/>
+
+  <!-- underscore swoosh -->
+  <path d="M28 168 C70 186 140 184 178 150" fill="none" stroke="url(#ringGr)" stroke-width="7" stroke-linecap="round"/>
+</svg>

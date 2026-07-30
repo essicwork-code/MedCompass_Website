@@ -1,0 +1,122 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand — sampled from the MedCompass compass mark. Locked; not free variables. */
+  --color-deep: #0f4c75;
+  --color-blue: #1b7fbf;
+  --color-sky: #4da8da;
+  --color-mist: #e3f1fa;
+  --color-green: #5ca632;
+  --color-lime: #8dc63f;
+  --color-moss: #eaf5dd;
+
+  --color-ink: #10222e;
+  --color-slate-soft: #5a7183;
+  --color-bone: #f6f9fb;
+  --color-line: #d9e5ee;
+
+  --color-alert: #c02626;
+  --color-amber: #b5730d;
+
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-public-sans), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: 14px;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Anchor targets clear the sticky header instead of hiding beneath it. */
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    background: var(--color-bone);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.021em;
+    /* Long facility and street names must not overflow on narrow screens. */
+    overflow-wrap: break-word;
+  }
+
+  /*
+   * A single visible focus treatment for every interactive element. Per
+   * CLAUDE.md §3 the ring is restyled to fit the brand, never removed.
+   */
+  :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline: 3px solid var(--color-blue);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Times, ETAs and mileage must not jitter as digits change. */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer utilities {
+  /* The signature: the logo's blue→green sweep, used for route lines and rules. */
+  .route-gradient {
+    background-image: linear-gradient(90deg, var(--color-deep), var(--color-blue), var(--color-green), var(--color-lime));
+  }
+
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 100;
+  }
+  .skip-link:focus {
+    left: 1rem;
+    top: 1rem;
+    padding: 0.75rem 1.25rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 8px 30px rgb(16 34 46 / 0.18);
+  }
+}
+
+/* The live pulse on an active vehicle marker. */
+@keyframes ping-soft {
+  0% { transform: scale(1); opacity: 0.55; }
+  70% { transform: scale(2.6); opacity: 0; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+
+.pulse-ring {
+  animation: ping-soft 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/*
+ * Reduced motion must still leave a usable page, not a frozen one — the live
+ * marker keeps its position and colour, it simply stops pulsing.
+ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .pulse-ring { animation: none; opacity: 0.35; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Leaflet ships its own focus styles that fail contrast; align them to ours. */
+.leaflet-container a:focus-visible,
+.leaflet-container button:focus-visible {
+  outline: 3px solid var(--color-blue);
+  outline-offset: 1px;
+}
+
+.leaflet-container {
+  font-family: var(--font-sans);
+  background: #dfe9f0;
+}
