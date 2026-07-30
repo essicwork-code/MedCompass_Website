@@ -22,13 +22,13 @@ const publicSans = Public_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: `${COMPANY.name} — Non-Emergency Medical Transportation, Chicagoland`,
+    default: `${COMPANY.name}, Non Emergency Medical Transportation in Chicagoland`,
     template: `%s · ${COMPANY.name}`,
   },
   description:
     "Wheelchair, ambulatory, stretcher and bariatric medical transportation across Chicago and the western suburbs. Track your ride live from booking to arrival.",
   openGraph: {
-    title: `${COMPANY.name} — Track your ride, not just book it`,
+    title: `${COMPANY.name}. Track your ride, not just book it`,
     description:
       "Chicagoland non-emergency medical transportation with live vehicle tracking for families and facilities.",
     type: "website",

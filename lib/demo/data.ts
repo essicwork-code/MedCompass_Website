@@ -118,7 +118,7 @@ export const PLACES: Record<string, Place> = {
   // Residences use block-level addresses only — never a unit number.
   res1: {
     id: "res1",
-    name: "Residence — Oak Park",
+    name: "Residence in Oak Park",
     kind: "residence",
     address: "1100 block S Ridgeland Ave",
     city: "Oak Park",
@@ -126,7 +126,7 @@ export const PLACES: Record<string, Place> = {
   },
   res2: {
     id: "res2",
-    name: "Residence — Cicero",
+    name: "Residence in Cicero",
     kind: "residence",
     address: "2400 block S 58th Ct",
     city: "Cicero",
@@ -134,7 +134,7 @@ export const PLACES: Record<string, Place> = {
   },
   res3: {
     id: "res3",
-    name: "Residence — Evanston",
+    name: "Residence in Evanston",
     kind: "residence",
     address: "800 block Dodge Ave",
     city: "Evanston",
@@ -142,7 +142,7 @@ export const PLACES: Record<string, Place> = {
   },
   res4: {
     id: "res4",
-    name: "Residence — Berwyn",
+    name: "Residence in Berwyn",
     kind: "residence",
     address: "1900 block Oak Park Ave",
     city: "Berwyn",
@@ -150,7 +150,7 @@ export const PLACES: Record<string, Place> = {
   },
   res5: {
     id: "res5",
-    name: "Residence — Oak Lawn",
+    name: "Residence in Oak Lawn",
     kind: "residence",
     address: "9600 block S Menard Ave",
     city: "Oak Lawn",
@@ -158,7 +158,7 @@ export const PLACES: Record<string, Place> = {
   },
   res6: {
     id: "res6",
-    name: "Residence — Skokie",
+    name: "Residence in Skokie",
     kind: "residence",
     address: "4700 block Oakton St",
     city: "Skokie",

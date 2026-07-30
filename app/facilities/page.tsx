@@ -1,0 +1,129 @@
+import Link from "next/link";
+import type { Metadata } from "next";
+import MarketingShell, { PageHero } from "@/components/MarketingShell";
+import { COMPANY } from "@/lib/demo/data";
+
+export const metadata: Metadata = {
+  title: "Facility partnerships",
+  description:
+    "Corporate NEMT accounts for Chicagoland hospitals, dialysis centers and skilled nursing facilities, with direct dispatch, bulk scheduling and consolidated invoicing.",
+};
+
+const FEATURES = [
+  {
+    h: "A dispatch line that skips the queue",
+    d: "Partner facilities call a direct number answered by a named dispatcher who knows your unit, not a general queue.",
+  },
+  {
+    h: "Bulk recurring scheduling",
+    d: "Load up to 40 standing orders in one pass. Change one and the series updates; change the series and every future trip follows.",
+  },
+  {
+    h: "One board for your whole unit",
+    d: "Every trip your facility booked today, live, with status and ETA. Coordinators stop calling to ask where a van is.",
+  },
+  {
+    h: "Consolidated invoicing",
+    d: "Net-30 terms, one monthly statement, per-department cost coding. No per-trip receipts to reconcile.",
+  },
+  {
+    h: "Discharge capacity held back",
+    d: "We reserve same-day capacity specifically for discharges. Median pickup is 42 minutes from the call.",
+  },
+  {
+    h: "Documentation that survives audit",
+    d: "Signature capture, timestamped arrival and delivery, driver and vehicle on every trip record. Exportable for your compliance file.",
+  },
+];
+
+export default function FacilitiesPage() {
+  return (
+    <MarketingShell>
+      <PageHero
+        eyebrow="For facilities"
+        title="Transport your discharge planners stop chasing"
+        lede="Partner accounts for hospitals, dialysis centers, skilled nursing and assisted living across Chicagoland. Set the schedule once and watch it run."
+      />
+
+      <div className="mx-auto max-w-7xl px-4 py-14">
+        <ul className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {FEATURES.map((f) => (
+            <li key={f.h} className="rounded-2xl border border-line bg-white p-6">
+              <h2 className="font-display text-[1.1rem] font-bold text-deep">{f.h}</h2>
+              <p className="mt-2.5 text-[0.95rem] leading-relaxed text-slate-soft">{f.d}</p>
+            </li>
+          ))}
+        </ul>
+
+        <section className="mt-12 rounded-2xl border border-line bg-white p-7 lg:p-10">
+          <div className="grid gap-9 lg:grid-cols-2">
+            <div>
+              <h2 className="font-display text-[1.6rem] font-extrabold text-deep">
+                Start a facility account
+              </h2>
+              <p className="mt-4 text-[1rem] leading-relaxed text-slate-soft">
+                Setup takes about a week: a service agreement, a Business Associate Agreement, and
+                a walkthrough with whoever will be booking. No minimum volume and no setup fee.
+              </p>
+
+              <ol className="mt-7 space-y-4">
+                {[
+                  "Intro call, where we learn your volume, mobility mix and discharge patterns",
+                  "Service agreement and BAA executed",
+                  "Portal accounts created, one per coordinator",
+                  "First week runs with a dispatcher assigned to your account",
+                ].map((s, i) => (
+                  <li key={s} className="flex gap-3.5">
+                    <span className="tabular grid h-7 w-7 shrink-0 place-items-center rounded-full bg-deep text-[0.85rem] font-bold text-white">
+                      {i + 1}
+                    </span>
+                    <span className="text-[0.97rem] leading-relaxed text-ink">{s}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            <aside className="self-start rounded-xl bg-bone p-7">
+              <h3 className="font-display text-[1.15rem] font-bold text-deep">Talk to us</h3>
+              <p className="mt-2 text-[0.95rem] leading-relaxed text-slate-soft">
+                Partnerships are handled by the dispatch supervisor, not a sales team.
+              </p>
+
+              <dl className="mt-5 space-y-3 text-[0.95rem]">
+                <div>
+                  <dt className="text-slate-soft">Direct line</dt>
+                  <dd className="tabular font-bold text-deep">
+                    <a href={`tel:${COMPANY.dispatchPhone.replace(/\D/g, "")}`} className="hover:text-blue">
+                      {COMPANY.dispatchPhone}
+                    </a>
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-slate-soft">Email</dt>
+                  <dd className="font-bold text-deep">
+                    <a href={`mailto:${COMPANY.email}`} className="break-all hover:text-blue">
+                      {COMPANY.email}
+                    </a>
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-slate-soft">Registration</dt>
+                  <dd className="tabular text-deep">
+                    USDOT {COMPANY.usdot} · NPI {COMPANY.npi}
+                  </dd>
+                </div>
+              </dl>
+
+              <Link
+                href="/contact"
+                className="mt-6 block rounded-full bg-green px-6 py-3.5 text-center font-bold text-white hover:bg-[#4d8f28]"
+              >
+                Request a callback
+              </Link>
+            </aside>
+          </div>
+        </section>
+      </div>
+    </MarketingShell>
+  );
+}

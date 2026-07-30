@@ -43,7 +43,7 @@ export default function HeroTracker({ tripId = "t1" }: { tripId?: string }) {
           </span>
         </div>
         <span className="tabular text-[0.8rem] text-slate-soft">
-          Trip {live?.trip.code ?? "—"}
+          Trip {live?.trip.code ?? "…"}
         </span>
       </div>
 
@@ -82,7 +82,7 @@ export default function HeroTracker({ tripId = "t1" }: { tripId?: string }) {
               <li key={stage} className="flex-1">
                 <span className="sr-only">
                   {STATUS_COPY[stage].label}
-                  {done ? " — done" : ""}
+                  {done ? " (done)" : ""}
                 </span>
                 <span
                   aria-hidden="true"

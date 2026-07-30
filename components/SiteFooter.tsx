@@ -45,7 +45,7 @@ export default function SiteFooter() {
             <Logo />
             <p className="mt-4 max-w-sm text-[0.95rem] leading-relaxed text-slate-soft">
               {COMPANY.tagline}. Non-emergency medical transportation across Chicago and the
-              western suburbs — wheelchair, ambulatory, stretcher and bariatric.
+              western suburbs, covering wheelchair, ambulatory, stretcher and bariatric.
             </p>
 
             <address className="mt-5 not-italic text-[0.95rem] leading-relaxed text-slate-soft">

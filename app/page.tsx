@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
+import MarketingShell from "@/components/MarketingShell";
 import HeroTracker from "@/components/HeroTracker";
 import ServiceIcon from "@/components/ServiceIcon";
 import { COMPANY } from "@/lib/demo/data";
@@ -9,10 +8,8 @@ import { SEGMENTS, SERVICES, SERVICE_AREA, STATS, TESTIMONIALS } from "@/lib/con
 
 export default function HomePage() {
   return (
-    <>
-      <SiteHeader />
-
-      <main id="main">
+    <MarketingShell>
+      <>
         {/* ---- Hero ------------------------------------------------------ */}
         <section className="relative overflow-hidden bg-white">
           <div
@@ -26,13 +23,14 @@ export default function HomePage() {
               </p>
 
               <h1 className="mt-5 font-display text-[clamp(2.3rem,5.6vw,4rem)] font-extrabold leading-[1.03] text-deep">
-                Know exactly where your ride is.
+                Know where your ride is.
               </h1>
 
               <p className="mt-5 max-w-xl text-[1.12rem] leading-relaxed text-slate-soft">
-                Most medical transport asks you to book a van and then wait by a window.
-                MedCompass gives every trip a live map, a driver name, and an arrival time you
-                can watch count down — for the rider, and for whoever is worrying about them.
+                With most transport companies you help your mother into a van, and then you wait by
+                a window with no idea when she will get there. We think you should be able to see
+                it. Every MedCompass trip comes with a live map, the driver&rsquo;s name, and an
+                arrival time that counts down.
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
@@ -51,8 +49,8 @@ export default function HomePage() {
               </div>
 
               <p className="mt-5 text-[0.9rem] text-slate-soft">
-                Medicaid managed care and major NEMT brokers billed directly · One escort rides
-                free
+                We bill Medicaid managed care and the major NEMT brokers directly. One escort always
+                rides free.
               </p>
             </div>
 
@@ -64,28 +62,87 @@ export default function HomePage() {
         <section aria-label="Company statistics" className="border-y border-line bg-deep">
           <dl className="mx-auto grid max-w-7xl grid-cols-2 gap-x-6 gap-y-8 px-4 py-10 lg:grid-cols-4">
             {STATS.map((s) => (
-              <div key={s.label}>
-                <dt className="sr-only">{s.label}</dt>
-                <dd>
-                  <span className="tabular block font-display text-[2rem] font-extrabold leading-none text-lime">
-                    {s.value}
-                  </span>
-                  <span className="mt-1.5 block text-[0.9rem] text-white/75">{s.label}</span>
+              // Column-reverse so the value reads first visually while the
+              // label still precedes it in the DOM. A visually hidden <dt>
+              // alongside a visible label would announce the label twice.
+              <div key={s.label} className="flex flex-col-reverse">
+                <dt className="mt-1.5 text-[0.9rem] text-white/75">{s.label}</dt>
+                <dd className="tabular font-display text-[2rem] font-extrabold leading-none text-lime">
+                  {s.value}
                 </dd>
               </div>
             ))}
           </dl>
         </section>
 
+        {/* ---- Warm intro ------------------------------------------------- */}
+        <section className="bg-white py-20">
+          <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-[1.15fr_1fr]">
+            <div className="overflow-hidden rounded-2xl">
+              <Image
+                src="/photos/assist-to-vehicle.jpg"
+                alt="A caregiver walking beside an older woman in a wheelchair on a path at sunset"
+                width={1400}
+                height={933}
+                className="h-auto w-full"
+                priority
+              />
+            </div>
+
+            <div>
+              <h2 className="font-display text-[clamp(1.8rem,3.4vw,2.6rem)] font-extrabold leading-tight text-deep">
+                Getting to an appointment should be the easy part
+              </h2>
+              <p className="mt-5 text-[1.05rem] leading-relaxed text-slate-soft">
+                For a lot of families it is the hardest. A parent who cannot drive anymore. A
+                wheelchair that will not fit in anyone&rsquo;s car. A dialysis schedule that does
+                not move, three days a week, no matter what else is going on that week.
+              </p>
+              <p className="mt-4 text-[1.05rem] leading-relaxed text-slate-soft">
+                That is the whole job for us. We show up when we said we would, we help your person
+                from their door to the right desk instead of leaving them at a curb, and we let you
+                watch the whole thing happen from wherever you are.
+              </p>
+
+              <ul className="mt-7 space-y-3">
+                {[
+                  "Door through door, not curb to curb",
+                  "The same driver on standing orders wherever we can manage it",
+                  "One escort rides free on every trip",
+                  "Drivers are employees, background checked and CPR certified",
+                ].map((point) => (
+                  <li key={point} className="flex items-start gap-3 text-[1rem] text-ink">
+                    <svg
+                      className="mt-1 h-4.5 w-4.5 shrink-0 text-green"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M5 13l4 4L19 7"
+                        stroke="currentColor"
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+
         {/* ---- Services --------------------------------------------------- */}
         <section className="mx-auto max-w-7xl px-4 py-20">
           <div className="max-w-2xl">
             <h2 className="font-display text-[clamp(1.8rem,3.4vw,2.6rem)] font-extrabold leading-tight text-deep">
-              Four levels of transport, priced before you book
+              Four kinds of transport, with the price on the page
             </h2>
             <p className="mt-4 text-[1.05rem] leading-relaxed text-slate-soft">
-              Every service below has a published base rate and per-mile rate. You will not get a
-              surprise number at the curb.
+              Every service below has a base rate and a per mile rate listed. You will not find out
+              what it costs at the curb.
             </p>
           </div>
 
@@ -116,13 +173,13 @@ export default function HomePage() {
           </ul>
         </section>
 
-        {/* ---- The differentiator ---------------------------------------- */}
+        {/* ---- Tracking --------------------------------------------------- */}
         <section className="bg-white py-20">
           <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-2">
             <div className="overflow-hidden rounded-2xl border border-line">
               <Image
                 src="/brand/van-side.jpg"
-                alt="A MedCompass wheelchair-accessible RAM ProMaster van, marked with USDOT and MC numbers"
+                alt="A MedCompass wheelchair accessible RAM ProMaster van marked with USDOT and MC numbers"
                 width={1156}
                 height={419}
                 className="h-auto w-full"
@@ -131,31 +188,31 @@ export default function HomePage() {
 
             <div>
               <h2 className="font-display text-[clamp(1.8rem,3.4vw,2.6rem)] font-extrabold leading-tight text-deep">
-                The part everyone else leaves out
+                The waiting is the hard part, so we fixed that first
               </h2>
               <p className="mt-4 text-[1.05rem] leading-relaxed text-slate-soft">
-                Booking a ride is the easy half. The hard half is the ninety minutes afterward,
-                when nobody will tell you where the van is. We built the tracking first and the
-                brochure second.
+                Booking a ride was never really the problem. The problem is the ninety minutes
+                afterward when nobody can tell you where the van is. We built the tracking before we
+                built anything else.
               </p>
 
               <ul className="mt-8 space-y-5">
                 {[
                   {
-                    t: "A link, not an app",
-                    d: "Tracking arrives by text. It opens in any browser, on any phone, for anyone you forward it to — no account, no download.",
+                    t: "A link, not another app",
+                    d: "Tracking arrives by text. It opens in any browser on any phone, and you can forward it to anyone. Nobody has to make an account.",
                   },
                   {
-                    t: "The driver's name before the knock",
-                    d: "You see who is coming, how long they have driven for us, and the unit number on the van, before they reach the door.",
+                    t: "You know who is coming",
+                    d: "You see the driver's name, how long they have been with us, and the number on the side of the van, before they reach the door.",
                   },
                   {
-                    t: "Alerts at the moments that matter",
-                    d: "Driver assigned, driver arriving, rider on board, rider delivered. Four messages, no noise in between.",
+                    t: "Four messages, no noise",
+                    d: "Driver assigned. Driver arriving. Rider on board. Rider delivered. We do not fill your phone with anything else.",
                   },
                   {
-                    t: "Private by construction",
-                    d: "The link shows a van and an ETA. It never carries a name, a condition, or the name of the clinic — so forwarding it to family leaks nothing.",
+                    t: "Safe to forward",
+                    d: "The link shows a van and an arrival time. It never carries a name, a condition, or the clinic, so sending it to the family group chat gives nothing away.",
                   },
                 ].map((item) => (
                   <li key={item.t} className="flex gap-4">
@@ -175,7 +232,7 @@ export default function HomePage() {
                 href="/track"
                 className="mt-8 inline-flex items-center gap-2 rounded-full border-2 border-blue px-6 py-3 font-bold text-blue hover:bg-mist"
               >
-                See a live trip →
+                Watch a trip in progress →
               </Link>
             </div>
           </div>
@@ -183,28 +240,42 @@ export default function HomePage() {
 
         {/* ---- Segments --------------------------------------------------- */}
         <section className="mx-auto max-w-7xl px-4 py-20">
-          <h2 className="max-w-2xl font-display text-[clamp(1.8rem,3.4vw,2.6rem)] font-extrabold leading-tight text-deep">
-            Built around who is actually making the call
-          </h2>
+          <div className="grid gap-12 lg:grid-cols-[1fr_1.4fr] lg:items-start">
+            <div className="lg:sticky lg:top-32">
+              <h2 className="font-display text-[clamp(1.8rem,3.4vw,2.6rem)] font-extrabold leading-tight text-deep">
+                Different people call us for different reasons
+              </h2>
+              <p className="mt-4 text-[1.05rem] leading-relaxed text-slate-soft">
+                A daughter wants to know her mother got there. A discharge planner needs the bed
+                back. A dialysis coordinator needs the chair to turn on time. We built for each of
+                them instead of averaging everyone into one word.
+              </p>
+              <div className="mt-8 overflow-hidden rounded-2xl">
+                <Image
+                  src="/photos/care-handoff.jpg"
+                  alt="A care worker laughing with an older woman during a visit"
+                  width={1100}
+                  height={778}
+                  className="h-auto w-full"
+                />
+              </div>
+            </div>
 
-          <ul className="mt-10 grid gap-5 md:grid-cols-2">
-            {SEGMENTS.map((seg) => (
-              <li
-                key={seg.id}
-                id={seg.id}
-                className="rounded-2xl border border-line bg-white p-7"
-              >
-                <h3 className="font-display text-[1.25rem] font-bold text-deep">{seg.name}</h3>
-                <p className="mt-3 border-l-3 border-line pl-4 text-[0.98rem] italic leading-relaxed text-slate-soft">
-                  {seg.pain}
-                </p>
-                <p className="mt-4 text-[0.98rem] leading-relaxed text-ink">{seg.answer}</p>
-                <p className="tabular mt-4 inline-block rounded-full bg-moss px-3 py-1.5 text-[0.85rem] font-semibold text-[#3f7f22]">
-                  {seg.proof}
-                </p>
-              </li>
-            ))}
-          </ul>
+            <ul className="grid gap-5 sm:grid-cols-2">
+              {SEGMENTS.map((seg) => (
+                <li key={seg.id} id={seg.id} className="rounded-2xl border border-line bg-white p-7">
+                  <h3 className="font-display text-[1.25rem] font-bold text-deep">{seg.name}</h3>
+                  <p className="mt-3 border-l-3 border-line pl-4 text-[0.98rem] italic leading-relaxed text-slate-soft">
+                    {seg.pain}
+                  </p>
+                  <p className="mt-4 text-[0.98rem] leading-relaxed text-ink">{seg.answer}</p>
+                  <p className="tabular mt-4 inline-block rounded-full bg-moss px-3 py-1.5 text-[0.85rem] font-semibold text-[#3f7f22]">
+                    {seg.proof}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
         </section>
 
         {/* ---- Testimonials ----------------------------------------------- */}
@@ -238,9 +309,9 @@ export default function HomePage() {
                   {SERVICE_AREA.length} communities, one dispatch desk
                 </h2>
                 <p className="mt-4 text-[1.02rem] leading-relaxed text-slate-soft">
-                  Chicago proper plus the western and northern suburbs, with scheduled
-                  long-distance runs into southeastern Wisconsin. Outside the list? Call dispatch —
-                  we quote out-of-area trips individually rather than refusing them.
+                  Chicago proper plus the western and northern suburbs, with scheduled longer runs
+                  into southeastern Wisconsin. If you do not see your town, call us anyway. We quote
+                  trips outside the area rather than turning them away.
                 </p>
                 <Link
                   href="/service-area"
@@ -268,11 +339,11 @@ export default function HomePage() {
         <section className="bg-deep">
           <div className="mx-auto max-w-4xl px-4 py-20 text-center">
             <h2 className="font-display text-[clamp(1.9rem,4vw,2.8rem)] font-extrabold leading-tight text-white">
-              Book the ride. Then actually watch it happen.
+              Book the ride, then watch it happen
             </h2>
             <p className="mx-auto mt-5 max-w-2xl text-[1.05rem] leading-relaxed text-white/75">
-              Quote in under a minute. No account needed to get a price, and no card required
-              until the trip is confirmed.
+              A quote takes about a minute. You do not need an account to see a price, and there is
+              no card until the trip is confirmed.
             </p>
             <div className="mt-9 flex flex-wrap justify-center gap-3">
               <Link
@@ -290,9 +361,7 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-      </main>
-
-      <SiteFooter />
-    </>
+      </>
+    </MarketingShell>
   );
 }

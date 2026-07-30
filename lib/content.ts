@@ -25,7 +25,7 @@ export const SERVICES: Service[] = [
     name: "Wheelchair transport",
     short: "Hydraulic lift, four-point securement, door-through-door.",
     description:
-      "Our wheelchair vans carry manual and power chairs up to 800 lb combined on a hydraulic lift — no transfers, no lifting, no folding your chair into a trunk. Every chair is secured at four points and the rider gets a separate lap-and-shoulder belt.",
+      "Our wheelchair vans carry manual and power chairs up to 800 lb combined on a hydraulic lift. No transferring out of your chair, no lifting, and nobody folding it into a trunk. Every chair is secured at four points, and the rider gets their own lap and shoulder belt.",
     includes: [
       "Hydraulic lift rated to 800 lb",
       "Four-point wheelchair securement",
@@ -73,7 +73,7 @@ export const SERVICES: Service[] = [
     name: "Bariatric transport",
     short: "Equipment rated to 750 lb, booked with the room it needs.",
     description:
-      "Riders over standard equipment limits get a van built for it — wider lift, reinforced securement, and a bariatric chair rated to 750 lb. We schedule extra time so nobody is rushed, and we confirm building access before the day of the trip.",
+      "Riders over standard equipment limits get a van built for it, with a wider lift, reinforced securement, and a bariatric chair rated to 750 lb. We schedule extra time so nobody feels rushed, and we confirm building access before the day of the trip rather than finding out at the door.",
     includes: [
       "Lift and chair rated to 750 lb",
       "Reinforced securement points",
@@ -103,7 +103,7 @@ export const SEGMENTS: Segment[] = [
     pain: "You put your mother in a van and then hear nothing for an hour.",
     answer:
       "Every MedCompass trip gets a live tracking link. Watch the van approach, see the driver's name before they knock, and get a notification the moment your parent is inside the building.",
-    proof: "Share the link with anyone — no account, no app install.",
+    proof: "Share the link with anyone. No account, no app to install.",
   },
   {
     id: "hospitals",
@@ -184,7 +184,7 @@ export const FAQS = [
   },
   {
     q: "How far in advance should I book?",
-    a: "Routine appointments: 24 hours. Standing orders like dialysis: one week to lock the same driver. Hospital discharges: call when the order is written — we hold same-day capacity specifically for discharges.",
+    a: "Routine appointments: 24 hours. Standing orders like dialysis: about a week, so we can lock in the same driver. Hospital discharges: call as soon as the order is written. We hold back same-day capacity specifically for those.",
   },
   {
     q: "Can someone ride with the patient?",
@@ -192,14 +192,14 @@ export const FAQS = [
   },
   {
     q: "What if the appointment runs long?",
-    a: "Return trips are open-ended by default. Call or tap 'Ready for pickup' in the portal when you are done, and we dispatch the nearest available van — typically 20 to 35 minutes in our core service area.",
+    a: "Return trips are open ended by default. Call us or tap 'Ready for pickup' in the portal when you are finished, and we send the nearest available van. In our core service area that is usually 20 to 35 minutes.",
   },
   {
     q: "How is the tracking link private?",
-    a: "The link carries a single-use token that expires when the trip ends. It shows the vehicle position, ETA and trip status only — never the rider's name, condition, or the name of the facility they are visiting.",
+    a: "The link carries a single use token that expires when the trip ends. It shows the vehicle position, the arrival time and the trip status. It never shows the rider's name, their condition, or the name of the facility they are visiting.",
   },
   {
     q: "What areas do you cover?",
-    a: "Chicago proper plus the western and northern suburbs, with regular long-distance runs to southeastern Wisconsin. If you are outside the map, call dispatch — we quote out-of-area trips individually.",
+    a: "Chicago proper plus the western and northern suburbs, with regular longer runs into southeastern Wisconsin. If you are outside the map, call dispatch anyway. We quote trips outside the area one at a time rather than turning them away.",
   },
 ];
