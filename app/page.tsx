@@ -80,10 +80,10 @@ export default function HomePage() {
           <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-[1.15fr_1fr]">
             <div className="overflow-hidden rounded-2xl">
               <Image
-                src="/photos/assist-to-vehicle.jpg"
-                alt="A caregiver walking beside an older woman in a wheelchair on a path at sunset"
-                width={1400}
-                height={933}
+                src="/photos/stretcher-loading.jpg"
+                alt="Two MedCompass crew members loading a patient on a stretcher into a branded MedCompass van on a Chicago street, with the downtown skyline in the background"
+                width={1296}
+                height={832}
                 className="h-auto w-full"
                 priority
               />
