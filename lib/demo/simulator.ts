@@ -221,10 +221,14 @@ export function createFleetSimulation(
     : TRIPS;
 
   // Local mutable copies so the simulation never mutates the exported fixtures.
+  // `seedStatus` records how a trip started: a fixture seeded as completed is
+  // history, so looping it would resurrect a finished trip onto the dispatch
+  // board while the client portal still lists it under past rides.
   const state = watched.map((t) => ({
     trip: { ...t },
     progress: t.progress,
     status: t.status,
+    seedStatus: t.status,
     dwell: 0,
   }));
 
@@ -243,7 +247,7 @@ export function createFleetSimulation(
         { ...s.trip, status: s.status },
         { progress: s.progress, status: s.status, dwell: s.dwell },
         tickMs / 1000,
-        loop,
+        loop && s.seedStatus !== "completed" && s.seedStatus !== "cancelled",
       );
       s.progress = next.progress;
       s.status = next.status;
