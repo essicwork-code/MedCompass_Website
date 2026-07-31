@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Logo } from "@/components/Logo";
+import { WeatherChip } from "@/components/WeatherWidget";
 import SignInCard from "@/components/auth/SignInCard";
 import { useSession } from "@/lib/auth/useSession";
 import { ACCOUNTS, ROLE_LABEL, STAFF_ACCOUNTS, can } from "@/lib/auth/accounts";
@@ -154,6 +155,7 @@ export default function AdminPage() {
           </div>
 
           <div className="flex items-center gap-4">
+            <WeatherChip />
             <span className="tabular hidden text-[0.85rem] text-white/70 md:inline">
               Dispatch {COMPANY.dispatchPhone}
             </span>

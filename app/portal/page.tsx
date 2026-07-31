@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import { Logo } from "@/components/Logo";
 import TripTracker from "@/components/TripTracker";
 import ChatWidget from "@/components/ChatWidget";
+import { WeatherCard } from "@/components/WeatherWidget";
 import SignInCard from "@/components/auth/SignInCard";
 import { useSession } from "@/lib/auth/useSession";
 import { CLIENT_ACCOUNTS, ROLE_LABEL, can } from "@/lib/auth/accounts";
@@ -146,23 +147,31 @@ export default function PortalPage() {
       </header>
 
       <main id="main" className="mx-auto max-w-7xl px-4 py-8">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <h1 className="font-display text-[2rem] font-extrabold leading-tight text-deep">
-              {heading}
-            </h1>
-            <p className="mt-1 text-[0.98rem] text-slate-soft">
-              {isFacility
-                ? `${myTrips.length} trips booked against this facility · ${account.title}`
-                : `Managing rides for ${account.ridersManaged?.join(", ")} · ${account.relationship}`}
-            </p>
+        <div className="flex flex-wrap items-start justify-between gap-6">
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <h1 className="font-display text-[2rem] font-extrabold leading-tight text-deep">
+                  {heading}
+                </h1>
+                <p className="mt-1 text-[0.98rem] text-slate-soft">
+                  {isFacility
+                    ? `${myTrips.length} trips booked against this facility · ${account.title}`
+                    : `Managing rides for ${account.ridersManaged?.join(", ")} · ${account.relationship}`}
+                </p>
+              </div>
+              <Link
+                href="/book"
+                className="rounded-full bg-green px-6 py-3 font-bold text-white hover:bg-[#4d8f28]"
+              >
+                Book a ride
+              </Link>
+            </div>
           </div>
-          <Link
-            href="/book"
-            className="rounded-full bg-green px-6 py-3 font-bold text-white hover:bg-[#4d8f28]"
-          >
-            Book a ride
-          </Link>
+
+          <div className="w-full sm:w-80 sm:shrink-0">
+            <WeatherCard />
+          </div>
         </div>
 
         {focus ? (
