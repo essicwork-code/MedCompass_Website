@@ -23,14 +23,14 @@ export default function ResourcesPage() {
             <li key={r.slug}>
               <Link
                 href={`/resources/${r.slug}`}
-                className="group block rounded-2xl border border-line bg-white p-7 transition-shadow hover:shadow-[0_14px_40px_-20px_rgb(16_34_46/0.4)]"
+                className="group block rounded-2xl border border-line bg-white p-7 transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_14px_40px_-20px_rgb(16_34_46/0.4)]"
               >
                 <p className="text-[0.8rem] font-semibold uppercase tracking-wide text-slate-soft">
                   {r.readTime}
                 </p>
                 <h2 className="mt-1.5 font-display text-[1.4rem] font-bold text-deep">{r.title}</h2>
                 <p className="mt-2.5 text-[0.98rem] leading-relaxed text-slate-soft">{r.description}</p>
-                <span className="mt-4 inline-block text-[0.92rem] font-semibold text-blue group-hover:underline">
+                <span className="mt-4 inline-block text-[0.92rem] font-semibold text-blue-ink group-hover:underline">
                   Read the guide →
                 </span>
               </Link>

@@ -28,7 +28,7 @@ export default function HospitalDischargeGuidePage() {
         <p>
           Usually a discharge planner, case manager, or floor nurse, not the patient or family
           directly. If you are family and nobody has called transport yet, you can call{" "}
-          <a href={`tel:${COMPANY.phoneHref}`} className="font-semibold text-blue hover:underline">
+          <a href={`tel:${COMPANY.phoneHref}`} className="font-semibold text-blue-ink hover:underline">
             {COMPANY.phone}
           </a>{" "}
           yourself, but it helps to have the discharging unit's name and the patient's mobility
@@ -87,11 +87,11 @@ export default function HospitalDischargeGuidePage() {
           Whoever is listed as the contact gets a live tracking link by text: the van's position, an
           arrival estimate, and the driver's first name, updating in real time until the patient is
           delivered. See how that actually looks on the{" "}
-          <Link href="/track" className="font-semibold text-blue hover:underline">
+          <Link href="/track" className="font-semibold text-blue-ink hover:underline">
             tracking page
           </Link>
           , or read how the link is built to protect the patient's privacy on our{" "}
-          <Link href="/privacy" className="font-semibold text-blue hover:underline">
+          <Link href="/privacy" className="font-semibold text-blue-ink hover:underline">
             privacy page
           </Link>
           .
@@ -100,7 +100,7 @@ export default function HospitalDischargeGuidePage() {
         <h2>For discharge planners booking regularly</h2>
         <p>
           If your unit sends multiple discharges a week, a{" "}
-          <Link href="/facilities" className="font-semibold text-blue hover:underline">
+          <Link href="/facilities" className="font-semibold text-blue-ink hover:underline">
             facility account
           </Link>{" "}
           gets you a direct dispatch line and a live board showing every trip your unit has booked

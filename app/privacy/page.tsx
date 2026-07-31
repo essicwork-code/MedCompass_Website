@@ -81,7 +81,7 @@ export default function PrivacyPage() {
         <p>
           You may request a copy of the information we hold about you, ask us to correct it, or ask
           for an accounting of disclosures. Contact us at{" "}
-          <a href={`mailto:${COMPANY.email}`} className="font-semibold text-blue hover:underline">
+          <a href={`mailto:${COMPANY.email}`} className="font-semibold text-blue-ink hover:underline">
             {COMPANY.email}
           </a>{" "}
           or {COMPANY.phone}.

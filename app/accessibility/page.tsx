@@ -56,11 +56,11 @@ export default function AccessibilityPage() {
         <h2>Tell us where we fall short</h2>
         <p>
           If any part of this site or our service is difficult to use, call dispatch at{" "}
-          <a href={`tel:${COMPANY.phoneHref}`} className="font-semibold text-blue hover:underline">
+          <a href={`tel:${COMPANY.phoneHref}`} className="font-semibold text-blue-ink hover:underline">
             {COMPANY.phone}
           </a>{" "}
           or write to{" "}
-          <a href={`mailto:${COMPANY.email}`} className="font-semibold text-blue hover:underline">
+          <a href={`mailto:${COMPANY.email}`} className="font-semibold text-blue-ink hover:underline">
             {COMPANY.email}
           </a>
           . We respond within one business day, and we will arrange your ride by phone in the

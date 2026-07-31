@@ -118,7 +118,7 @@ export default function ChatWidget() {
           bottom: "max(1.25rem, calc(env(safe-area-inset-bottom) + 0.75rem))",
           right: "max(1.25rem, calc(env(safe-area-inset-right) + 0.75rem))",
         }}
-        className="fixed z-[60] flex h-14 w-14 items-center justify-center rounded-full bg-deep text-white shadow-[0_10px_30px_-8px_rgb(16_34_46/0.6)] transition-transform hover:scale-105"
+        className="fixed z-[60] flex h-14 w-14 items-center justify-center rounded-full bg-deep text-white shadow-[0_10px_30px_-8px_rgb(16_34_46/0.6)] transition-colors hover:bg-[#0c3e60]"
       >
         <span className="sr-only">{open ? "Close chat" : "Open chat with MedCompass"}</span>
         {open ? (
@@ -206,13 +206,13 @@ export default function ChatWidget() {
                       {m.text}
                     </div>
                     {m.suggestions && (
-                      <div className="mt-2 flex flex-wrap gap-1.5">
+                      <div className="mt-2 flex flex-wrap gap-2">
                         {m.suggestions.map((s) => (
                           <button
                             key={s}
                             type="button"
                             onClick={() => send(s)}
-                            className="rounded-full border border-blue/40 bg-white px-3 py-1.5 text-[0.8rem] font-medium text-blue hover:bg-mist"
+                            className="inline-flex min-h-11 items-center rounded-full border border-blue/40 bg-white px-3.5 py-1.5 text-[0.8rem] font-medium text-blue-ink hover:bg-mist"
                           >
                             {s}
                           </button>
@@ -247,12 +247,12 @@ export default function ChatWidget() {
               onChange={(e) => setDraft(e.target.value)}
               placeholder="Ask about rides, pricing, coverage…"
               autoComplete="off"
-              className="min-w-0 flex-1 rounded-full border border-line px-4 py-2.5 text-[0.92rem] outline-none placeholder:text-slate-soft/70 focus:border-blue"
+              className="min-w-0 flex-1 rounded-full border border-line px-4 py-2.5 text-[0.92rem] placeholder:text-slate-soft/70 focus:border-blue"
             />
             <button
               type="submit"
               disabled={!draft.trim()}
-              className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-green text-white disabled:opacity-40"
+              className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-green text-white disabled:opacity-40"
             >
               <span className="sr-only">Send message</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">

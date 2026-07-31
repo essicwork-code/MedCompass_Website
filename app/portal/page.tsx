@@ -55,7 +55,7 @@ export default function PortalPage() {
         footer={
           <>
             Staff member?{" "}
-            <Link href="/admin" className="font-semibold text-blue hover:underline">
+            <Link href="/admin" className="font-semibold text-blue-ink hover:underline">
               Dispatch sign in
             </Link>
           </>
@@ -212,7 +212,7 @@ export default function PortalPage() {
                         {l.trip.code} · {l.trip.pickup.city} to {l.trip.dropoff.name}
                       </p>
                     </div>
-                    <span className="rounded-full bg-moss px-3 py-1 text-[0.8rem] font-semibold text-[#3f7f22]">
+                    <span className="rounded-full bg-moss px-3 py-1 text-[0.8rem] font-semibold text-moss-ink">
                       {STATUS_COPY[l.trip.status].label}
                     </span>
                     <span className="tabular w-24 text-right text-[0.9rem] text-slate-soft">
@@ -248,7 +248,7 @@ export default function PortalPage() {
                   </div>
                   <button
                     type="button"
-                    className="shrink-0 rounded-full border-2 border-blue px-4 py-1.5 text-[0.85rem] font-bold text-blue hover:bg-mist"
+                    className="shrink-0 rounded-full border-2 border-blue px-4 py-1.5 text-[0.85rem] font-bold text-blue-ink hover:bg-mist"
                   >
                     Ready now
                   </button>
@@ -301,7 +301,7 @@ export default function PortalPage() {
                         {fmtDate(t.scheduledAt)} · {d.name.split(" ")[0]} · Unit {v.unit}
                       </p>
                     </div>
-                    <span className="shrink-0 rounded-full bg-moss px-2.5 py-1 text-[0.78rem] font-semibold text-[#3f7f22]">
+                    <span className="shrink-0 rounded-full bg-moss px-2.5 py-1 text-[0.78rem] font-semibold text-moss-ink">
                       {STATUS_COPY[t.status].label}
                     </span>
                   </li>

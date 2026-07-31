@@ -76,7 +76,7 @@ export default function ServicesPage() {
                 </Link>
                 <Link
                   href={`/services/${s.slug}`}
-                  className="mt-2.5 block text-center text-[0.9rem] font-semibold text-blue hover:underline"
+                  className="mt-2.5 block text-center text-[0.9rem] font-semibold text-blue-ink hover:underline"
                 >
                   Full details →
                 </Link>

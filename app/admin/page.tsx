@@ -37,11 +37,12 @@ const MOBILITY_LABEL: Record<MobilityType, string> = {
 
 const STATUS_TONE: Partial<Record<TripStatus, string>> = {
   en_route_pickup: "bg-mist text-deep",
-  arrived_pickup: "bg-[#fff3d6] text-amber",
-  onboard: "bg-moss text-[#3f7f22]",
-  arrived_dest: "bg-moss text-[#3f7f22]",
+  arrived_pickup: "bg-amber-tint text-amber-ink",
+  onboard: "bg-moss text-moss-ink",
+  arrived_dest: "bg-moss text-moss-ink",
   scheduled: "bg-bone text-slate-soft",
   completed: "bg-bone text-slate-soft",
+  cancelled: "bg-alert-tint text-alert",
 };
 
 type Tab = "board" | "fleet" | "drivers" | "accounts";
@@ -77,7 +78,7 @@ export default function AdminPage() {
         footer={
           <>
             Looking for your rides?{" "}
-            <Link href="/portal" className="font-semibold text-blue hover:underline">
+            <Link href="/portal" className="font-semibold text-blue-ink hover:underline">
               Client sign in
             </Link>
           </>
@@ -176,7 +177,7 @@ export default function AdminPage() {
             <button
               type="button"
               onClick={signOut}
-              className="text-[0.85rem] font-semibold text-white/80 hover:text-lime"
+              className="rounded-md px-3.5 py-3 text-[0.85rem] font-semibold text-white/80 hover:bg-white/10 hover:text-lime"
             >
               Sign out
             </button>
@@ -228,7 +229,7 @@ export default function AdminPage() {
                   <button
                     type="button"
                     onClick={() => setFocused(null)}
-                    className="text-[0.88rem] font-semibold text-blue hover:underline"
+                    className="rounded-md px-3.5 py-3 text-[0.88rem] font-semibold text-blue-ink hover:underline"
                   >
                     Show whole fleet
                   </button>
@@ -257,6 +258,7 @@ export default function AdminPage() {
                   const vehicle = VEHICLE_BY_ID[t.trip.vehicleId];
                   const isFocused = focused === t.trip.id;
                   const late = t.etaMinutes != null && t.etaMinutes > 25;
+                  const veryLate = t.etaMinutes != null && t.etaMinutes > 45;
 
                   return (
                     <li key={t.trip.id}>
@@ -295,13 +297,15 @@ export default function AdminPage() {
                           <span>·</span>
                           <span>{driver.name}</span>
                           <span>·</span>
-                          <span className={late ? "font-bold text-amber" : ""}>
+                          <span
+                            className={veryLate ? "font-bold text-alert" : late ? "font-bold text-amber-ink" : ""}
+                          >
                             ETA {t.etaMinutes ?? "n/a"} min
                           </span>
                         </div>
 
                         {t.trip.recurring && (
-                          <span className="mt-2 inline-block rounded-full bg-moss px-2 py-0.5 text-[0.72rem] font-semibold text-[#3f7f22]">
+                          <span className="mt-2 inline-block rounded-full bg-moss px-2 py-0.5 text-[0.72rem] font-semibold text-moss-ink">
                             Standing order
                           </span>
                         )}
@@ -368,7 +372,7 @@ export default function AdminPage() {
                         <td className="tabular px-4 py-3 text-slate-soft">{v.lastInspection}</td>
                         <td className="px-4 py-3">
                           {assigned ? (
-                            <span className="rounded-full bg-moss px-2.5 py-1 text-[0.78rem] font-semibold text-[#3f7f22]">
+                            <span className="rounded-full bg-moss px-2.5 py-1 text-[0.78rem] font-semibold text-moss-ink">
                               On trip {assigned.trip.code}
                             </span>
                           ) : (
@@ -421,7 +425,7 @@ export default function AdminPage() {
 
                   <p className="mt-4 border-t border-line pt-3 text-[0.85rem]">
                     {trip ? (
-                      <span className="font-semibold text-[#3f7f22]">
+                      <span className="font-semibold text-moss-ink">
                         On {trip.trip.code} · ETA {trip.etaMinutes} min
                       </span>
                     ) : (

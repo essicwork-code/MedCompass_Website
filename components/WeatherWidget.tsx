@@ -46,7 +46,7 @@ export function WeatherCard() {
       {advisory && (
         <p
           className={`mt-3.5 rounded-lg px-3.5 py-2.5 text-[0.88rem] leading-relaxed ${
-            data.adverse ? "bg-[#fff3d6] text-[#6b4a0a]" : "bg-mist text-deep"
+            data.adverse ? "bg-amber-tint text-amber-ink" : "bg-mist text-deep"
           }`}
         >
           {advisory}
@@ -67,7 +67,7 @@ export function WeatherChip() {
   const { data } = weather;
   const advisory = advisoryFor(data, "ops");
   const chipClass = `flex items-center gap-2 rounded-full px-3 py-1.5 text-[0.82rem] font-semibold ${
-    data.adverse ? "bg-[#fff3d6] text-[#6b4a0a]" : "bg-white/15 text-white"
+    data.adverse ? "bg-amber-tint text-amber-ink" : "bg-white/15 text-white"
   }`;
 
   // Plain, non-interactive chip when there's nothing to say beyond the

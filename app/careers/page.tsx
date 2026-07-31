@@ -292,7 +292,7 @@ export default function CareersPage() {
                       id="c-name"
                       required
                       autoComplete="name"
-                      className="mt-1.5 w-full rounded-lg border-2 border-line px-3.5 py-2.5 outline-none focus:border-blue"
+                      className="mt-1.5 w-full rounded-lg border-2 border-line px-3.5 py-2.5 focus:border-blue"
                     />
                   </div>
                   <div>
@@ -304,7 +304,7 @@ export default function CareersPage() {
                       type="tel"
                       required
                       autoComplete="tel"
-                      className="mt-1.5 w-full rounded-lg border-2 border-line px-3.5 py-2.5 outline-none focus:border-blue"
+                      className="mt-1.5 w-full rounded-lg border-2 border-line px-3.5 py-2.5 focus:border-blue"
                     />
                   </div>
                 </div>
@@ -315,7 +315,7 @@ export default function CareersPage() {
                   </label>
                   <select
                     id="c-role"
-                    className="mt-1.5 w-full rounded-lg border-2 border-line bg-white px-3.5 py-2.5 outline-none focus:border-blue"
+                    className="mt-1.5 w-full rounded-lg border-2 border-line bg-white px-3.5 py-2.5 focus:border-blue"
                   >
                     {JOB_POSTINGS.map((job) => (
                       <option key={job.title}>{job.title}</option>
@@ -331,7 +331,7 @@ export default function CareersPage() {
                     id="c-exp"
                     rows={3}
                     placeholder="CDL, CNA, rideshare, caregiving, anything relevant"
-                    className="mt-1.5 w-full rounded-lg border-2 border-line px-3.5 py-2.5 outline-none focus:border-blue"
+                    className="mt-1.5 w-full rounded-lg border-2 border-line px-3.5 py-2.5 focus:border-blue"
                   />
                 </div>
 
@@ -343,10 +343,10 @@ export default function CareersPage() {
                 </button>
 
                 {submitted && (
-                  <p role="status" className="rounded-xl bg-[#fff8ec] px-4 py-3.5 text-[0.88rem] leading-relaxed text-deep">
+                  <p role="status" className="rounded-xl bg-amber-tint px-4 py-3.5 text-[0.88rem] leading-relaxed text-deep">
                     <strong>This is a demonstration site.</strong> The form has no backend, so
                     nothing was sent. To actually apply, call dispatch at{" "}
-                    <a href={`tel:${COMPANY.phoneHref}`} className="font-semibold text-blue hover:underline">
+                    <a href={`tel:${COMPANY.phoneHref}`} className="font-semibold text-blue-ink hover:underline">
                       {COMPANY.phone}
                     </a>{" "}
                     and ask for hiring.

@@ -58,7 +58,7 @@ export default function TripTracker({
   const isPublic = variant === "public";
 
   async function share() {
-    const url = `${window.location.origin}/track?t=${trip.code.toLowerCase()}`;
+    const url = `${window.location.origin}/track?s=${trip.shareToken}`;
     try {
       await navigator.clipboard.writeText(url);
       setCopied(true);
@@ -219,7 +219,8 @@ export default function TripTracker({
             <h2 className="font-display text-[1.05rem] font-bold text-deep">Share this trip</h2>
             <p className="mt-2 text-[0.9rem] leading-relaxed text-slate-soft">
               Send a live link to family. It shows the van, the ETA and the driver&rsquo;s first
-              name. It never shows the rider&rsquo;s name, their condition, or where they&rsquo;re going.
+              name. It never shows the rider&rsquo;s name, their condition, or where they&rsquo;re going,
+              and it stops working once this trip ends.
             </p>
             <button
               type="button"

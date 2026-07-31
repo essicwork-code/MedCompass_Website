@@ -63,7 +63,7 @@ export default function CancellationPage() {
         <h2>How to cancel</h2>
         <p>
           Call dispatch at{" "}
-          <a href={`tel:${COMPANY.phoneHref}`} className="font-semibold text-blue hover:underline">
+          <a href={`tel:${COMPANY.phoneHref}`} className="font-semibold text-blue-ink hover:underline">
             {COMPANY.phone}
           </a>
           , any hour. You can also cancel from the client portal, but for anything inside two hours

@@ -348,7 +348,7 @@ function offsetIso(minutes: number): string {
   return new Date(Date.now() + minutes * 60_000).toISOString();
 }
 
-export const TRIPS: Trip[] = [
+const TRIP_FIXTURES: Omit<Trip, "shareToken" | "shareExpiresAt">[] = [
   {
     id: "t1",
     code: "MC-4821",
@@ -496,6 +496,29 @@ export const TRIPS: Trip[] = [
     isReturnLeg: true,
   },
 ];
+
+/**
+ * Deterministic stand-in for a server-issued random token: unrelated to the
+ * human-readable trip `code`, so a forwarded link can't be guessed from the
+ * code read aloud on the phone with dispatch. A real backend would generate
+ * and store this at share time instead of deriving it from the trip id.
+ */
+function shareToken(seed: string): string {
+  let h = 0;
+  for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) >>> 0;
+  return h.toString(36).padStart(8, "0");
+}
+
+export const TRIPS: Trip[] = TRIP_FIXTURES.map((trip) => ({
+  ...trip,
+  shareToken: shareToken(trip.id),
+  // Finished trips expire immediately; active/upcoming trips stay shareable
+  // for a few hours so family can keep watching without the link outliving the ride.
+  shareExpiresAt:
+    trip.status === "completed" || trip.status === "cancelled"
+      ? offsetIso(-60)
+      : offsetIso(180),
+}));
 
 export const DRIVER_BY_ID = Object.fromEntries(DRIVERS.map((d) => [d.id, d]));
 export const VEHICLE_BY_ID = Object.fromEntries(VEHICLES.map((v) => [v.id, v]));

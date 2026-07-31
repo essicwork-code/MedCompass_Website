@@ -99,11 +99,11 @@ export default function NemtCostChicagoPage() {
         <p>
           The formula above is exact, not a ballpark, for any address inside the core service area.
           Use the{" "}
-          <Link href="/cost-calculator" className="font-semibold text-blue hover:underline">
+          <Link href="/cost-calculator" className="font-semibold text-blue-ink hover:underline">
             cost calculator
           </Link>{" "}
           to plug in a real pickup and destination, or start a{" "}
-          <Link href="/book" className="font-semibold text-blue hover:underline">
+          <Link href="/book" className="font-semibold text-blue-ink hover:underline">
             booking
           </Link>{" "}
           to see the same number with your actual trip details and any add-ons.

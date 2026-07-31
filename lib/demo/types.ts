@@ -64,6 +64,14 @@ export interface Trip {
   id: string;
   /** Short human code used on the phone with dispatch, e.g. "MC-4821". */
   code: string;
+  /**
+   * Opaque token for forwarded share links. Deliberately unrelated to `code`
+   * so a link in a family group chat can't be guessed from the dispatch code
+   * read aloud on the phone, and can be rotated/expired independently of it.
+   */
+  shareToken: string;
+  /** ISO timestamp. A share link stops resolving after this, even if the trip is still active. */
+  shareExpiresAt: string;
   /** Rider initials only in list views; full name is gated behind the detail pane. */
   riderName: string;
   riderInitials: string;

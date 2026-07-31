@@ -41,7 +41,7 @@ export default function TermsPage() {
         <h2>Rates and billing</h2>
         <p>
           Published rates are on our{" "}
-          <Link href="/pricing" className="font-semibold text-blue hover:underline">
+          <Link href="/pricing" className="font-semibold text-blue-ink hover:underline">
             pricing page
           </Link>
           . Where a Medicaid managed care plan, a broker or a facility account covers the trip, we
@@ -65,7 +65,7 @@ export default function TermsPage() {
         <h2>Cancellations</h2>
         <p>
           Covered separately on our{" "}
-          <Link href="/cancellation" className="font-semibold text-blue hover:underline">
+          <Link href="/cancellation" className="font-semibold text-blue-ink hover:underline">
             cancellation page
           </Link>
           , including the circumstances where we waive the fee.
@@ -83,7 +83,7 @@ export default function TermsPage() {
         <h2>Privacy</h2>
         <p>
           Handling of health information is described on our{" "}
-          <Link href="/privacy" className="font-semibold text-blue hover:underline">
+          <Link href="/privacy" className="font-semibold text-blue-ink hover:underline">
             privacy and HIPAA page
           </Link>
           .

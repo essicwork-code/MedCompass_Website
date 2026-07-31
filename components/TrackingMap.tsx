@@ -75,9 +75,13 @@ function FitBounds({ points, enabled }: { points: LatLng[]; enabled: boolean }) 
 
   useEffect(() => {
     if (!enabled || points.length === 0) return;
+    // Leaflet's own pan/zoom easing doesn't check prefers-reduced-motion, so
+    // it has to be gated here rather than in the CSS reduced-motion catch-all.
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     map.fitBounds(L.latLngBounds(points.map((p) => L.latLng(p[0], p[1]))), {
       padding: [48, 48],
       maxZoom: 14,
+      animate: !reduceMotion,
     });
     // Refit only when the set of tracked points changes size, not on every tick —
     // continuous refitting would fight the user's own panning.

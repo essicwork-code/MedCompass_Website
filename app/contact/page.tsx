@@ -79,7 +79,7 @@ export default function ContactPage() {
             </div>
           </dl>
 
-          <p className="mt-8 rounded-xl bg-[#fdeaea] px-5 py-4 text-[0.95rem] leading-relaxed text-alert">
+          <p className="mt-8 rounded-xl bg-alert-tint px-5 py-4 text-[0.95rem] leading-relaxed text-alert">
             <strong>Medical emergency?</strong> Call 911. MedCompass provides non-emergency
             transport only and cannot respond to emergencies.
           </p>
@@ -108,7 +108,7 @@ export default function ContactPage() {
                   name="name"
                   required
                   autoComplete="name"
-                  className="mt-2 w-full rounded-lg border-2 border-line px-3.5 py-3 outline-none focus:border-blue"
+                  className="mt-2 w-full rounded-lg border-2 border-line px-3.5 py-3 focus:border-blue"
                 />
               </div>
               <div>
@@ -120,7 +120,7 @@ export default function ContactPage() {
                   name="phone"
                   type="tel"
                   autoComplete="tel"
-                  className="mt-2 w-full rounded-lg border-2 border-line px-3.5 py-3 outline-none focus:border-blue"
+                  className="mt-2 w-full rounded-lg border-2 border-line px-3.5 py-3 focus:border-blue"
                 />
               </div>
             </div>
@@ -135,7 +135,7 @@ export default function ContactPage() {
                 type="email"
                 required
                 autoComplete="email"
-                className="mt-2 w-full rounded-lg border-2 border-line px-3.5 py-3 outline-none focus:border-blue"
+                className="mt-2 w-full rounded-lg border-2 border-line px-3.5 py-3 focus:border-blue"
               />
             </div>
 
@@ -146,7 +146,7 @@ export default function ContactPage() {
               <select
                 id="topic"
                 name="topic"
-                className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 outline-none focus:border-blue"
+                className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 focus:border-blue"
               >
                 <option>Booking a ride</option>
                 <option>Facility or corporate account</option>
@@ -165,7 +165,7 @@ export default function ContactPage() {
                 name="message"
                 rows={4}
                 required
-                className="mt-2 w-full rounded-lg border-2 border-line px-3.5 py-3 outline-none focus:border-blue"
+                className="mt-2 w-full rounded-lg border-2 border-line px-3.5 py-3 focus:border-blue"
               />
               <p className="mt-1.5 text-[0.82rem] text-slate-soft">
                 Please don&rsquo;t include diagnoses or medical records here.
@@ -180,11 +180,11 @@ export default function ContactPage() {
             </button>
 
             {submitted && (
-              <p role="status" className="rounded-xl bg-[#fff8ec] px-5 py-4 text-[0.93rem] leading-relaxed text-deep">
+              <p role="status" className="rounded-xl bg-amber-tint px-5 py-4 text-[0.93rem] leading-relaxed text-deep">
                 <strong>This is a demonstration site.</strong> The form has no backend, so nothing
                 was sent and nobody was notified. On a live site this would reach dispatch. To
                 actually reach someone, call{" "}
-                <a href={`tel:${COMPANY.phoneHref}`} className="font-semibold text-blue hover:underline">
+                <a href={`tel:${COMPANY.phoneHref}`} className="font-semibold text-blue-ink hover:underline">
                   {COMPANY.phone}
                 </a>
                 .

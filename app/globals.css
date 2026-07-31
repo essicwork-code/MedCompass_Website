@@ -18,6 +18,19 @@
   --color-alert: #c02626;
   --color-amber: #b5730d;
 
+  /*
+   * Derived, not locked — adjusted off the swatches above so text meets the
+   * §3 contrast floor and so recurring tint/ink pairs stop getting
+   * reinvented as ad hoc hex per call site.
+   */
+  --color-blue-ink: #146a9f; /* body-copy links on white: --color-blue is 4.34:1, this is 5.85:1 */
+  --color-amber-ink: #6b4a0a; /* text on amber-tint / amber-tint bg: --color-amber is 3.87:1, this is 8.05:1 */
+  --color-moss-ink: #3f7f22; /* text on moss / bg-moss badges */
+  --color-lime-ink: #22400f; /* text on lime buttons */
+  --color-lime-hover: #9ed352; /* lime button hover */
+  --color-amber-tint: #fff3d6;
+  --color-alert-tint: #fdeaea;
+
   --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-public-sans), ui-sans-serif, system-ui, sans-serif;
 
@@ -114,6 +127,24 @@
 .leaflet-container button:focus-visible {
   outline: 3px solid var(--color-blue);
   outline-offset: 1px;
+}
+
+/*
+ * Leaflet's stock zoom buttons ship at ~26x26px flush against each other —
+ * under the §3 44x44 target / 8px spacing floor. Widen the control itself
+ * rather than just the buttons, so the extra hit area isn't clipped.
+ */
+.leaflet-control-zoom {
+  border: none !important;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.leaflet-control-zoom a {
+  width: 44px !important;
+  height: 44px !important;
+  line-height: 44px !important;
+  border-radius: 8px !important;
 }
 
 .leaflet-container {

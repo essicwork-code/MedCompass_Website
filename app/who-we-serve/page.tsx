@@ -34,7 +34,7 @@ export default function WhoWeServePage() {
               </div>
               <div>
                 <p className="text-[1.05rem] leading-relaxed text-ink">{seg.answer}</p>
-                <p className="tabular mt-5 inline-block rounded-full bg-moss px-4 py-2 text-[0.9rem] font-semibold text-[#3f7f22]">
+                <p className="tabular mt-5 inline-block rounded-full bg-moss px-4 py-2 text-[0.9rem] font-semibold text-moss-ink">
                   {seg.proof}
                 </p>
               </div>
@@ -53,7 +53,7 @@ export default function WhoWeServePage() {
           </p>
           <Link
             href="/facilities"
-            className="mt-7 inline-flex rounded-full bg-lime px-8 py-3.5 font-bold text-[#22400f] hover:bg-[#9ed352]"
+            className="mt-7 inline-flex rounded-full bg-lime px-8 py-3.5 font-bold text-lime-ink hover:bg-lime-hover"
           >
             Facility partnerships
           </Link>

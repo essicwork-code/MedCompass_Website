@@ -86,7 +86,7 @@ export default function CostCalculatorPage() {
                 id="calc-pickup"
                 value={pickupId}
                 onChange={(e) => setPickupId(e.target.value)}
-                className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-[0.95rem] outline-none focus:border-blue"
+                className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-[0.95rem] focus:border-blue"
               >
                 <option value="">Select a location…</option>
                 {PLACE_OPTIONS.map((p) => (
@@ -105,7 +105,7 @@ export default function CostCalculatorPage() {
                 id="calc-dropoff"
                 value={dropoffId}
                 onChange={(e) => setDropoffId(e.target.value)}
-                className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-[0.95rem] outline-none focus:border-blue"
+                className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-[0.95rem] focus:border-blue"
               >
                 <option value="">Select a location…</option>
                 {PLACE_OPTIONS.map((p) => (
@@ -131,11 +131,11 @@ export default function CostCalculatorPage() {
             Estimates use straight-line distance between the two points with a 25% adjustment for
             city driving, the same formula the booking flow uses. An unusual route, heavy traffic
             corridor, or unlisted address can change the real number. Call{" "}
-            <a href={`tel:${COMPANY.phoneHref}`} className="font-semibold text-blue hover:underline">
+            <a href={`tel:${COMPANY.phoneHref}`} className="font-semibold text-blue-ink hover:underline">
               {COMPANY.phone}
             </a>{" "}
             for an exact quote on anything not covered here, or enter a specific address in the{" "}
-            <Link href="/book" className="font-semibold text-blue hover:underline">
+            <Link href="/book" className="font-semibold text-blue-ink hover:underline">
               booking flow
             </Link>
             .

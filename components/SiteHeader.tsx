@@ -49,7 +49,10 @@ export default function SiteHeader() {
             >
               Dispatch {COMPANY.phone}
             </a>
-            <Link href="/portal" className="hidden sm:inline text-white/80 hover:text-lime">
+            <Link
+              href="/portal"
+              className="hidden sm:inline text-[0.95rem] font-semibold text-white/90 hover:text-lime"
+            >
               Client sign in
             </Link>
           </div>
@@ -87,7 +90,7 @@ export default function SiteHeader() {
           <div className="flex shrink-0 items-center gap-2 sm:gap-2.5">
             <Link
               href="/track"
-              className="hidden shrink-0 items-center gap-2 whitespace-nowrap rounded-full border-2 border-blue px-4 py-2 text-[0.9rem] font-semibold text-blue hover:bg-mist sm:inline-flex"
+              className="hidden shrink-0 items-center gap-2 whitespace-nowrap rounded-full border-2 border-blue px-4 py-2 text-[0.9rem] font-semibold text-blue-ink hover:bg-mist sm:inline-flex"
             >
               <span className="relative flex h-2 w-2">
                 <span className="pulse-ring absolute inline-flex h-2 w-2 rounded-full bg-green" />

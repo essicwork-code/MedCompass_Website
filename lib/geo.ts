@@ -10,7 +10,20 @@
  * Nothing here is persisted. A resolved pickup point only lives in the
  * booking wizard's component state and disappears the moment the tab closes,
  * consistent with never storing a rider's real address in this demo.
+ *
+ * PRODUCTION NOTE (CLAUDE.md PHI boundary): every function below sends the
+ * pickup address text to nominatim.openstreetmap.org, a free public
+ * geocoder with no BAA and no privacy guarantee. That's acceptable for a
+ * demo with fake addresses, but a real deployment must not call it directly
+ * from the browser with real rider addresses. Before going live, swap the
+ * base URL below for a BAA-covered geocoder (e.g. a licensed Mapbox/Google/
+ * Azure Maps key behind a first-party proxy route, or a self-hosted
+ * Nominatim instance) — every call is already funneled through this one
+ * file, so that's a one-file change, not a rewrite of the booking flow.
+ * Only the address string is ever sent; no rider name, trip id, or other
+ * identifier is attached to these requests, and none should be added later.
  */
+const NOMINATIM_BASE = "https://nominatim.openstreetmap.org";
 
 export interface GeoPoint {
   lat: number;
@@ -79,7 +92,7 @@ function shortLabel(addr: NominatimAddress | undefined, fallback: string): strin
 
 /** Coordinates to a readable street address. */
 export async function reverseGeocode(point: GeoPoint): Promise<string> {
-  const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${point.lat}&lon=${point.lng}&zoom=18&addressdetails=1`;
+  const url = `${NOMINATIM_BASE}/reverse?format=jsonv2&lat=${point.lat}&lon=${point.lng}&zoom=18&addressdetails=1`;
   const res = await fetch(url, { headers: { Accept: "application/json" } });
   if (!res.ok) throw new GeoError("lookup-failed", "Couldn't look up that location. Try entering an address instead.");
   const data = await res.json();
@@ -90,7 +103,7 @@ export async function reverseGeocode(point: GeoPoint): Promise<string> {
 
 /** A typed address to coordinates, biased toward Illinois since that's the whole service area. */
 export async function forwardGeocode(address: string): Promise<{ point: GeoPoint; label: string }> {
-  const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&addressdetails=1&q=${encodeURIComponent(
+  const url = `${NOMINATIM_BASE}/search?format=jsonv2&limit=1&addressdetails=1&q=${encodeURIComponent(
     `${address}, Illinois`,
   )}`;
   const res = await fetch(url, { headers: { Accept: "application/json" } });
@@ -121,7 +134,7 @@ export async function searchAddresses(query: string, limit = 5): Promise<Address
   const trimmed = query.trim();
   if (trimmed.length < 4) return [];
 
-  const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=${limit}&countrycodes=us&q=${encodeURIComponent(
+  const url = `${NOMINATIM_BASE}/search?format=jsonv2&addressdetails=1&limit=${limit}&countrycodes=us&q=${encodeURIComponent(
     `${trimmed}, Illinois`,
   )}`;
   const res = await fetch(url, { headers: { Accept: "application/json" } });

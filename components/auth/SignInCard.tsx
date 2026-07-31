@@ -69,7 +69,7 @@ export default function SignInCard({
                 onChange={(e) => setEmail(e.target.value)}
                 autoComplete="username"
                 required
-                className="mt-2 w-full rounded-lg border-2 border-line px-3.5 py-3 text-[0.95rem] outline-none focus:border-blue"
+                className="mt-2 w-full rounded-lg border-2 border-line px-3.5 py-3 text-[0.95rem] focus:border-blue"
               />
             </div>
 
@@ -84,12 +84,12 @@ export default function SignInCard({
                 onChange={(e) => setPassword(e.target.value)}
                 autoComplete="current-password"
                 required
-                className="mt-2 w-full rounded-lg border-2 border-line px-3.5 py-3 text-[0.95rem] outline-none focus:border-blue"
+                className="mt-2 w-full rounded-lg border-2 border-line px-3.5 py-3 text-[0.95rem] focus:border-blue"
               />
             </div>
 
             {error && (
-              <p role="alert" className="rounded-lg bg-[#fdeaea] px-4 py-3 text-[0.9rem] text-alert">
+              <p role="alert" className="rounded-lg bg-alert-tint px-4 py-3 text-[0.9rem] text-alert">
                 {error}
               </p>
             )}
@@ -141,7 +141,7 @@ export default function SignInCard({
             </ul>
           </div>
 
-          <p className="mt-6 rounded-lg bg-[#fff8ec] px-4 py-3 text-[0.82rem] leading-relaxed text-slate-soft">
+          <p className="mt-6 rounded-lg bg-amber-tint px-4 py-3 text-[0.82rem] leading-relaxed text-slate-soft">
             <strong className="text-deep">Not real security.</strong> These credentials live in the
             page source. A production build needs server-side sessions and one account per person,
             since a shared login cannot be audited.

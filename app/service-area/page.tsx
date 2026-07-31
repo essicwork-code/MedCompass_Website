@@ -60,7 +60,7 @@ export default function ServiceAreaPage() {
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Start typing… e.g. Berwyn"
               autoComplete="off"
-              className="mt-3 w-full rounded-full border-2 border-line bg-white px-5 py-3 text-[0.98rem] outline-none focus:border-blue"
+              className="mt-3 w-full rounded-full border-2 border-line bg-white px-5 py-3 text-[0.98rem] focus:border-blue"
             />
 
             <p aria-live="polite" className="mt-3 text-[0.9rem] text-slate-soft">

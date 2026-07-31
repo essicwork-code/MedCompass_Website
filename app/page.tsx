@@ -18,7 +18,7 @@ export default function HomePage() {
           />
           <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-14 lg:grid-cols-[1.05fr_1fr] lg:py-20">
             <div>
-              <p className="inline-flex items-center gap-2 rounded-full bg-moss px-3.5 py-1.5 text-[0.8rem] font-bold uppercase tracking-wider text-[#3f7f22]">
+              <p className="inline-flex items-center gap-2 rounded-full bg-moss px-3.5 py-1.5 text-[0.8rem] font-bold uppercase tracking-wider text-moss-ink">
                 Chicagoland · Wheelchair · Stretcher · Bariatric
               </p>
 
@@ -151,7 +151,7 @@ export default function HomePage() {
               <li key={s.slug}>
                 <Link
                   href={`/services/${s.slug}`}
-                  className="group flex h-full flex-col rounded-2xl border border-line bg-white p-6 transition-shadow hover:shadow-[0_14px_40px_-20px_rgb(16_34_46/0.4)]"
+                  className="group flex h-full flex-col rounded-2xl border border-line bg-white p-6 transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_14px_40px_-20px_rgb(16_34_46/0.4)]"
                 >
                   <span className="text-blue">
                     <ServiceIcon kind={s.icon} />
@@ -164,7 +164,7 @@ export default function HomePage() {
                     From <span className="font-bold text-deep">${s.fromPrice}</span> + $
                     {s.perMile.toFixed(2)}/mi
                   </p>
-                  <span className="mt-3 text-[0.9rem] font-semibold text-blue group-hover:underline">
+                  <span className="mt-3 text-[0.9rem] font-semibold text-blue-ink group-hover:underline">
                     What&rsquo;s included →
                   </span>
                 </Link>
@@ -230,7 +230,7 @@ export default function HomePage() {
 
               <Link
                 href="/track"
-                className="mt-8 inline-flex items-center gap-2 rounded-full border-2 border-blue px-6 py-3 font-bold text-blue hover:bg-mist"
+                className="mt-8 inline-flex items-center gap-2 rounded-full border-2 border-blue px-6 py-3 font-bold text-blue-ink hover:bg-mist"
               >
                 Watch a trip in progress →
               </Link>
@@ -269,7 +269,7 @@ export default function HomePage() {
                     {seg.pain}
                   </p>
                   <p className="mt-4 text-[0.98rem] leading-relaxed text-ink">{seg.answer}</p>
-                  <p className="tabular mt-4 inline-block rounded-full bg-moss px-3 py-1.5 text-[0.85rem] font-semibold text-[#3f7f22]">
+                  <p className="tabular mt-4 inline-block rounded-full bg-moss px-3 py-1.5 text-[0.85rem] font-semibold text-moss-ink">
                     {seg.proof}
                   </p>
                 </li>
@@ -315,7 +315,7 @@ export default function HomePage() {
                 </p>
                 <Link
                   href="/service-area"
-                  className="mt-6 inline-flex items-center gap-2 font-bold text-blue hover:underline"
+                  className="mt-6 inline-flex items-center gap-2 font-bold text-blue-ink hover:underline"
                 >
                   Open the coverage map →
                 </Link>
@@ -348,7 +348,7 @@ export default function HomePage() {
             <div className="mt-9 flex flex-wrap justify-center gap-3">
               <Link
                 href="/book"
-                className="inline-flex items-center rounded-full bg-lime px-8 py-4 text-[1.02rem] font-bold text-[#22400f] hover:bg-[#9ed352]"
+                className="inline-flex items-center rounded-full bg-lime px-8 py-4 text-[1.02rem] font-bold text-lime-ink hover:bg-lime-hover"
               >
                 Get a quote
               </Link>

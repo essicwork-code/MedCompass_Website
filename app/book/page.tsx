@@ -299,7 +299,7 @@ export default function BookPage() {
                     <button
                       type="button"
                       onClick={pickupMode === "saved" ? switchToCustom : switchToSaved}
-                      className="text-[0.85rem] font-semibold text-blue hover:underline"
+                      className="text-[0.85rem] font-semibold text-blue-ink hover:underline"
                     >
                       {pickupMode === "saved" ? "Enter a different address" : "Choose a saved location instead"}
                     </button>
@@ -310,7 +310,7 @@ export default function BookPage() {
                       id="pickup"
                       value={pickupId}
                       onChange={(e) => setPickupId(e.target.value)}
-                      className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-[0.95rem] outline-none focus:border-blue"
+                      className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-[0.95rem] focus:border-blue"
                     >
                       <option value="">Select a pickup location…</option>
                       {PLACE_OPTIONS.map((p) => (
@@ -345,7 +345,7 @@ export default function BookPage() {
                         aria-expanded={suggestionsOpen}
                         aria-controls="pickup-suggestions"
                         aria-autocomplete="list"
-                        className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-[0.95rem] outline-none focus:border-blue"
+                        className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-[0.95rem] focus:border-blue"
                       />
 
                       {suggestionsOpen && suggestions.length > 0 && (
@@ -398,7 +398,7 @@ export default function BookPage() {
                       type="button"
                       onClick={useMyLocation}
                       disabled={geoStatus === "locating" || geoStatus === "resolving"}
-                      className="inline-flex items-center gap-1.5 rounded-full border-2 border-blue px-3.5 py-1.5 text-[0.85rem] font-semibold text-blue hover:bg-mist disabled:opacity-50"
+                      className="inline-flex items-center gap-1.5 rounded-full border-2 border-blue px-3.5 py-1.5 text-[0.85rem] font-semibold text-blue-ink hover:bg-mist disabled:opacity-50"
                     >
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2" />
@@ -416,7 +416,7 @@ export default function BookPage() {
                   </div>
 
                   {geoStatus === "error" && geoError && (
-                    <p role="alert" className="mt-2 rounded-lg bg-[#fdeaea] px-3.5 py-2.5 text-[0.85rem] text-alert">
+                    <p role="alert" className="mt-2 rounded-lg bg-alert-tint px-3.5 py-2.5 text-[0.85rem] text-alert">
                       {geoError}
                     </p>
                   )}
@@ -430,7 +430,7 @@ export default function BookPage() {
                     id="dropoff"
                     value={dropoffId}
                     onChange={(e) => setDropoffId(e.target.value)}
-                    className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-[0.95rem] outline-none focus:border-blue"
+                    className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-[0.95rem] focus:border-blue"
                   >
                     <option value="">Select a destination…</option>
                     {PLACE_OPTIONS.map((p) => (
@@ -450,7 +450,7 @@ export default function BookPage() {
                     type="datetime-local"
                     value={when}
                     onChange={(e) => setWhen(e.target.value)}
-                    className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-[0.95rem] outline-none focus:border-blue"
+                    className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-[0.95rem] focus:border-blue"
                   />
                   <p className="mt-1.5 text-[0.82rem] text-slate-soft">
                     24 hours&rsquo; notice for routine trips. Discharges: call dispatch.
@@ -490,7 +490,7 @@ export default function BookPage() {
                   onChange={(e) => setNotes(e.target.value)}
                   rows={3}
                   placeholder="Stairs at the entrance, oxygen tank, preferred door…"
-                  className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-[0.95rem] outline-none focus:border-blue"
+                  className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-[0.95rem] focus:border-blue"
                 />
                 <p className="mt-1.5 text-[0.82rem] text-slate-soft">
                   Access and equipment notes only. Don&rsquo;t include diagnoses here.
@@ -557,7 +557,7 @@ export default function BookPage() {
                     rather than billing you after it.
                   </p>
 
-                  <div className="mt-6 rounded-xl border-2 border-amber/30 bg-[#fff8ec] px-4 py-4">
+                  <div className="mt-6 rounded-xl border-2 border-amber/30 bg-amber-tint px-4 py-4">
                     <p className="text-[0.9rem] font-bold text-deep">This is a demonstration</p>
                     <p className="mt-1 text-[0.9rem] leading-relaxed text-slate-soft">
                       Nothing is submitted and no booking is created. On a live site this button
@@ -572,7 +572,7 @@ export default function BookPage() {
                     </button>
                     <p className="mt-3 text-center text-[0.88rem] text-slate-soft">
                       To book for real, call{" "}
-                      <a href={`tel:${COMPANY.phoneHref}`} className="font-semibold text-blue hover:underline">
+                      <a href={`tel:${COMPANY.phoneHref}`} className="font-semibold text-blue-ink hover:underline">
                         {COMPANY.phone}
                       </a>
                     </p>
@@ -607,7 +607,7 @@ export default function BookPage() {
                 {geoStatus === "resolving" ? "Looking up address…" : "Continue"}
               </button>
             ) : (
-              <Link href="/track" className="font-semibold text-blue hover:underline">
+              <Link href="/track" className="font-semibold text-blue-ink hover:underline">
                 See how tracking works →
               </Link>
             )}
