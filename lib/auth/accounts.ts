@@ -153,6 +153,16 @@ export const ACCOUNTS: Account[] = [
     title: "Operations director",
     shift: "Business hours",
   },
+  {
+    id: "acc-ranique",
+    email: "ranique@medcompass.com",
+    password: "admin5678",
+    name: "Ranique Test",
+    initials: "RT",
+    role: "admin",
+    title: "Systems administrator",
+    shift: "Business hours",
+  },
 ];
 
 export const CLIENT_ACCOUNTS = ACCOUNTS.filter(

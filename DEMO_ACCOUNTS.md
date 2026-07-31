@@ -26,6 +26,7 @@ a production build would need instead.
 | Tomas Rivera | `tomas@medcompass.com` | `dispatch1234` | Dispatcher | View the board and fleet (read-only on fleet) |
 | Yolanda Reyes | `yolanda@medcompass.com` | `dispatch1234` | Dispatch supervisor | Everything above, plus manage the fleet |
 | Angela Boyd | `angela@medcompass.com` | `admin1234` | Administrator | Everything above, plus the Accounts tab |
+| Ranique Test | `ranique@medcompass.com` | `admin5678` | Administrator | Same as Angela — a second full-admin account |
 
 ## How signing in actually works here
 
