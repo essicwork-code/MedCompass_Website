@@ -1,0 +1,19 @@
+{
+  /*
+   * Cloudflare Workers "static assets" deployment — not the OpenNext/SSR
+   * path. There is no `main` entry point below on purpose: this site has no
+   * server (next.config.ts sets output: "export"), so there is nothing for a
+   * Worker script to run. Without this file, Cloudflare auto-detects
+   * "Next.js" and tries to run the OpenNext adapter, which expects a full
+   * server build and fails looking for .next/standalone/.next/server/
+   * pages-manifest.json — a file a static export never produces. Declaring
+   * `assets` explicitly tells wrangler to just upload the `out/` folder.
+   */
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "medcompass-website",
+  "compatibility_date": "2026-07-31",
+  "assets": {
+    "directory": "./out",
+    "not_found_handling": "404-page"
+  }
+}

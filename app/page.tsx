@@ -22,8 +22,8 @@ export default function HomePage() {
                 Chicagoland · Wheelchair · Stretcher · Bariatric
               </p>
 
-              <h1 className="mt-5 font-display text-[clamp(2.3rem,5.6vw,4rem)] font-extrabold leading-[1.03] text-deep">
-                Know where your ride is.
+              <h1 className="mt-5 font-display text-[clamp(2.2rem,5.4vw,3.9rem)] font-extrabold leading-[1.05] text-deep">
+                Safe · Reliable · On time.
               </h1>
 
               <p className="mt-5 max-w-xl text-[1.12rem] leading-relaxed text-slate-soft">

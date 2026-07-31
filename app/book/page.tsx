@@ -1,13 +1,25 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import MarketingShell from "@/components/MarketingShell";
 import ServiceIcon from "@/components/ServiceIcon";
 import { SERVICES } from "@/lib/content";
 import { COMPANY, PLACES } from "@/lib/demo/data";
 import { haversineKm } from "@/lib/demo/simulator";
-import type { MobilityType } from "@/lib/demo/types";
+import {
+  forwardGeocode,
+  getCurrentPosition,
+  reverseGeocode,
+  searchAddresses,
+  GeoError,
+  type AddressSuggestion,
+  type GeoPoint,
+} from "@/lib/geo";
+import type { LatLng, MobilityType } from "@/lib/demo/types";
+
+/** How long to let the rider keep typing before hitting the geocoder. */
+const SUGGEST_DEBOUNCE_MS = 400;
 
 /*
  * Booking wizard.
@@ -16,6 +28,14 @@ import type { MobilityType } from "@/lib/demo/types";
  * one shows the number before the commit, which is the single most requested
  * thing in NEMT reviews. Nothing here submits anywhere — it is a demo — so the
  * final step says so plainly rather than faking a confirmation.
+ *
+ * Pickup has two real modes, not just the fixed list of demo facilities:
+ *  1. "Use my current location" — the browser's actual geolocation, reverse
+ *     geocoded to a readable address. This is the one that needs a
+ *     permission prompt, and the UI has to handle grant, deny, and timeout
+ *     as distinct, honest states rather than pretending it always works.
+ *  2. A typed address, forward geocoded on Continue.
+ * Neither is persisted anywhere — this is a quote, not a saved profile.
  */
 
 const PLACE_OPTIONS = Object.values(PLACES);
@@ -25,11 +45,57 @@ const ROAD_FACTOR = 1.25;
 const KM_TO_MILES = 0.621371;
 
 type Step = 1 | 2 | 3;
+type PickupMode = "saved" | "custom";
+type GeoStatus = "idle" | "locating" | "resolving" | "error";
 
 export default function BookPage() {
   const [step, setStep] = useState<Step>(1);
   const [mobility, setMobility] = useState<MobilityType | null>(null);
+
+  const [pickupMode, setPickupMode] = useState<PickupMode>("saved");
   const [pickupId, setPickupId] = useState("");
+  const [customAddress, setCustomAddress] = useState("");
+  const [customPoint, setCustomPoint] = useState<GeoPoint | null>(null);
+  const [usedCurrentLocation, setUsedCurrentLocation] = useState(false);
+  const [geoStatus, setGeoStatus] = useState<GeoStatus>("idle");
+  const [geoError, setGeoError] = useState<string | null>(null);
+  const [suggestions, setSuggestions] = useState<AddressSuggestion[]>([]);
+  const [suggestionsOpen, setSuggestionsOpen] = useState(false);
+  const suggestSeq = useRef(0);
+  // Set whenever customAddress is filled in programmatically (a picked
+  // suggestion, or a geolocation result) rather than typed. Selecting a
+  // suggestion changes customAddress, which would otherwise re-trigger this
+  // same effect and immediately re-search for — and reopen a dropdown
+  // showing — the address that was just chosen.
+  const resolvedAddressRef = useRef<string | null>(null);
+
+  // Debounced address autocomplete. A sequence number guards against an
+  // earlier, slower request overwriting the result of a more recent
+  // keystroke — the rider typed on, so the stale response should lose.
+  useEffect(() => {
+    if (
+      pickupMode !== "custom" ||
+      usedCurrentLocation ||
+      customAddress.trim().length < 4 ||
+      customAddress === resolvedAddressRef.current
+    ) {
+      setSuggestions([]);
+      return;
+    }
+
+    const mySeq = ++suggestSeq.current;
+    const timer = setTimeout(() => {
+      searchAddresses(customAddress).then((results) => {
+        if (suggestSeq.current === mySeq) {
+          setSuggestions(results);
+          setSuggestionsOpen(results.length > 0);
+        }
+      });
+    }, SUGGEST_DEBOUNCE_MS);
+
+    return () => clearTimeout(timer);
+  }, [customAddress, pickupMode, usedCurrentLocation]);
+
   const [dropoffId, setDropoffId] = useState("");
   const [when, setWhen] = useState("");
   const [roundTrip, setRoundTrip] = useState(false);
@@ -38,20 +104,105 @@ export default function BookPage() {
 
   const service = SERVICES.find((s) => s.icon === mobility || s.slug === mobility) ?? null;
 
-  const quote = useMemo(() => {
-    if (!service || !pickupId || !dropoffId) return null;
-    const a = PLACES[pickupId];
-    const b = PLACES[dropoffId];
-    if (!a || !b) return null;
+  const pickupCoord: LatLng | null =
+    pickupMode === "saved"
+      ? (PLACES[pickupId]?.coord ?? null)
+      : customPoint
+        ? [customPoint.lat, customPoint.lng]
+        : null;
+  const pickupLabel = pickupMode === "saved" ? PLACES[pickupId]?.name : customAddress;
 
-    const miles = haversineKm(a.coord, b.coord) * KM_TO_MILES * ROAD_FACTOR;
+  const quote = useMemo(() => {
+    if (!service || !pickupCoord || !dropoffId) return null;
+    const b = PLACES[dropoffId];
+    if (!b) return null;
+
+    const miles = haversineKm(pickupCoord, b.coord) * KM_TO_MILES * ROAD_FACTOR;
     const oneWay = service.fromPrice + miles * service.perMile;
     const total = roundTrip ? oneWay * 2 : oneWay;
 
     return { miles, oneWay, total };
-  }, [service, pickupId, dropoffId, roundTrip]);
+    // pickupCoord is a fresh array each render; comparing its contents (not
+    // its identity) so the quote doesn't recompute needlessly.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [service, pickupCoord?.[0], pickupCoord?.[1], dropoffId, roundTrip]);
 
-  const canAdvance = step === 1 ? Boolean(mobility) : step === 2 ? Boolean(pickupId && dropoffId && when) : true;
+  async function useMyLocation() {
+    setGeoStatus("locating");
+    setGeoError(null);
+    try {
+      const point = await getCurrentPosition();
+      setGeoStatus("resolving");
+      const address = await reverseGeocode(point);
+      resolvedAddressRef.current = address;
+      setCustomPoint(point);
+      setCustomAddress(address);
+      setPickupMode("custom");
+      setUsedCurrentLocation(true);
+      setGeoStatus("idle");
+    } catch (err) {
+      setGeoStatus("error");
+      setGeoError(err instanceof GeoError ? err.message : "Couldn't get your location. Try entering an address.");
+    }
+  }
+
+  function switchToCustom() {
+    setPickupMode("custom");
+    setCustomAddress("");
+    setCustomPoint(null);
+    setUsedCurrentLocation(false);
+    setGeoStatus("idle");
+    setGeoError(null);
+    setSuggestions([]);
+    setSuggestionsOpen(false);
+    resolvedAddressRef.current = null;
+  }
+
+  function switchToSaved() {
+    setPickupMode("saved");
+    setCustomAddress("");
+    setCustomPoint(null);
+    setUsedCurrentLocation(false);
+    setGeoStatus("idle");
+    setGeoError(null);
+    setSuggestions([]);
+    setSuggestionsOpen(false);
+    resolvedAddressRef.current = null;
+  }
+
+  function pickSuggestion(s: AddressSuggestion) {
+    resolvedAddressRef.current = s.label;
+    setCustomAddress(s.label);
+    setCustomPoint(s.point);
+    setSuggestionsOpen(false);
+    setSuggestions([]);
+  }
+
+  const pickupReady = pickupMode === "saved" ? Boolean(pickupId) : customAddress.trim().length > 0;
+  const canAdvanceStep2 = pickupReady && Boolean(dropoffId && when);
+  const canAdvance = step === 1 ? Boolean(mobility) : step === 2 ? canAdvanceStep2 : true;
+
+  async function handleContinue() {
+    if (step === 2 && pickupMode === "custom" && !customPoint && customAddress.trim()) {
+      // Typed by hand rather than via geolocation — resolve it to real
+      // coordinates before the quote step needs them.
+      setGeoStatus("resolving");
+      setGeoError(null);
+      try {
+        const { point, label } = await forwardGeocode(customAddress);
+        resolvedAddressRef.current = label;
+        setCustomPoint(point);
+        setCustomAddress(label);
+        setGeoStatus("idle");
+        setStep(3);
+      } catch (err) {
+        setGeoStatus("error");
+        setGeoError(err instanceof GeoError ? err.message : "Couldn't find that address.");
+      }
+      return;
+    }
+    setStep((s) => (s + 1) as Step);
+  }
 
   return (
     <MarketingShell>
@@ -146,23 +297,138 @@ export default function BookPage() {
               <h2 className="font-display text-[1.3rem] font-bold text-deep">Trip details</h2>
 
               <div className="mt-6 grid gap-5 sm:grid-cols-2">
-                <div>
-                  <label htmlFor="pickup" className="block text-[0.92rem] font-semibold text-deep">
-                    Pickup
-                  </label>
-                  <select
-                    id="pickup"
-                    value={pickupId}
-                    onChange={(e) => setPickupId(e.target.value)}
-                    className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-[0.95rem] outline-none focus:border-blue"
-                  >
-                    <option value="">Select a pickup location…</option>
-                    {PLACE_OPTIONS.map((p) => (
-                      <option key={p.id} value={p.id}>
-                        {p.name} ({p.city})
-                      </option>
-                    ))}
-                  </select>
+                <div className="sm:col-span-2">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <label
+                      htmlFor={pickupMode === "saved" ? "pickup" : "pickup-address"}
+                      className="block text-[0.92rem] font-semibold text-deep"
+                    >
+                      Pickup
+                    </label>
+                    <button
+                      type="button"
+                      onClick={pickupMode === "saved" ? switchToCustom : switchToSaved}
+                      className="text-[0.85rem] font-semibold text-blue hover:underline"
+                    >
+                      {pickupMode === "saved" ? "Enter a different address" : "Choose a saved location instead"}
+                    </button>
+                  </div>
+
+                  {pickupMode === "saved" ? (
+                    <select
+                      id="pickup"
+                      value={pickupId}
+                      onChange={(e) => setPickupId(e.target.value)}
+                      className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-[0.95rem] outline-none focus:border-blue"
+                    >
+                      <option value="">Select a pickup location…</option>
+                      {PLACE_OPTIONS.map((p) => (
+                        <option key={p.id} value={p.id}>
+                          {p.name} ({p.city})
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    <div className="relative">
+                      <input
+                        id="pickup-address"
+                        type="text"
+                        value={customAddress}
+                        onChange={(e) => {
+                          setCustomAddress(e.target.value);
+                          // Any hand-edit invalidates a previously resolved
+                          // point — it gets re-geocoded on Continue, or
+                          // sooner if the rider picks a live suggestion.
+                          setCustomPoint(null);
+                          setUsedCurrentLocation(false);
+                        }}
+                        onFocus={() => setSuggestionsOpen(suggestions.length > 0)}
+                        onBlur={() => {
+                          // Delay so a click on a suggestion (see onMouseDown
+                          // below) registers before the list disappears.
+                          setTimeout(() => setSuggestionsOpen(false), 150);
+                        }}
+                        placeholder="Street address, city"
+                        autoComplete="off"
+                        role="combobox"
+                        aria-expanded={suggestionsOpen}
+                        aria-controls="pickup-suggestions"
+                        aria-autocomplete="list"
+                        className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-[0.95rem] outline-none focus:border-blue"
+                      />
+
+                      {suggestionsOpen && suggestions.length > 0 && (
+                        <ul
+                          id="pickup-suggestions"
+                          role="listbox"
+                          aria-label="Address suggestions"
+                          className="absolute z-10 mt-1.5 w-full overflow-hidden rounded-lg border border-line bg-white shadow-lg"
+                        >
+                          {suggestions.map((s) => (
+                            <li key={`${s.point.lat},${s.point.lng}`} role="option" aria-selected={false}>
+                              <button
+                                type="button"
+                                onMouseDown={(e) => {
+                                  // mousedown fires before the input's blur,
+                                  // so the click actually lands.
+                                  e.preventDefault();
+                                  pickSuggestion(s);
+                                }}
+                                className="block w-full px-3.5 py-2.5 text-left text-[0.9rem] text-ink hover:bg-mist"
+                              >
+                                {s.label}
+                              </button>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+
+                      {usedCurrentLocation && customPoint && (
+                        <p className="mt-1.5 flex items-center gap-1.5 text-[0.82rem] text-green">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                          Using your current location
+                        </p>
+                      )}
+                      {!usedCurrentLocation && customPoint && (
+                        <p className="mt-1.5 flex items-center gap-1.5 text-[0.82rem] text-green">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                          Address confirmed
+                        </p>
+                      )}
+                    </div>
+                  )}
+
+                  <div className="mt-2.5 flex flex-wrap items-center gap-3">
+                    <button
+                      type="button"
+                      onClick={useMyLocation}
+                      disabled={geoStatus === "locating" || geoStatus === "resolving"}
+                      className="inline-flex items-center gap-1.5 rounded-full border-2 border-blue px-3.5 py-1.5 text-[0.85rem] font-semibold text-blue hover:bg-mist disabled:opacity-50"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2" />
+                        <path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                      </svg>
+                      {geoStatus === "locating"
+                        ? "Locating…"
+                        : geoStatus === "resolving"
+                          ? "Looking up address…"
+                          : "Use my current location"}
+                    </button>
+                    <span className="text-[0.8rem] text-slate-soft">
+                      We&rsquo;ll ask your browser for permission first.
+                    </span>
+                  </div>
+
+                  {geoStatus === "error" && geoError && (
+                    <p role="alert" className="mt-2 rounded-lg bg-[#fdeaea] px-3.5 py-2.5 text-[0.85rem] text-alert">
+                      {geoError}
+                    </p>
+                  )}
                 </div>
 
                 <div>
@@ -255,6 +521,9 @@ export default function BookPage() {
                   <p className="mt-2 text-[0.95rem] text-slate-soft">
                     {roundTrip ? "Round trip" : "One way"} · {service.name.toLowerCase()}
                   </p>
+                  <p className="mt-1 text-[0.88rem] text-slate-soft">
+                    From <span className="font-semibold text-deep">{pickupLabel}</span>
+                  </p>
 
                   <dl className="mt-6 space-y-2.5 border-t border-line pt-5 text-[0.95rem]">
                     <div className="flex justify-between gap-4">
@@ -340,11 +609,11 @@ export default function BookPage() {
             {step < 3 ? (
               <button
                 type="button"
-                onClick={() => setStep((s) => ((s + 1) as Step))}
-                disabled={!canAdvance}
+                onClick={handleContinue}
+                disabled={!canAdvance || geoStatus === "resolving"}
                 className="rounded-full bg-green px-8 py-3 font-bold text-white disabled:opacity-40 enabled:hover:bg-[#4d8f28]"
               >
-                Continue
+                {geoStatus === "resolving" ? "Looking up address…" : "Continue"}
               </button>
             ) : (
               <Link href="/track" className="font-semibold text-blue hover:underline">
