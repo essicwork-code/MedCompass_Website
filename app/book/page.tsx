@@ -6,7 +6,7 @@ import MarketingShell from "@/components/MarketingShell";
 import ServiceIcon from "@/components/ServiceIcon";
 import { SERVICES } from "@/lib/content";
 import { COMPANY, PLACES } from "@/lib/demo/data";
-import { haversineKm } from "@/lib/demo/simulator";
+import { computeQuote } from "@/lib/quote";
 import {
   forwardGeocode,
   getCurrentPosition,
@@ -39,10 +39,6 @@ const SUGGEST_DEBOUNCE_MS = 400;
  */
 
 const PLACE_OPTIONS = Object.values(PLACES);
-
-/** Straight-line distance underestimates driving; city grids add roughly 25%. */
-const ROAD_FACTOR = 1.25;
-const KM_TO_MILES = 0.621371;
 
 type Step = 1 | 2 | 3;
 type PickupMode = "saved" | "custom";
@@ -116,12 +112,7 @@ export default function BookPage() {
     if (!service || !pickupCoord || !dropoffId) return null;
     const b = PLACES[dropoffId];
     if (!b) return null;
-
-    const miles = haversineKm(pickupCoord, b.coord) * KM_TO_MILES * ROAD_FACTOR;
-    const oneWay = service.fromPrice + miles * service.perMile;
-    const total = roundTrip ? oneWay * 2 : oneWay;
-
-    return { miles, oneWay, total };
+    return computeQuote(service, pickupCoord, b.coord, roundTrip);
     // pickupCoord is a fresh array each render; comparing its contents (not
     // its identity) so the quote doesn't recompute needlessly.
     // eslint-disable-next-line react-hooks/exhaustive-deps

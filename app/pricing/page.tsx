@@ -62,6 +62,12 @@ export default function PricingPage() {
             One escort rides free on every service. Wait time over 20 minutes bills at $18/hour in
             15-minute increments. No surcharge for evenings or weekends.
           </p>
+          <Link
+            href="/cost-calculator"
+            className="mt-4 inline-flex items-center gap-2 font-semibold text-blue hover:underline"
+          >
+            Try the cost calculator for your own trip →
+          </Link>
         </section>
 
         {/* Worked examples */}
@@ -145,7 +151,12 @@ export default function PricingPage() {
                     +
                   </span>
                 </summary>
-                <p className="mt-3 max-w-3xl text-[0.97rem] leading-relaxed text-slate-soft">{f.a}</p>
+                {/* hidden + group-open:block rather than relying on the browser's native
+                    details:not([open]) UA rule — that rule did not apply in testing, see
+                    components/WeatherWidget.tsx for the full explanation. */}
+                <p className="mt-3 hidden max-w-3xl text-[0.97rem] leading-relaxed text-slate-soft group-open:block">
+                  {f.a}
+                </p>
               </details>
             ))}
           </div>

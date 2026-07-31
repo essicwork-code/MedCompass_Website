@@ -150,7 +150,7 @@ export const ACCOUNTS: Account[] = [
     name: "Dan Test",
     initials: "DT",
     role: "admin",
-    title: "Operations director",
+    title: "IT Admin",
     shift: "Business hours",
   },
   {
@@ -160,7 +160,7 @@ export const ACCOUNTS: Account[] = [
     name: "Ranique Test",
     initials: "RT",
     role: "admin",
-    title: "Systems administrator",
+    title: "CEO",
     shift: "Business hours",
   },
 ];

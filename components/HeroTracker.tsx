@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import dynamic from "next/dynamic";
 import { useTrip } from "@/lib/demo/useFleet";
 import { STATUS_COPY } from "@/lib/demo/simulator";
@@ -22,8 +23,23 @@ const TrackingMap = dynamic(() => import("./TrackingMap"), {
  * Competitors open with a stock photo of a smiling caregiver. This opens with a
  * van actually moving, because the product claim is operational competence and
  * showing it is more persuasive than asserting it.
+ *
+ * The reset button remounts <TrackerBody> via its `key`, which is simpler and
+ * more robust than adding a reset path to the shared fleet simulation just
+ * for this one demo widget — a fresh mount re-subscribes from the trip's
+ * original seed progress in lib/demo/data.ts, which is exactly "reset."
  */
 export default function HeroTracker({ tripId = "t1" }: { tripId?: string }) {
+  const [resetToken, setResetToken] = useState(0);
+
+  return (
+    <div className="overflow-hidden rounded-2xl border border-line bg-white shadow-[0_20px_60px_-25px_rgb(16_34_46/0.35)]">
+      <TrackerBody key={resetToken} tripId={tripId} onReset={() => setResetToken((n) => n + 1)} />
+    </div>
+  );
+}
+
+function TrackerBody({ tripId, onReset }: { tripId: string; onReset: () => void }) {
   const live = useTrip(tripId);
 
   const driver = live ? DRIVER_BY_ID[live.trip.driverId] : undefined;
@@ -31,7 +47,7 @@ export default function HeroTracker({ tripId = "t1" }: { tripId?: string }) {
   const stageIndex = live ? TRIP_STAGES.indexOf(live.trip.status as never) : -1;
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-line bg-white shadow-[0_20px_60px_-25px_rgb(16_34_46/0.35)]">
+    <>
       <div className="flex items-center justify-between gap-3 border-b border-line bg-white px-4 py-3">
         <div className="flex items-center gap-2.5">
           <span className="relative flex h-2.5 w-2.5">
@@ -42,9 +58,36 @@ export default function HeroTracker({ tripId = "t1" }: { tripId?: string }) {
             Live demo
           </span>
         </div>
-        <span className="tabular text-[0.8rem] text-slate-soft">
-          Trip {live?.trip.code ?? "…"}
-        </span>
+
+        <div className="flex items-center gap-1">
+          <span className="tabular text-[0.8rem] text-slate-soft">
+            Trip {live?.trip.code ?? "…"}
+          </span>
+          <button
+            type="button"
+            onClick={onReset}
+            aria-label="Restart this demo trip from the beginning"
+            title="Restart demo"
+            className="grid h-11 w-11 shrink-0 place-items-center rounded-full text-slate-soft hover:bg-bone hover:text-deep"
+          >
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M4 4v6h6M20 20v-6h-6"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M5.5 15a8 8 0 0 0 13.9 3M18.5 9A8 8 0 0 0 4.6 6"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
 
       <div className="h-[300px] w-full sm:h-[340px]">
@@ -107,6 +150,6 @@ export default function HeroTracker({ tripId = "t1" }: { tripId?: string }) {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

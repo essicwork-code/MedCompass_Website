@@ -40,10 +40,13 @@ export default function SiteHeader() {
     >
       {/* Utility bar: the phone number stays reachable for callers who will never use the portal. */}
       <div className="bg-deep text-white">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-1.5 text-[0.8rem]">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2 text-[0.8rem]">
           <p className="hidden sm:block text-white/80">{COMPANY.hours}</p>
           <div className="flex items-center gap-4">
-            <a href={`tel:${COMPANY.phoneHref}`} className="font-semibold hover:text-lime">
+            <a
+              href={`tel:${COMPANY.phoneHref}`}
+              className="tabular whitespace-nowrap text-[1.05rem] font-extrabold tracking-tight hover:text-lime sm:text-[1.15rem]"
+            >
               Dispatch {COMPANY.phone}
             </a>
             <Link href="/portal" className="hidden sm:inline text-white/80 hover:text-lime">
