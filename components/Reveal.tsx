@@ -39,7 +39,10 @@ export default function Reveal({
           io.disconnect();
         }
       },
-      { threshold: 0.15, rootMargin: "0px 0px -8% 0px" },
+      // threshold 0: a proportional threshold is unreachable for a section
+      // taller than the viewport divided by that fraction, which leaves long
+      // sections on narrow phones permanently hidden.
+      { threshold: 0, rootMargin: "0px 0px -8% 0px" },
     );
     io.observe(node);
     return () => io.disconnect();

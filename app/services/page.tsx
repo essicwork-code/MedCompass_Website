@@ -77,7 +77,7 @@ export default function ServicesPage() {
                 </BookARideButton>
                 <Link
                   href={`/services/${s.slug}`}
-                  className="mt-2.5 block text-center text-[0.9rem] font-semibold text-blue-ink hover:underline"
+                  className="mt-1 flex min-h-11 items-center justify-center text-[0.9rem] font-semibold text-blue-ink hover:underline"
                 >
                   Full details →
                 </Link>

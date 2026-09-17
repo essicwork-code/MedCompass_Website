@@ -38,9 +38,20 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const service = SERVICE_BY_SLUG[slug];
-  if (service) return { title: service.name, description: service.short };
+  if (service) {
+    return {
+      title: `${service.name} in Chicago`,
+      description: `${service.name} across Chicago and the suburbs. ${service.short} From $${service.fromPrice} plus $${service.perMile.toFixed(2)} per mile, with the price shown before you book.`,
+    };
+  }
   const alias = ALIASES[slug];
-  return alias ? { title: alias.title, description: alias.body.slice(0, 150) } : {};
+  return alias
+    ? {
+        title: `${alias.title} in Chicago`,
+        description:
+          "Recurring dialysis rides across Chicago and the suburbs: the same driver and van where scheduling allows, and standing orders that get first call on capacity.",
+      }
+    : {};
 }
 
 export default async function ServiceDetailPage({

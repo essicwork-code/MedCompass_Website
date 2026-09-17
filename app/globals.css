@@ -128,18 +128,20 @@
  * slightly down and transparent, settles on intersection. Transform/opacity
  * only, per the §3 floor.
  */
-.reveal {
+/* Hidden only once the inline script in app/layout.tsx has tagged <html>, so
+   a page whose JS never runs still shows every section. */
+.js .reveal {
   opacity: 0;
   transform: translateY(18px);
   transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;
 }
-.reveal.is-visible {
+.js .reveal.is-visible {
   opacity: 1;
   transform: translateY(0);
 }
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
+  .js .reveal {
     opacity: 1;
     transform: none;
     transition: none;

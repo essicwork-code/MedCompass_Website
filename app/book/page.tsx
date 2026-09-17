@@ -6,6 +6,7 @@ import { useBookingModal, type BookingModalPrefill } from "@/components/BookingM
 import ServiceIcon from "@/components/ServiceIcon";
 import { COURIER_STAT_FEE, SERVICES, type ServiceSlug } from "@/lib/content";
 import { COMPANY, PLACES } from "@/lib/demo/data";
+import { nowForDateTimeInput } from "@/lib/datetime";
 import { computeQuote } from "@/lib/quote";
 import {
   forwardGeocode,
@@ -192,7 +193,8 @@ export default function BookPage() {
   }
 
   const pickupReady = pickupMode === "saved" ? Boolean(pickupId) : customAddress.trim().length > 0;
-  const canAdvanceStep2 = pickupReady && Boolean(dropoffId && when);
+  const whenInPast = Boolean(when) && when < nowForDateTimeInput();
+  const canAdvanceStep2 = pickupReady && Boolean(dropoffId && when) && !whenInPast;
   const canAdvance = step === 1 ? Boolean(mobility) : step === 2 ? canAdvanceStep2 : true;
 
   async function handleContinue() {
@@ -271,7 +273,7 @@ export default function BookPage() {
                   return (
                     <label
                       key={s.slug}
-                      className={`flex cursor-pointer gap-4 rounded-xl border-2 p-5 transition-colors ${
+                      className={`flex cursor-pointer gap-4 rounded-xl border-2 p-5 transition-colors has-focus-visible:outline-3 has-focus-visible:outline-offset-2 has-focus-visible:outline-blue ${
                         selected ? "border-green bg-moss" : "border-line hover:border-blue"
                       }`}
                     >
@@ -470,10 +472,16 @@ export default function BookPage() {
                   <input
                     id="when"
                     type="datetime-local"
+                    min={nowForDateTimeInput()}
                     value={when}
                     onChange={(e) => setWhen(e.target.value)}
                     className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-base focus:border-blue"
                   />
+                  {whenInPast && (
+                    <p role="alert" className="mt-1.5 text-[0.82rem] font-semibold text-alert">
+                      That time has already passed. Choose a later one.
+                    </p>
+                  )}
                   <p className="mt-1.5 text-[0.82rem] text-slate-soft">
                     {isCourier
                       ? "Routine runs are scheduled same day. Choose STAT for pickup within 30 minutes."
@@ -483,7 +491,7 @@ export default function BookPage() {
 
                 <fieldset className="self-start">
                   <legend className="block text-[0.92rem] font-semibold text-deep">Options</legend>
-                  <label className="mt-2 flex items-center gap-2.5 text-[0.95rem] text-ink">
+                  <label className="mt-2 flex min-h-11 items-center gap-2.5 text-[0.95rem] text-ink">
                     <input
                       type="checkbox"
                       checked={roundTrip}
@@ -493,7 +501,7 @@ export default function BookPage() {
                     Round trip (return pickup)
                   </label>
                   {isCourier ? (
-                    <label className="mt-2.5 flex items-center gap-2.5 text-[0.95rem] text-ink">
+                    <label className="mt-2.5 flex min-h-11 items-center gap-2.5 text-[0.95rem] text-ink">
                       <input
                         type="checkbox"
                         checked={stat}
@@ -503,7 +511,7 @@ export default function BookPage() {
                       STAT pickup within 30 minutes (+${COURIER_STAT_FEE})
                     </label>
                   ) : (
-                    <label className="mt-2.5 flex items-center gap-2.5 text-[0.95rem] text-ink">
+                    <label className="mt-2.5 flex min-h-11 items-center gap-2.5 text-[0.95rem] text-ink">
                       <input
                         type="checkbox"
                         checked={escort}

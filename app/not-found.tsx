@@ -6,6 +6,8 @@ import { COMPANY } from "@/lib/demo/data";
 
 export const metadata = {
   title: "Page not found",
+  robots: { index: false },
+  alternates: { canonical: null },
 };
 
 export default function NotFound() {
@@ -58,7 +60,7 @@ export default function NotFound() {
               { href: "/service-area", label: "Service area" },
               { href: "/contact", label: "Contact" },
             ].map((l) => (
-              <Link key={l.href} href={l.href} className="font-semibold text-blue-ink hover:underline">
+              <Link key={l.href} href={l.href} className="inline-flex min-h-11 items-center font-semibold text-blue-ink hover:underline">
                 {l.label}
               </Link>
             ))}

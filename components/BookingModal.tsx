@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { COURIER_STAT_FEE, SERVICES } from "@/lib/content";
 import { COMPANY } from "@/lib/demo/data";
+import { nowForDateTimeInput } from "@/lib/datetime";
 import { sendFormEmail } from "@/lib/emailjs";
 import { dispatchMailto } from "@/lib/mailto";
 import type { BookingModalPrefill } from "./BookingModalProvider";
@@ -137,6 +138,7 @@ export default function BookingModal({
     if (!form.pickup.trim()) return "Enter a pickup address.";
     if (!form.dropoff.trim()) return "Enter a destination address.";
     if (!form.when) return "Choose a pickup date and time.";
+    if (form.when < nowForDateTimeInput()) return "Choose a pickup time that hasn't passed yet.";
     return null;
   }
 
@@ -437,13 +439,14 @@ export default function BookingModal({
                     id="bm-when"
                     type="datetime-local"
                     required
+                    min={isOpen ? nowForDateTimeInput() : undefined}
                     value={form.when}
                     onChange={(e) => update("when", e.target.value)}
                     className="mt-1.5 w-full rounded-lg border-2 border-line bg-white px-3.5 py-2.5 text-base focus:border-blue"
                   />
                 </div>
 
-                <label className="flex items-center gap-2.5 text-[0.92rem] text-ink">
+                <label className="flex min-h-11 items-center gap-2.5 text-[0.95rem] text-ink">
                   <input
                     type="checkbox"
                     checked={form.roundTrip}
@@ -453,7 +456,7 @@ export default function BookingModal({
                   Round trip
                 </label>
                 {isCourier ? (
-                  <label className="flex items-center gap-2.5 text-[0.92rem] text-ink">
+                  <label className="flex min-h-11 items-center gap-2.5 text-[0.95rem] text-ink">
                     <input
                       type="checkbox"
                       checked={form.stat}
@@ -463,7 +466,7 @@ export default function BookingModal({
                     STAT, within 30 min (+${COURIER_STAT_FEE})
                   </label>
                 ) : (
-                  <label className="flex items-center gap-2.5 text-[0.92rem] text-ink">
+                  <label className="flex min-h-11 items-center gap-2.5 text-[0.95rem] text-ink">
                     <input
                       type="checkbox"
                       checked={form.escort}

@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Public_Sans } from "next/font/google";
 import { COMPANY } from "@/lib/demo/data";
+import { SITE_URL } from "@/lib/site";
+import StructuredData from "@/components/StructuredData";
 import "./globals.css";
 
 /*
@@ -21,18 +23,24 @@ const publicSans = Public_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: `${COMPANY.name}, Non Emergency Medical Transportation in Chicagoland`,
+    default: `${COMPANY.name} | Non-Emergency Medical Transportation in Chicago`,
     template: `%s · ${COMPANY.name}`,
   },
   description:
-    "Wheelchair, ambulatory, stretcher and bariatric medical transportation, plus medical courier service, across Chicago and the western suburbs. Reliable, on-time, door-through-door service.",
+    "Wheelchair, ambulatory, stretcher and bariatric medical transportation, plus medical courier service, across Chicago and the western suburbs. Published rates, on-time pickup, door-through-door service.",
+  applicationName: COMPANY.name,
+  // "./" resolves to each page's own URL, so every page declares itself canonical.
+  alternates: { canonical: "./" },
   openGraph: {
-    title: `${COMPANY.name}. Reliable rides, booked in minutes`,
-    description:
-      "Chicagoland non-emergency medical transportation and medical courier service for families, facilities, labs and pharmacies, with on-time pickup and door-through-door service.",
     type: "website",
+    siteName: COMPANY.name,
+    locale: "en_US",
+    url: "./",
   },
+  twitter: { card: "summary_large_image" },
+  formatDetection: { telephone: true, email: true, address: true },
 };
 
 export const viewport: Viewport = {
@@ -46,12 +54,16 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${bricolage.variable} ${publicSans.variable}`}>
+    <html lang="en" className={`${bricolage.variable} ${publicSans.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+      </head>
       <body>
         <a href="#main" className="skip-link">
           Skip to main content
         </a>
         {children}
+        <StructuredData />
       </body>
     </html>
   );

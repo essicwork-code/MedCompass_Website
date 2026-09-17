@@ -52,7 +52,7 @@ export default function CostCalculatorPage() {
                 return (
                   <label
                     key={s.slug}
-                    className={`flex cursor-pointer items-center gap-3 rounded-xl border-2 p-4 transition-colors ${
+                    className={`flex cursor-pointer items-center gap-3 rounded-xl border-2 p-4 transition-colors has-focus-visible:outline-3 has-focus-visible:outline-offset-2 has-focus-visible:outline-blue ${
                       selected ? "border-green bg-moss" : "border-line hover:border-blue"
                     }`}
                   >
@@ -119,7 +119,7 @@ export default function CostCalculatorPage() {
             </div>
           </div>
 
-          <label className="mt-5 flex items-center gap-2.5 text-[0.95rem] text-ink">
+          <label className="mt-5 flex min-h-11 items-center gap-2.5 text-[0.95rem] text-ink">
             <input
               type="checkbox"
               checked={roundTrip}
@@ -129,7 +129,7 @@ export default function CostCalculatorPage() {
             Round trip (return pickup)
           </label>
           {isCourier && (
-            <label className="mt-3 flex items-center gap-2.5 text-[0.95rem] text-ink">
+            <label className="mt-3 flex min-h-11 items-center gap-2.5 text-[0.95rem] text-ink">
               <input
                 type="checkbox"
                 checked={stat}
