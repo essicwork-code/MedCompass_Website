@@ -27,14 +27,14 @@ jobs:
 
       - run: npm ci
 
-      # A user/org root site (<user>.github.io) is served from "/"; a project
-      # site (<user>.github.io/<repo>) is served from "/<repo>" and needs that
-      # baked into every asset path and internal link at build time.
+      # A custom domain (public/CNAME) or a user/org root site is served from
+      # "/"; a project site (<user>.github.io/<repo>) is served from "/<repo>"
+      # and needs that baked into every asset path and internal link.
       - name: Compute base path
         id: base
         run: |
           REPO_NAME="${GITHUB_REPOSITORY#*/}"
-          if [[ "$REPO_NAME" == *.github.io ]]; then
+          if [[ -s public/CNAME || "$REPO_NAME" == *.github.io ]]; then
             echo "path=" >> "$GITHUB_OUTPUT"
           else
             echo "path=/$REPO_NAME" >> "$GITHUB_OUTPUT"
