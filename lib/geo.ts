@@ -82,9 +82,12 @@ interface NominatimAddress {
  * neighborhood, city, township, county, state, country) and reads as noise
  * next to a quote someone is trying to actually read.
  */
-function shortLabel(addr: NominatimAddress | undefined, fallback: string): string {
+function shortLabel(addr: NominatimAddress | undefined, fallback: string, query = ""): string {
   if (!addr) return fallback;
-  const street = [addr.house_number, addr.road].filter(Boolean).join(" ");
+  // OSM sometimes stores several numbers on one building ("5481;5841").
+  const numbers = addr.house_number?.split(/[;,]/).map((n) => n.trim()) ?? [];
+  const houseNumber = numbers.find((n) => query.includes(n)) ?? numbers[0];
+  const street = [houseNumber, addr.road].filter(Boolean).join(" ");
   const place = addr.city ?? addr.town ?? addr.village ?? addr.suburb ?? addr.neighbourhood ?? addr.county;
   const parts = [street, place].filter(Boolean);
   return parts.length > 0 ? parts.join(", ") : fallback;
@@ -115,7 +118,7 @@ export async function forwardGeocode(address: string): Promise<{ point: GeoPoint
   const [first] = results;
   return {
     point: { lat: parseFloat(first.lat), lng: parseFloat(first.lon) },
-    label: shortLabel(first.address, first.display_name as string),
+    label: shortLabel(first.address, first.display_name as string, address),
   };
 }
 
@@ -142,8 +145,14 @@ export async function searchAddresses(query: string, limit = 5): Promise<Address
   const results = await res.json();
   if (!Array.isArray(results)) return [];
 
-  return results.map((r) => ({
-    point: { lat: parseFloat(r.lat), lng: parseFloat(r.lon) },
-    label: shortLabel(r.address, r.display_name as string),
-  }));
+  // One building often comes back as several OSM objects with the same label.
+  const seen = new Set<string>();
+  const suggestions: AddressSuggestion[] = [];
+  for (const r of results) {
+    const label = shortLabel(r.address, r.display_name as string, trimmed);
+    if (seen.has(label)) continue;
+    seen.add(label);
+    suggestions.push({ point: { lat: parseFloat(r.lat), lng: parseFloat(r.lon) }, label });
+  }
+  return suggestions;
 }

@@ -15,18 +15,15 @@ import { PLACES, SERVICE_CENTER } from "@/lib/demo/data";
 const CORE_RADIUS_M = 19_000;
 const EXTENDED_RADIUS_M = 36_000;
 
-/** Anchor facilities, so the map reads as a real operating footprint. */
-const ANCHORS = Object.values(PLACES).filter((p) => p.kind !== "residence");
+/** Major hospitals, so riders can place the coverage rings against landmarks they know. */
+const ANCHORS = Object.values(PLACES);
 
-function anchorIcon(kind: string) {
-  const color = kind === "dialysis" ? "#5CA632" : kind === "hospital" ? "#1B7FBF" : "#0F4C75";
-  return L.divIcon({
-    className: "",
-    iconSize: [14, 14],
-    iconAnchor: [7, 7],
-    html: `<div style="width:14px;height:14px;border-radius:9999px;background:${color};border:2.5px solid #fff;box-shadow:0 1px 4px rgba(16,34,46,.4)"></div>`,
-  });
-}
+const hospitalIcon = L.divIcon({
+  className: "",
+  iconSize: [14, 14],
+  iconAnchor: [7, 7],
+  html: `<div style="width:14px;height:14px;border-radius:9999px;background:#1B7FBF;border:2.5px solid #fff;box-shadow:0 1px 4px rgba(16,34,46,.4)"></div>`,
+});
 
 export default function CoverageMap() {
   return (
@@ -56,7 +53,7 @@ export default function CoverageMap() {
       />
 
       {ANCHORS.map((p) => (
-        <Marker key={p.id} position={p.coord as [number, number]} icon={anchorIcon(p.kind)}>
+        <Marker key={p.id} position={p.coord as [number, number]} icon={hospitalIcon}>
           <Tooltip direction="top" offset={[0, -8]}>
             {p.name}
           </Tooltip>

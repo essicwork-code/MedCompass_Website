@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import AddressField, { EMPTY_ADDRESS, addressCoord, type AddressValue } from "@/components/AddressField";
 import MarketingShell, { PageHero } from "@/components/MarketingShell";
 import ServiceIcon from "@/components/ServiceIcon";
 import BookARideButton from "@/components/BookARideButton";
 import { COURIER_STAT_FEE, SERVICES, type ServiceSlug } from "@/lib/content";
-import { COMPANY, PLACES } from "@/lib/demo/data";
+import { COMPANY } from "@/lib/demo/data";
 import { computeQuote } from "@/lib/quote";
 
 /*
@@ -19,27 +20,27 @@ import { computeQuote } from "@/lib/quote";
  * step buried in a wizard never is.
  */
 
-const PLACE_OPTIONS = Object.values(PLACES);
-
 export default function CostCalculatorPage() {
   const [mobility, setMobility] = useState<ServiceSlug>("wheelchair");
-  const [pickupId, setPickupId] = useState("");
-  const [dropoffId, setDropoffId] = useState("");
+  const [pickup, setPickup] = useState<AddressValue>(EMPTY_ADDRESS);
+  const [dropoff, setDropoff] = useState<AddressValue>(EMPTY_ADDRESS);
+  const [pickupError, setPickupError] = useState<string | null>(null);
+  const [dropoffError, setDropoffError] = useState<string | null>(null);
   const [roundTrip, setRoundTrip] = useState(false);
   const [stat, setStat] = useState(false);
 
   const service = SERVICES.find((s) => s.slug === mobility)!;
   const isCourier = mobility === "courier";
-  const pickup = PLACES[pickupId];
-  const dropoff = PLACES[dropoffId];
-  const quote = pickup && dropoff ? computeQuote(service, pickup.coord, dropoff.coord, roundTrip, stat) : null;
+  const from = addressCoord(pickup);
+  const to = addressCoord(dropoff);
+  const quote = from && to ? computeQuote(service, from, to, roundTrip, stat) : null;
 
   return (
     <MarketingShell>
       <PageHero
         eyebrow="Cost calculator"
         title="See what a ride costs, no booking required"
-        lede="Pick a service type and two locations for an instant estimate. This uses the same published rates as the rest of the site, so the number you see here is the number you'd see at checkout."
+        lede="Pick a service type and enter any two addresses in Chicagoland for an instant estimate. This uses the same published rates as the rest of the site, so the number you see here is the number you'd see at checkout."
       />
 
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-14 lg:grid-cols-[1fr_380px]">
@@ -79,44 +80,24 @@ export default function CostCalculatorPage() {
             </div>
           </fieldset>
 
-          <div className="mt-6 grid gap-5 sm:grid-cols-2">
-            <div>
-              <label htmlFor="calc-pickup" className="block text-[0.92rem] font-semibold text-deep">
-                Pickup
-              </label>
-              <select
-                id="calc-pickup"
-                value={pickupId}
-                onChange={(e) => setPickupId(e.target.value)}
-                className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-base focus:border-blue"
-              >
-                <option value="">Select a location…</option>
-                {PLACE_OPTIONS.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.name} ({p.city})
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label htmlFor="calc-dropoff" className="block text-[0.92rem] font-semibold text-deep">
-                Destination
-              </label>
-              <select
-                id="calc-dropoff"
-                value={dropoffId}
-                onChange={(e) => setDropoffId(e.target.value)}
-                className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-base focus:border-blue"
-              >
-                <option value="">Select a location…</option>
-                {PLACE_OPTIONS.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.name} ({p.city})
-                  </option>
-                ))}
-              </select>
-            </div>
+          <div className="mt-6 space-y-5">
+            <AddressField
+              id="calc-pickup"
+              label="Pickup"
+              value={pickup}
+              onChange={setPickup}
+              error={pickupError}
+              onError={setPickupError}
+              allowCurrentLocation
+            />
+            <AddressField
+              id="calc-dropoff"
+              label="Destination"
+              value={dropoff}
+              onChange={setDropoff}
+              error={dropoffError}
+              onError={setDropoffError}
+            />
           </div>
 
           <label className="mt-5 flex min-h-11 items-center gap-2.5 text-[0.95rem] text-ink">
@@ -143,15 +124,15 @@ export default function CostCalculatorPage() {
           <p className="mt-6 text-[0.85rem] leading-relaxed text-slate-soft">
             Estimates use straight-line distance between the two points with a 25% adjustment for
             city driving, the same formula the booking flow uses. An unusual route, heavy traffic
-            corridor, or unlisted address can change the real number. Call{" "}
+            corridor, or hard-to-reach entrance can change the real number. Call{" "}
             <a href={`tel:${COMPANY.phoneHref}`} className="font-semibold text-blue-ink hover:underline">
               {COMPANY.phone}
             </a>{" "}
-            for an exact quote on anything not covered here, or enter a specific address in the{" "}
+            for an exact quote, or{" "}
             <Link href="/book" className="font-semibold text-blue-ink hover:underline">
-              booking flow
-            </Link>
-            .
+              book the trip
+            </Link>{" "}
+            with the price shown up front.
           </p>
         </div>
 
@@ -211,8 +192,8 @@ export default function CostCalculatorPage() {
             <>
               <p className="font-display text-[1.15rem] font-bold text-deep">Your estimate</p>
               <p className="mt-2 text-[0.92rem] leading-relaxed text-slate-soft">
-                Choose a pickup and a destination to see a price. It updates as you change either
-                one.
+                Enter a pickup and a destination, or pick a major hospital, to see a price. Typed
+                addresses are checked when you leave the field.
               </p>
             </>
           )}

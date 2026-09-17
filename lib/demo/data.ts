@@ -3,10 +3,8 @@ import type { LatLng, Place } from "./types";
 /*
  * Demo fixtures for the MedCompass marketing site.
  *
- * Coordinates are real Chicago-area locations so the service-area map reads
- * correctly at neighborhood zoom. Everything else — names, phone numbers —
- * is invented. No real person or patient record is
- * represented here.
+ * Hospital names, addresses and coordinates are real public locations. No
+ * real person or patient record is represented here.
  */
 
 export const SERVICE_CENTER: LatLng = [41.8781, -87.6298];
@@ -22,6 +20,12 @@ export const COMPANY = {
   hours: "Dispatch staffed 24/7 · Scheduled rides 4:00 AM to 11:00 PM daily",
 } as const;
 
+/**
+ * Major Chicagoland hospitals offered as one-tap pickup/destination shortcuts.
+ * Real public addresses, verified against OpenStreetMap; any other address is
+ * typed into the address field instead. Listing a hospital here does not
+ * imply a partnership with it.
+ */
 export const PLACES: Record<string, Place> = {
   rush: {
     id: "rush",
@@ -29,7 +33,7 @@ export const PLACES: Record<string, Place> = {
     kind: "hospital",
     address: "1653 W Congress Pkwy",
     city: "Chicago",
-    coord: [41.8747, -87.6673],
+    coord: [41.8746, -87.6691],
   },
   northwestern: {
     id: "northwestern",
@@ -37,7 +41,39 @@ export const PLACES: Record<string, Place> = {
     kind: "hospital",
     address: "251 E Huron St",
     city: "Chicago",
-    coord: [41.8947, -87.6214],
+    coord: [41.8946, -87.6234],
+  },
+  uiHealth: {
+    id: "uiHealth",
+    name: "University of Illinois Hospital",
+    kind: "hospital",
+    address: "1740 W Taylor St",
+    city: "Chicago",
+    coord: [41.8697, -87.6705],
+  },
+  stroger: {
+    id: "stroger",
+    name: "John H. Stroger Jr. Hospital of Cook County",
+    kind: "hospital",
+    address: "1969 W Ogden Ave",
+    city: "Chicago",
+    coord: [41.8722, -87.6739],
+  },
+  mtsinai: {
+    id: "mtsinai",
+    name: "Mount Sinai Hospital",
+    kind: "hospital",
+    address: "1500 S Fairfield Ave",
+    city: "Chicago",
+    coord: [41.8618, -87.6936],
+  },
+  uchicago: {
+    id: "uchicago",
+    name: "University of Chicago Medical Center",
+    kind: "hospital",
+    address: "5841 S Maryland Ave",
+    city: "Chicago",
+    coord: [41.7904, -87.6049],
   },
   loyola: {
     id: "loyola",
@@ -45,7 +81,31 @@ export const PLACES: Record<string, Place> = {
     kind: "hospital",
     address: "2160 S 1st Ave",
     city: "Maywood",
-    coord: [41.8639, -87.8353],
+    coord: [41.8611, -87.8348],
+  },
+  hines: {
+    id: "hines",
+    name: "Edward Hines Jr. VA Hospital",
+    kind: "hospital",
+    address: "5000 S 5th Ave",
+    city: "Hines",
+    coord: [41.8575, -87.84],
+  },
+  rushOakPark: {
+    id: "rushOakPark",
+    name: "Rush Oak Park Hospital",
+    kind: "hospital",
+    address: "520 S Maple Ave",
+    city: "Oak Park",
+    coord: [41.8789, -87.8031],
+  },
+  macneal: {
+    id: "macneal",
+    name: "MacNeal Hospital",
+    kind: "hospital",
+    address: "3249 S Oak Park Ave",
+    city: "Berwyn",
+    coord: [41.8307, -87.7929],
   },
   christ: {
     id: "christ",
@@ -53,112 +113,23 @@ export const PLACES: Record<string, Place> = {
     kind: "hospital",
     address: "4440 W 95th St",
     city: "Oak Lawn",
-    coord: [41.7167, -87.7331],
+    coord: [41.7236, -87.7321],
   },
-  mtsinai: {
-    id: "mtsinai",
-    name: "Mount Sinai Hospital",
+  lutheranGeneral: {
+    id: "lutheranGeneral",
+    name: "Advocate Lutheran General Hospital",
     kind: "hospital",
-    address: "1500 S California Ave",
-    city: "Chicago",
-    coord: [41.8592, -87.6947],
+    address: "1775 Dempster St",
+    city: "Park Ridge",
+    coord: [42.0395, -87.8501],
   },
-  lakeshoreDialysis: {
-    id: "lakeshoreDialysis",
-    name: "Lakeshore Renal Care",
-    kind: "dialysis",
-    address: "3220 N Sheridan Rd",
-    city: "Chicago",
-    coord: [41.9403, -87.6444],
-  },
-  westsideDialysis: {
-    id: "westsideDialysis",
-    name: "Westside Kidney Center",
-    kind: "dialysis",
-    address: "5100 W Roosevelt Rd",
-    city: "Cicero",
-    coord: [41.8661, -87.7527],
-  },
-  southDialysis: {
-    id: "southDialysis",
-    name: "Southtown Dialysis Partners",
-    kind: "dialysis",
-    address: "8730 S Cicero Ave",
-    city: "Oak Lawn",
-    coord: [41.7345, -87.7412],
-  },
-  oakParkSnf: {
-    id: "oakParkSnf",
-    name: "Oak Park Rehabilitation & Living",
-    kind: "snf",
-    address: "625 Madison St",
-    city: "Oak Park",
-    coord: [41.8812, -87.7891],
-  },
-  evanstonSnf: {
-    id: "evanstonSnf",
-    name: "Lakeview Skilled Nursing",
-    kind: "snf",
-    address: "1300 Chicago Ave",
+  evanston: {
+    id: "evanston",
+    name: "Evanston Hospital",
+    kind: "hospital",
+    address: "2650 Ridge Ave",
     city: "Evanston",
-    coord: [42.0421, -87.6822],
-  },
-  berwynImaging: {
-    id: "berwynImaging",
-    name: "Berwyn Advanced Imaging",
-    kind: "imaging",
-    address: "3100 S Harlem Ave",
-    city: "Berwyn",
-    coord: [41.8331, -87.8034],
-  },
-  // Residences use block-level addresses only — never a unit number.
-  res1: {
-    id: "res1",
-    name: "Residence in Oak Park",
-    kind: "residence",
-    address: "1100 block S Ridgeland Ave",
-    city: "Oak Park",
-    coord: [41.8709, -87.7936],
-  },
-  res2: {
-    id: "res2",
-    name: "Residence in Cicero",
-    kind: "residence",
-    address: "2400 block S 58th Ct",
-    city: "Cicero",
-    coord: [41.8452, -87.7623],
-  },
-  res3: {
-    id: "res3",
-    name: "Residence in Evanston",
-    kind: "residence",
-    address: "800 block Dodge Ave",
-    city: "Evanston",
-    coord: [42.0466, -87.6991],
-  },
-  res4: {
-    id: "res4",
-    name: "Residence in Berwyn",
-    kind: "residence",
-    address: "1900 block Oak Park Ave",
-    city: "Berwyn",
-    coord: [41.8489, -87.7942],
-  },
-  res5: {
-    id: "res5",
-    name: "Residence in Oak Lawn",
-    kind: "residence",
-    address: "9600 block S Menard Ave",
-    city: "Oak Lawn",
-    coord: [41.7186, -87.7688],
-  },
-  res6: {
-    id: "res6",
-    name: "Residence in Skokie",
-    kind: "residence",
-    address: "4700 block Oakton St",
-    city: "Skokie",
-    coord: [42.0287, -87.7452],
+    coord: [42.066, -87.6843],
   },
 };
 

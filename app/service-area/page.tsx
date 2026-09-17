@@ -45,7 +45,7 @@ export default function ServiceAreaPage() {
               </span>
               <span className="flex items-center gap-2">
                 <span className="h-3 w-3 rounded-full bg-blue" aria-hidden="true" />
-                Partner facility
+                Major hospital
               </span>
             </div>
           </div>
