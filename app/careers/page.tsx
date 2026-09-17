@@ -125,6 +125,8 @@ const JOB_POSTINGS: JobPosting[] = [
 
 export default function CareersPage() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "fallback">("idle");
+  const [role, setRole] = useState(JOB_POSTINGS[0].title);
+  const [formError, setFormError] = useState<string | null>(null);
   const [spotlight, second] = SPOTLIGHT_DRIVERS;
 
   return (
@@ -253,6 +255,7 @@ export default function CareersPage() {
 
                   <a
                     href="#apply"
+                    onClick={() => setRole(job.title)}
                     className="mt-6 inline-flex items-center gap-2 rounded-full bg-green px-5 py-2.5 text-[0.9rem] font-bold text-white hover:bg-[#4d8f28]"
                   >
                     Apply for this role
@@ -285,6 +288,11 @@ export default function CareersPage() {
                 onSubmit={async (e) => {
                   e.preventDefault();
                   const f = e.currentTarget;
+                  if (!formValue(f, "c-name").trim()) return setFormError("Enter your name.");
+                  if ((formValue(f, "c-phone").match(/\d/g)?.length ?? 0) < 7) {
+                    return setFormError("Enter a phone number we can call back.");
+                  }
+                  setFormError(null);
                   const subject = `Job interest: ${formValue(f, "c-role")}`;
                   const fields: [string, string][] = [
                     ["Name", formValue(f, "c-name")],
@@ -304,6 +312,7 @@ export default function CareersPage() {
                     });
                     setStatus("sent");
                     f.reset();
+                    setRole(JOB_POSTINGS[0].title);
                   } catch {
                     window.location.href = dispatchMailto(subject, fields);
                     setStatus("fallback");
@@ -356,6 +365,8 @@ export default function CareersPage() {
                   </label>
                   <select
                     id="c-role"
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
                     className="mt-1.5 w-full rounded-lg border-2 border-line bg-white px-3.5 py-2.5 focus:border-blue"
                   >
                     {JOB_POSTINGS.map((job) => (
@@ -375,6 +386,12 @@ export default function CareersPage() {
                     className="mt-1.5 w-full rounded-lg border-2 border-line px-3.5 py-2.5 focus:border-blue"
                   />
                 </div>
+
+                {formError && (
+                  <p role="alert" className="rounded-lg bg-alert-tint px-3.5 py-2.5 text-[0.85rem] text-alert">
+                    {formError}
+                  </p>
+                )}
 
                 <button
                   type="submit"
