@@ -1,9 +1,12 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import JsonLd from "@/components/JsonLd";
 import MarketingShell, { PageHero } from "@/components/MarketingShell";
 import Prose from "@/components/Prose";
 import { RESOURCES } from "@/lib/resources";
 import { COMPANY } from "@/lib/demo/data";
+import { SITE_URL } from "@/lib/site";
 
 const resource = RESOURCES.find((r) => r.slug === "hospital-discharge-guide")!;
 
@@ -15,6 +18,7 @@ export const metadata: Metadata = {
 export default function HospitalDischargeGuidePage() {
   return (
     <MarketingShell>
+      <Breadcrumbs items={[{ label: "Resources", href: "/resources/" }, { label: "Hospital discharge rides" }]} />
       <PageHero eyebrow={resource.readTime} title={resource.title} lede={resource.description} />
 
       <Prose>
@@ -99,6 +103,18 @@ export default function HospitalDischargeGuidePage() {
           unit has booked today, so you stop calling to ask where a van is.
         </p>
       </Prose>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: resource.title,
+          description: resource.description,
+          mainEntityOfPage: `${SITE_URL}/resources/${resource.slug}/`,
+          image: `${SITE_URL}/opengraph-image.jpg`,
+          author: { "@id": `${SITE_URL}/#business` },
+          publisher: { "@id": `${SITE_URL}/#business` },
+        }}
+      />
     </MarketingShell>
   );
 }

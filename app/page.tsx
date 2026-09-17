@@ -6,8 +6,11 @@ import Reveal from "@/components/Reveal";
 import StatCounter from "@/components/StatCounter";
 import BookARideButton from "@/components/BookARideButton";
 import { COMPANY } from "@/lib/demo/data";
+import { AREAS } from "@/lib/areas";
 import { COMPARISON, SEGMENTS, SERVICES, SERVICE_AREA, STATS, TESTIMONIALS } from "@/lib/content";
 import { asset } from "@/lib/asset";
+
+const AREA_SLUG_BY_NAME: Record<string, string> = Object.fromEntries(AREAS.map((a) => [a.name, a.slug]));
 
 const SEGMENT_ACCENT: Record<string, string> = {
   families: "bg-green",
@@ -429,23 +432,43 @@ export default function HomePage() {
                   into southeastern Wisconsin. If you do not see your town, call us anyway. We
                   quote trips outside the area rather than turning them away.
                 </p>
-                <Link
-                  href="/service-area"
-                  className="mt-6 inline-flex items-center gap-2 font-bold text-blue-ink hover:underline"
-                >
-                  Open the coverage map →
-                </Link>
+                <div className="mt-6 flex flex-wrap gap-x-6">
+                  <Link
+                    href="/service-area"
+                    className="inline-flex min-h-11 items-center gap-2 font-bold text-blue-ink hover:underline"
+                  >
+                    Open the coverage map →
+                  </Link>
+                  <Link
+                    href="/areas"
+                    className="inline-flex min-h-11 items-center gap-2 font-bold text-blue-ink hover:underline"
+                  >
+                    Prices by town →
+                  </Link>
+                </div>
               </div>
 
               <ul className="flex flex-wrap gap-2 self-start">
-                {SERVICE_AREA.map((town) => (
-                  <li
-                    key={town}
-                    className="rounded-full border border-line bg-bone px-3 py-1.5 text-[0.85rem] text-slate-soft"
-                  >
-                    {town}
-                  </li>
-                ))}
+                {SERVICE_AREA.map((town) => {
+                  const slug = AREA_SLUG_BY_NAME[town];
+                  return slug ? (
+                    <li key={town}>
+                      <Link
+                        href={`/areas/${slug}/`}
+                        className="inline-flex min-h-11 items-center rounded-full border border-blue/40 bg-white px-3.5 text-[0.88rem] font-semibold text-blue-ink hover:bg-mist"
+                      >
+                        {town}
+                      </Link>
+                    </li>
+                  ) : (
+                    <li
+                      key={town}
+                      className="inline-flex min-h-11 items-center rounded-full border border-line bg-bone px-3.5 text-[0.88rem] text-slate-soft"
+                    >
+                      {town}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </Reveal>

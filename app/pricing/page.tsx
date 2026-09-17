@@ -140,7 +140,7 @@ export default function PricingPage() {
           <div className="mt-5 divide-y divide-line rounded-2xl border border-line bg-white">
             {FAQS.map((f) => (
               <details key={f.q} className="group px-6 py-5">
-                <summary className="flex cursor-pointer items-center justify-between gap-4 font-semibold text-deep marker:content-['']">
+                <summary className="flex min-h-11 cursor-pointer items-center justify-between gap-4 font-semibold text-deep marker:content-['']">
                   {f.q}
                   <span
                     aria-hidden="true"

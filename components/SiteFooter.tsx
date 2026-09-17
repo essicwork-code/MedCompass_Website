@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
+import { AREAS } from "@/lib/areas";
 import { COMPANY } from "@/lib/demo/data";
 
 const COLUMNS = [
@@ -26,13 +27,22 @@ const COLUMNS = [
     ],
   },
   {
+    heading: "Popular areas",
+    links: [
+      ...AREAS.slice(0, 9).map((a) => ({ href: `/areas/${a.slug}`, label: a.name })),
+      { href: "/areas", label: "All areas →" },
+    ],
+  },
+  {
     heading: "Company",
     links: [
       { href: "/about", label: "About Ride MedCompass" },
       { href: "/service-area", label: "Service area" },
+      { href: "/areas", label: "Areas we serve" },
       { href: "/pricing", label: "Pricing & insurance" },
       { href: "/cost-calculator", label: "Cost calculator" },
       { href: "/resources", label: "Guides & resources" },
+      { href: "/faq", label: "FAQ" },
       { href: "/careers", label: "Careers" },
       { href: "/contact", label: "Contact dispatch" },
     ],
@@ -44,8 +54,8 @@ export default function SiteFooter() {
     <footer className="mt-24 border-t border-line bg-white">
       <div className="route-gradient h-1.5" aria-hidden="true" />
       <div className="mx-auto max-w-7xl px-4 py-14">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5">
-          <div className="lg:col-span-2">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-6">
+          <div className="md:col-span-2">
             <Logo />
             <p className="mt-4 max-w-sm text-[0.95rem] leading-relaxed text-slate-soft">
               {COMPANY.tagline}. Non-emergency medical transportation and courier service across
@@ -57,12 +67,10 @@ export default function SiteFooter() {
               {COMPANY.address}
               <br />
               {COMPANY.city}
-              <br />
-              <a href={`tel:${COMPANY.phoneHref}`} className="font-semibold text-deep hover:text-blue">
+              <a href={`tel:${COMPANY.phoneHref}`} className="flex min-h-11 w-fit items-center font-semibold text-deep hover:text-blue">
                 {COMPANY.phone}
               </a>
-              <br />
-              <a href={`mailto:${COMPANY.email}`} className="hover:text-blue">
+              <a href={`mailto:${COMPANY.email}`} className="flex min-h-11 w-fit items-center break-all hover:text-blue">
                 {COMPANY.email}
               </a>
             </address>
@@ -71,12 +79,12 @@ export default function SiteFooter() {
           {COLUMNS.map((col) => (
             <nav key={col.heading} aria-label={col.heading}>
               <h2 className="font-display text-[0.95rem] font-bold text-deep">{col.heading}</h2>
-              <ul className="mt-4 space-y-2.5">
+              <ul className="mt-2">
                 {col.links.map((l) => (
                   <li key={l.href}>
                     <Link
                       href={l.href}
-                      className="inline-block text-[0.92rem] text-slate-soft transition-transform duration-150 hover:translate-x-0.5 hover:text-blue"
+                      className="inline-flex min-h-11 items-center text-[0.92rem] text-slate-soft transition-transform duration-150 hover:translate-x-0.5 hover:text-blue"
                     >
                       {l.label}
                     </Link>

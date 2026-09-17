@@ -1,3 +1,6 @@
+import { AREAS } from "./areas";
+import { RESOURCES } from "./resources";
+
 /** The production origin, used for canonical URLs, the sitemap and structured data. */
 export const SITE_URL = "https://ridemedcompass.com";
 
@@ -17,9 +20,11 @@ export const SITE_ROUTES: { path: string; priority: number }[] = [
   { path: "/service-area/", priority: 0.7 },
   { path: "/who-we-serve/", priority: 0.7 },
   { path: "/facilities/", priority: 0.7 },
+  { path: "/areas/", priority: 0.8 },
+  ...AREAS.map((a) => ({ path: `/areas/${a.slug}/`, priority: 0.7 })),
+  { path: "/faq/", priority: 0.6 },
   { path: "/resources/", priority: 0.6 },
-  { path: "/resources/nemt-cost-chicago/", priority: 0.6 },
-  { path: "/resources/hospital-discharge-guide/", priority: 0.6 },
+  ...RESOURCES.map((r) => ({ path: `/resources/${r.slug}/`, priority: 0.6 })),
   { path: "/about/", priority: 0.5 },
   { path: "/contact/", priority: 0.6 },
   { path: "/careers/", priority: 0.4 },

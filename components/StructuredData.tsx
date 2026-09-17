@@ -1,4 +1,5 @@
 import { SERVICES, SERVICE_AREA } from "@/lib/content";
+import JsonLd from "./JsonLd";
 import { COMPANY } from "@/lib/demo/data";
 import { SITE_URL } from "@/lib/site";
 
@@ -67,10 +68,5 @@ export default function StructuredData() {
     ],
   };
 
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }}
-    />
-  );
+  return <JsonLd data={data} />;
 }

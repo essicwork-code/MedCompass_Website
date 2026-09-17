@@ -42,12 +42,12 @@ export default function SiteHeader() {
     >
       {/* Utility bar: the phone number stays reachable for callers. */}
       <div className="bg-deep text-white">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2 text-[0.8rem]">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 text-[0.8rem]">
           <p className="hidden sm:block text-white/80">{COMPANY.hours}</p>
           <div className="flex items-center gap-4">
             <a
               href={`tel:${COMPANY.phoneHref}`}
-              className="tabular whitespace-nowrap text-[1.05rem] font-extrabold tracking-tight hover:text-lime sm:text-[1.15rem]"
+              className="tabular inline-flex min-h-11 items-center whitespace-nowrap text-[1.05rem] font-extrabold tracking-tight hover:text-lime sm:text-[1.15rem]"
             >
               Dispatch {COMPANY.phone}
             </a>
@@ -61,7 +61,7 @@ export default function SiteHeader() {
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 py-3 sm:gap-6">
-          <Link href="/" aria-label={`${COMPANY.name} home`} className="shrink-0">
+          <Link href="/" aria-label={`${COMPANY.name} home`} className="flex min-h-11 shrink-0 items-center">
             <Logo />
           </Link>
 

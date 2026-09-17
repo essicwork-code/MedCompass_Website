@@ -2,7 +2,9 @@
 
 import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import MarketingShell, { PageHero } from "@/components/MarketingShell";
+import { AREAS } from "@/lib/areas";
 import { SERVICE_AREA } from "@/lib/content";
 import { COMPANY } from "@/lib/demo/data";
 
@@ -10,6 +12,8 @@ const CoverageMap = dynamic(() => import("@/components/CoverageMap"), {
   ssr: false,
   loading: () => <div className="h-full w-full animate-pulse bg-mist" />,
 });
+
+const AREA_SLUG_BY_NAME: Record<string, string> = Object.fromEntries(AREAS.map((a) => [a.name, a.slug]));
 
 export default function ServiceAreaPage() {
   const [query, setQuery] = useState("");
@@ -74,15 +78,34 @@ export default function ServiceAreaPage() {
             </p>
 
             <ul className="mt-4 flex max-h-[420px] flex-wrap gap-2 overflow-y-auto">
-              {filtered.map((t) => (
-                <li
-                  key={t}
-                  className="rounded-full border border-line bg-white px-3.5 py-1.5 text-[0.88rem] text-slate-soft"
-                >
-                  {t}
-                </li>
-              ))}
+              {filtered.map((t) => {
+                const page = AREA_SLUG_BY_NAME[t];
+                return page ? (
+                  <li key={t}>
+                    <Link
+                      href={`/areas/${page}/`}
+                      className="inline-flex min-h-11 items-center rounded-full border border-blue/50 bg-white px-4 text-[0.9rem] font-semibold text-blue-ink hover:bg-mist"
+                    >
+                      {t}
+                    </Link>
+                  </li>
+                ) : (
+                  <li
+                    key={t}
+                    className="inline-flex min-h-11 items-center rounded-full border border-line bg-white px-4 text-[0.9rem] text-slate-soft"
+                  >
+                    {t}
+                  </li>
+                );
+              })}
             </ul>
+
+            <Link
+              href="/areas/"
+              className="mt-4 inline-flex min-h-11 items-center text-[0.95rem] font-semibold text-blue-ink hover:underline"
+            >
+              Prices and nearby hospitals by town →
+            </Link>
 
             {filtered.length === 0 && (
               <a
@@ -99,7 +122,7 @@ export default function ServiceAreaPage() {
           {[
             {
               h: "Core area",
-              d: "Roughly 12 miles from our Cicero base. Same-day discharge capacity held back daily, median pickup 42 minutes from the call.",
+              d: "Roughly 12 miles from downtown Chicago. Same-day discharge capacity held back daily, median pickup 42 minutes from the call.",
             },
             {
               h: "Extended area",

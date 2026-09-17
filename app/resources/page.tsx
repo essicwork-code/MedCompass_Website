@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import MarketingShell, { PageHero } from "@/components/MarketingShell";
 import { RESOURCES } from "@/lib/resources";
 
@@ -11,6 +12,7 @@ export const metadata: Metadata = {
 export default function ResourcesPage() {
   return (
     <MarketingShell>
+      <Breadcrumbs items={[{ label: "Resources" }]} />
       <PageHero
         eyebrow="Resources"
         title="Guides worth reading before you book"

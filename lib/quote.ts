@@ -13,7 +13,7 @@ export const KM_TO_MILES = 0.621371;
 const EARTH_RADIUS_KM = 6371;
 
 /** Great-circle distance between two lat/lng points, in kilometers. */
-function haversineKm([lat1, lng1]: LatLng, [lat2, lng2]: LatLng): number {
+export function haversineKm([lat1, lng1]: LatLng, [lat2, lng2]: LatLng): number {
   const toRad = (deg: number) => (deg * Math.PI) / 180;
   const dLat = toRad(lat2 - lat1);
   const dLng = toRad(lng2 - lng1);

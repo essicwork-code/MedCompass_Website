@@ -1,10 +1,13 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import JsonLd from "@/components/JsonLd";
 import MarketingShell, { PageHero } from "@/components/MarketingShell";
 import Prose from "@/components/Prose";
 import { RESOURCES } from "@/lib/resources";
 import { SERVICES } from "@/lib/content";
 import { COMPANY } from "@/lib/demo/data";
+import { SITE_URL } from "@/lib/site";
 
 const resource = RESOURCES.find((r) => r.slug === "nemt-cost-chicago")!;
 
@@ -21,6 +24,7 @@ const bariatric = SERVICES.find((s) => s.slug === "bariatric")!;
 export default function NemtCostChicagoPage() {
   return (
     <MarketingShell>
+      <Breadcrumbs items={[{ label: "Resources", href: "/resources/" }, { label: "NEMT costs in Chicago" }]} />
       <PageHero eyebrow={resource.readTime} title={resource.title} lede={resource.description} />
 
       <Prose>
@@ -110,6 +114,18 @@ export default function NemtCostChicagoPage() {
           to see the same number with your actual trip details and any add-ons.
         </p>
       </Prose>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: resource.title,
+          description: resource.description,
+          mainEntityOfPage: `${SITE_URL}/resources/${resource.slug}/`,
+          image: `${SITE_URL}/opengraph-image.jpg`,
+          author: { "@id": `${SITE_URL}/#business` },
+          publisher: { "@id": `${SITE_URL}/#business` },
+        }}
+      />
     </MarketingShell>
   );
 }

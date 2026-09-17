@@ -2,9 +2,14 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import MarketingShell, { PageHero } from "@/components/MarketingShell";
 import ServiceIcon from "@/components/ServiceIcon";
+import Link from "next/link";
 import BookARideButton from "@/components/BookARideButton";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import JsonLd from "@/components/JsonLd";
 import { SERVICES, SERVICE_BY_SLUG } from "@/lib/content";
+import { AREAS } from "@/lib/areas";
 import { COMPANY } from "@/lib/demo/data";
+import { SITE_URL } from "@/lib/site";
 
 /*
  * Static export needs the full slug list at build time. Extra slugs beyond the
@@ -71,6 +76,7 @@ export default async function ServiceDetailPage({
 
   return (
     <MarketingShell>
+      <Breadcrumbs items={[{ label: "Services", href: "/services/" }, { label: title }]} />
       <PageHero eyebrow="Service" title={title} lede={body} />
 
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 lg:grid-cols-[1fr_340px]">
@@ -111,6 +117,25 @@ export default async function ServiceDetailPage({
               </li>
             ))}
           </ol>
+
+          <h2 className="mt-12 font-display text-[1.4rem] font-extrabold text-deep">
+            {title} near you
+          </h2>
+          <p className="mt-2 text-[0.97rem] leading-relaxed text-slate-soft">
+            Sample prices and the nearest hospitals for each community we serve.
+          </p>
+          <ul className="mt-4 flex flex-wrap gap-2">
+            {AREAS.map((a) => (
+              <li key={a.slug}>
+                <Link
+                  href={`/areas/${a.slug}/`}
+                  className="inline-flex min-h-11 items-center rounded-full border border-line bg-white px-4 text-[0.92rem] font-semibold text-blue-ink hover:border-blue hover:bg-mist"
+                >
+                  {a.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
 
         <aside className="self-start rounded-2xl border border-line bg-white p-7">
@@ -147,6 +172,28 @@ export default async function ServiceDetailPage({
           </p>
         </aside>
       </div>
+
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Service",
+          name: title,
+          description: body,
+          serviceType: isCourier ? "Medical courier" : "Non-emergency medical transportation",
+          url: `${SITE_URL}/services/${slug}/`,
+          provider: { "@id": `${SITE_URL}/#business` },
+          areaServed: AREAS.map((a) => ({ "@type": "City", name: `${a.name}, IL` })),
+          offers: {
+            "@type": "Offer",
+            priceSpecification: {
+              "@type": "PriceSpecification",
+              price: service.fromPrice,
+              minPrice: service.fromPrice,
+              priceCurrency: "USD",
+            },
+          },
+        }}
+      />
     </MarketingShell>
   );
 }
