@@ -4,8 +4,8 @@ import type { LatLng, Place } from "./types";
  * Demo fixtures for the MedCompass marketing site.
  *
  * Coordinates are real Chicago-area locations so the service-area map reads
- * correctly at neighborhood zoom. Everything else — names, phone numbers,
- * USDOT figures — is invented. No real person or patient record is
+ * correctly at neighborhood zoom. Everything else — names, phone numbers —
+ * is invented. No real person or patient record is
  * represented here.
  */
 
@@ -19,9 +19,6 @@ export const COMPANY = {
   email: "dispatch@ridemedcompass.com",
   address: "4200 W Cermak Rd, Suite 210",
   city: "Cicero, IL 60804",
-  usdot: "3914772",
-  mc: "1447209",
-  npi: "1043827715",
   hours: "Dispatch staffed 24/7 · Scheduled rides 4:00 AM to 11:00 PM daily",
 } as const;
 

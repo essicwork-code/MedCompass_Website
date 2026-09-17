@@ -130,12 +130,6 @@ export default function FacilitiesPage() {
                     </a>
                   </dd>
                 </div>
-                <div>
-                  <dt className="text-slate-soft">Registration</dt>
-                  <dd className="tabular text-deep">
-                    USDOT {COMPANY.usdot} · NPI {COMPANY.npi}
-                  </dd>
-                </div>
               </dl>
 
               <Link

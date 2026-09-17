@@ -66,12 +66,6 @@ export default function SiteFooter() {
                 {COMPANY.email}
               </a>
             </address>
-
-            <p className="mt-5 text-[0.8rem] leading-relaxed text-slate-soft tabular">
-              USDOT {COMPANY.usdot} · MC {COMPANY.mc} · NPI {COMPANY.npi}
-              <br />
-              Licensed, bonded and insured in the State of Illinois.
-            </p>
           </div>
 
           {COLUMNS.map((col) => (

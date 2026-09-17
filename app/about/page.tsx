@@ -87,28 +87,6 @@ export default function AboutPage() {
                 </div>
               ))}
             </dl>
-
-            <div className="rounded-2xl border border-line bg-white p-6">
-              <h2 className="font-display text-[1.1rem] font-bold text-deep">Credentials</h2>
-              <dl className="tabular mt-4 space-y-2.5 text-[0.92rem]">
-                <div className="flex justify-between gap-3">
-                  <dt className="text-slate-soft">USDOT</dt>
-                  <dd className="font-semibold text-deep">{COMPANY.usdot}</dd>
-                </div>
-                <div className="flex justify-between gap-3">
-                  <dt className="text-slate-soft">MC</dt>
-                  <dd className="font-semibold text-deep">{COMPANY.mc}</dd>
-                </div>
-                <div className="flex justify-between gap-3">
-                  <dt className="text-slate-soft">NPI</dt>
-                  <dd className="font-semibold text-deep">{COMPANY.npi}</dd>
-                </div>
-              </dl>
-              <p className="mt-4 border-t border-line pt-4 text-[0.88rem] leading-relaxed text-slate-soft">
-                Licensed, bonded and insured in Illinois. ADA-compliant vehicles inspected under
-                IDOT requirements.
-              </p>
-            </div>
           </aside>
         </div>
       </div>
