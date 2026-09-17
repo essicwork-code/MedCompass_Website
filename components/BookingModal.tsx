@@ -337,9 +337,10 @@ export default function BookingModal({
                     id="bm-name"
                     type="text"
                     required
+                    autoComplete="name"
                     value={form.name}
                     onChange={(e) => update("name", e.target.value)}
-                    className="mt-1.5 w-full rounded-lg border-2 border-line bg-white px-3.5 py-2.5 text-[0.95rem] focus:border-blue"
+                    className="mt-1.5 w-full rounded-lg border-2 border-line bg-white px-3.5 py-2.5 text-base focus:border-blue"
                   />
                 </div>
 
@@ -354,7 +355,7 @@ export default function BookingModal({
                     autoComplete="tel"
                     value={form.phone}
                     onChange={(e) => update("phone", e.target.value)}
-                    className="mt-1.5 w-full rounded-lg border-2 border-line bg-white px-3.5 py-2.5 text-[0.95rem] focus:border-blue"
+                    className="mt-1.5 w-full rounded-lg border-2 border-line bg-white px-3.5 py-2.5 text-base focus:border-blue"
                   />
                 </div>
 
@@ -369,7 +370,7 @@ export default function BookingModal({
                     autoComplete="email"
                     value={form.email}
                     onChange={(e) => update("email", e.target.value)}
-                    className="mt-1.5 w-full rounded-lg border-2 border-line bg-white px-3.5 py-2.5 text-[0.95rem] focus:border-blue"
+                    className="mt-1.5 w-full rounded-lg border-2 border-line bg-white px-3.5 py-2.5 text-base focus:border-blue"
                   />
                 </div>
 
@@ -382,7 +383,7 @@ export default function BookingModal({
                     required
                     value={form.service}
                     onChange={(e) => update("service", e.target.value)}
-                    className="mt-1.5 w-full rounded-lg border-2 border-line bg-white px-3.5 py-2.5 text-[0.95rem] focus:border-blue"
+                    className="mt-1.5 w-full rounded-lg border-2 border-line bg-white px-3.5 py-2.5 text-base focus:border-blue"
                   >
                     <option value="">Select a service…</option>
                     {SERVICES.map((s) => (
@@ -409,7 +410,7 @@ export default function BookingModal({
                     placeholder="Street address, city"
                     value={form.pickup}
                     onChange={(e) => update("pickup", e.target.value)}
-                    className="mt-1.5 w-full rounded-lg border-2 border-line bg-white px-3.5 py-2.5 text-[0.95rem] focus:border-blue"
+                    className="mt-1.5 w-full rounded-lg border-2 border-line bg-white px-3.5 py-2.5 text-base focus:border-blue"
                   />
                 </div>
 
@@ -424,7 +425,7 @@ export default function BookingModal({
                     placeholder="Street address, city"
                     value={form.dropoff}
                     onChange={(e) => update("dropoff", e.target.value)}
-                    className="mt-1.5 w-full rounded-lg border-2 border-line bg-white px-3.5 py-2.5 text-[0.95rem] focus:border-blue"
+                    className="mt-1.5 w-full rounded-lg border-2 border-line bg-white px-3.5 py-2.5 text-base focus:border-blue"
                   />
                 </div>
 
@@ -438,7 +439,7 @@ export default function BookingModal({
                     required
                     value={form.when}
                     onChange={(e) => update("when", e.target.value)}
-                    className="mt-1.5 w-full rounded-lg border-2 border-line bg-white px-3.5 py-2.5 text-[0.95rem] focus:border-blue"
+                    className="mt-1.5 w-full rounded-lg border-2 border-line bg-white px-3.5 py-2.5 text-base focus:border-blue"
                   />
                 </div>
 
@@ -487,7 +488,7 @@ export default function BookingModal({
                     }
                     value={form.notes}
                     onChange={(e) => update("notes", e.target.value)}
-                    className="mt-1.5 w-full rounded-lg border-2 border-line bg-white px-3.5 py-2.5 text-[0.95rem] focus:border-blue"
+                    className="mt-1.5 w-full rounded-lg border-2 border-line bg-white px-3.5 py-2.5 text-base focus:border-blue"
                   />
                   <p className="mt-1.5 text-[0.8rem] text-slate-soft">
                     {isCourier

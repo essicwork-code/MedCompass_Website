@@ -56,11 +56,13 @@ export default function ServiceAreaPage() {
             </label>
             <input
               id="town"
+              type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Start typing… e.g. Berwyn"
               autoComplete="off"
-              className="mt-3 w-full rounded-full border-2 border-line bg-white px-5 py-3 text-[0.98rem] focus:border-blue"
+              enterKeyHint="search"
+              className="mt-3 w-full rounded-full border-2 border-line bg-white px-5 py-3 text-base focus:border-blue"
             />
 
             <p aria-live="polite" className="mt-3 text-[0.9rem] text-slate-soft">

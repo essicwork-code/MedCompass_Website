@@ -332,7 +332,7 @@ export default function BookPage() {
                       id="pickup"
                       value={pickupId}
                       onChange={(e) => setPickupId(e.target.value)}
-                      className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-[0.95rem] focus:border-blue"
+                      className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-base focus:border-blue"
                     >
                       <option value="">Select a pickup location…</option>
                       {PLACE_OPTIONS.map((p) => (
@@ -367,7 +367,7 @@ export default function BookPage() {
                         aria-expanded={suggestionsOpen}
                         aria-controls="pickup-suggestions"
                         aria-autocomplete="list"
-                        className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-[0.95rem] focus:border-blue"
+                        className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-base focus:border-blue"
                       />
 
                       {suggestionsOpen && suggestions.length > 0 && (
@@ -452,7 +452,7 @@ export default function BookPage() {
                     id="dropoff"
                     value={dropoffId}
                     onChange={(e) => setDropoffId(e.target.value)}
-                    className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-[0.95rem] focus:border-blue"
+                    className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-base focus:border-blue"
                   >
                     <option value="">Select a destination…</option>
                     {PLACE_OPTIONS.map((p) => (
@@ -472,7 +472,7 @@ export default function BookPage() {
                     type="datetime-local"
                     value={when}
                     onChange={(e) => setWhen(e.target.value)}
-                    className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-[0.95rem] focus:border-blue"
+                    className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-base focus:border-blue"
                   />
                   <p className="mt-1.5 text-[0.82rem] text-slate-soft">
                     {isCourier
@@ -530,7 +530,7 @@ export default function BookPage() {
                       ? "Refrigerated tote, loading dock entrance, who signs at drop-off…"
                       : "Stairs at the entrance, oxygen tank, preferred door…"
                   }
-                  className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-[0.95rem] focus:border-blue"
+                  className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-base focus:border-blue"
                 />
                 <p className="mt-1.5 text-[0.82rem] text-slate-soft">
                   {isCourier

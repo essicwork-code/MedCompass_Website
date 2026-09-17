@@ -88,7 +88,7 @@ export default function CostCalculatorPage() {
                 id="calc-pickup"
                 value={pickupId}
                 onChange={(e) => setPickupId(e.target.value)}
-                className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-[0.95rem] focus:border-blue"
+                className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-base focus:border-blue"
               >
                 <option value="">Select a location…</option>
                 {PLACE_OPTIONS.map((p) => (
@@ -107,7 +107,7 @@ export default function CostCalculatorPage() {
                 id="calc-dropoff"
                 value={dropoffId}
                 onChange={(e) => setDropoffId(e.target.value)}
-                className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-[0.95rem] focus:border-blue"
+                className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-base focus:border-blue"
               >
                 <option value="">Select a location…</option>
                 {PLACE_OPTIONS.map((p) => (

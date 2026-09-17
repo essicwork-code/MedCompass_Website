@@ -373,7 +373,7 @@ export default function ChatWidget() {
                         autoComplete={autoComplete}
                         value={contactForm[key]}
                         onChange={(e) => updateContact(key, e.target.value)}
-                        className="mt-1 w-full rounded-lg border-2 border-line px-3 py-2 text-[0.9rem] focus:border-blue"
+                        className="mt-1 w-full rounded-lg border-2 border-line px-3 py-2 text-base focus:border-blue"
                       />
                     </div>
                   ))}
@@ -387,7 +387,7 @@ export default function ChatWidget() {
                       value={contactForm.message}
                       onChange={(e) => updateContact("message", e.target.value)}
                       placeholder="Trip date, pickup area, questions…"
-                      className="mt-1 w-full rounded-lg border-2 border-line px-3 py-2 text-[0.9rem] focus:border-blue"
+                      className="mt-1 w-full rounded-lg border-2 border-line px-3 py-2 text-base focus:border-blue"
                     />
                     <p className="mt-1 text-[0.72rem] text-slate-soft">No diagnoses or medical records, please.</p>
                   </div>
@@ -472,7 +472,8 @@ export default function ChatWidget() {
               onChange={(e) => setDraft(e.target.value)}
               placeholder="Ask about rides, pricing, coverage…"
               autoComplete="off"
-              className="min-w-0 flex-1 rounded-full border border-line px-4 py-2.5 text-[0.92rem] placeholder:text-slate-soft focus:border-blue"
+              enterKeyHint="send"
+              className="min-w-0 flex-1 rounded-full border border-line px-4 py-2.5 text-base placeholder:text-slate-soft focus:border-blue"
             />
             <button
               type="submit"
