@@ -3,16 +3,18 @@
 import { useState } from "react";
 import MarketingShell, { PageHero } from "@/components/MarketingShell";
 import { COMPANY } from "@/lib/demo/data";
+import { sendFormEmail } from "@/lib/emailjs";
+import { dispatchMailto, formValue } from "@/lib/mailto";
 
 /*
  * Contact form.
  *
- * Submits nowhere — this is a demo build with no backend. Rather than fake a
- * success state, the form says so on submit and points at the phone number,
- * which is the channel that actually works today.
+ * Sent through EmailJS (lib/emailjs.ts). If that fails, the form opens the
+ * visitor's email app with the message addressed to dispatch instead, and the
+ * status line says which of the two happened.
  */
 export default function ContactPage() {
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "fallback">("idle");
 
   return (
     <MarketingShell>
@@ -34,17 +36,6 @@ export default function ContactPage() {
               <dd className="tabular mt-1 font-display text-[1.6rem] font-extrabold text-deep">
                 <a href={`tel:${COMPANY.phoneHref}`} className="hover:text-blue">
                   {COMPANY.phone}
-                </a>
-              </dd>
-            </div>
-
-            <div>
-              <dt className="text-[0.85rem] font-semibold uppercase tracking-wide text-slate-soft">
-                Facility &amp; discharge line
-              </dt>
-              <dd className="tabular mt-1 font-display text-[1.6rem] font-extrabold text-deep">
-                <a href={`tel:${COMPANY.dispatchPhone.replace(/\D/g, "")}`} className="hover:text-blue">
-                  {COMPANY.dispatchPhone}
                 </a>
               </dd>
             </div>
@@ -80,7 +71,7 @@ export default function ContactPage() {
           </dl>
 
           <p className="mt-8 rounded-xl bg-alert-tint px-5 py-4 text-[0.95rem] leading-relaxed text-alert">
-            <strong>Medical emergency?</strong> Call 911. MedCompass provides non-emergency
+            <strong>Medical emergency?</strong> Call 911. Ride MedCompass provides non-emergency
             transport only and cannot respond to emergencies.
           </p>
         </div>
@@ -92,9 +83,32 @@ export default function ContactPage() {
           </p>
 
           <form
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
-              setSubmitted(true);
+              const f = e.currentTarget;
+              const subject = `Website message: ${formValue(f, "topic")}`;
+              const fields: [string, string][] = [
+                ["Name", formValue(f, "name")],
+                ["Phone", formValue(f, "phone")],
+                ["Email", formValue(f, "email")],
+                ["Topic", formValue(f, "topic")],
+                ["Message", formValue(f, "message")],
+              ];
+              setStatus("sending");
+              try {
+                await sendFormEmail({
+                  subject,
+                  formName: "contact message",
+                  fromName: formValue(f, "name"),
+                  replyTo: formValue(f, "email"),
+                  fields,
+                });
+                setStatus("sent");
+                f.reset();
+              } catch {
+                window.location.href = dispatchMailto(subject, fields);
+                setStatus("fallback");
+              }
             }}
             className="mt-6 space-y-5"
           >
@@ -174,16 +188,30 @@ export default function ContactPage() {
 
             <button
               type="submit"
-              className="w-full rounded-full bg-green px-6 py-3.5 font-bold text-white hover:bg-[#4d8f28]"
+              disabled={status === "sending"}
+              className="w-full rounded-full bg-green px-6 py-3.5 font-bold text-white hover:bg-[#4d8f28] disabled:cursor-wait disabled:opacity-70"
             >
-              Send message
+              {status === "sending" ? "Sending…" : "Send message"}
             </button>
 
-            {submitted && (
-              <p role="status" className="rounded-xl bg-amber-tint px-5 py-4 text-[0.93rem] leading-relaxed text-deep">
-                <strong>This is a demonstration site.</strong> The form has no backend, so nothing
-                was sent and nobody was notified. On a live site this would reach dispatch. To
-                actually reach someone, call{" "}
+            {status === "sent" && (
+              <p role="status" className="rounded-xl bg-moss px-5 py-4 text-[0.93rem] leading-relaxed text-deep">
+                <strong>Message sent.</strong> Dispatch has it, and we&rsquo;ve emailed you a
+                confirmation. For anything about a trip today, call{" "}
+                <a href={`tel:${COMPANY.phoneHref}`} className="font-semibold text-blue-ink hover:underline">
+                  {COMPANY.phone}
+                </a>
+                .
+              </p>
+            )}
+            {status === "fallback" && (
+              <p role="status" className="rounded-xl bg-mist px-5 py-4 text-[0.93rem] leading-relaxed text-deep">
+                <strong>Almost done.</strong> Your email app should have opened with this message
+                addressed to dispatch. Press send there to reach us. Nothing opened? Email{" "}
+                <a href={`mailto:${COMPANY.email}`} className="font-semibold text-blue-ink hover:underline">
+                  {COMPANY.email}
+                </a>{" "}
+                or call{" "}
                 <a href={`tel:${COMPANY.phoneHref}`} className="font-semibold text-blue-ink hover:underline">
                   {COMPANY.phone}
                 </a>

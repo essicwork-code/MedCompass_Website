@@ -2,12 +2,13 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import MarketingShell, { PageHero } from "@/components/MarketingShell";
 import ServiceIcon from "@/components/ServiceIcon";
+import BookARideButton from "@/components/BookARideButton";
 import { SERVICES } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Wheelchair, ambulatory, stretcher and bariatric medical transportation in Chicagoland, with published rates.",
+    "Wheelchair, ambulatory, stretcher, bariatric and medical courier service in Chicagoland, with published rates.",
 };
 
 export default function ServicesPage() {
@@ -15,7 +16,7 @@ export default function ServicesPage() {
     <MarketingShell>
       <PageHero
         eyebrow="Services"
-        title="Four levels of transport. Published rates."
+        title="Five services. Published rates."
         lede="Every service has a base rate and a per-mile rate listed on this page. If you are covered by Medicaid managed care or an NEMT broker, most riders pay nothing. We verify before the trip, not after."
       />
 
@@ -68,12 +69,12 @@ export default function ServicesPage() {
                 <p className="tabular mt-1 text-[0.9rem] text-slate-soft">
                   plus ${s.perMile.toFixed(2)} per mile
                 </p>
-                <Link
-                  href={`/book?service=${s.slug}`}
-                  className="mt-5 block rounded-full bg-green px-5 py-3 text-center font-bold text-white hover:bg-[#4d8f28]"
+                <BookARideButton
+                  serviceSlug={s.slug}
+                  className="mt-5 block w-full rounded-full bg-green px-5 py-3 text-center font-bold text-white hover:bg-[#4d8f28]"
                 >
                   Get a quote
-                </Link>
+                </BookARideButton>
                 <Link
                   href={`/services/${s.slug}`}
                   className="mt-2.5 block text-center text-[0.9rem] font-semibold text-blue-ink hover:underline"

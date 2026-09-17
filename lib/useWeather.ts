@@ -25,7 +25,7 @@ export function useWeather(coord: [number, number] = SERVICE_CENTER): WeatherSta
         })
         .catch(() => {
           // Open-Meteo is best-effort here — a network hiccup shouldn't break
-          // the portal, it should just hide the widget.
+          // the page, it should just hide the widget.
           if (!cancelled) setState({ status: "error", data: null });
         });
     };

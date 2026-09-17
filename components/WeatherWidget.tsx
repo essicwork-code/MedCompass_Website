@@ -7,10 +7,10 @@ import WeatherIcon from "./WeatherIcon";
 /*
  * Live weather, tuned for who's looking at it.
  *
- * `card` is the full version for the client/facility portal: a rider or
- * coordinator wants to know whether to plan around it. `chip` is the
- * compact header version for dispatch, where the desk needs the number and
- * the operational advisory at a glance without spending vertical space.
+ * `card` is the full version: a rider or facility coordinator wants to know
+ * whether to plan around it. `chip` is the compact version for tighter
+ * layouts, where the number and the operational advisory need to fit at a
+ * glance without spending much vertical space.
  */
 
 export function WeatherCard() {

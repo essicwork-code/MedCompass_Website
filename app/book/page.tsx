@@ -1,10 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import MarketingShell from "@/components/MarketingShell";
+import { useBookingModal, type BookingModalPrefill } from "@/components/BookingModalProvider";
 import ServiceIcon from "@/components/ServiceIcon";
-import { SERVICES } from "@/lib/content";
+import { COURIER_STAT_FEE, SERVICES, type ServiceSlug } from "@/lib/content";
 import { COMPANY, PLACES } from "@/lib/demo/data";
 import { computeQuote } from "@/lib/quote";
 import {
@@ -16,7 +16,7 @@ import {
   type AddressSuggestion,
   type GeoPoint,
 } from "@/lib/geo";
-import type { LatLng, MobilityType } from "@/lib/demo/types";
+import type { LatLng } from "@/lib/demo/types";
 
 /** How long to let the rider keep typing before hitting the geocoder. */
 const SUGGEST_DEBOUNCE_MS = 400;
@@ -26,10 +26,10 @@ const SUGGEST_DEBOUNCE_MS = 400;
  *
  * The competitor booking flows all end at "we'll call you with a price". This
  * one shows the number before the commit, which is the single most requested
- * thing in NEMT reviews. Nothing here submits anywhere — it is a demo — so the
- * final step says so plainly rather than faking a confirmation.
+ * thing in NEMT reviews. Confirming hands the chosen trip to the booking modal,
+ * which only has to ask for contact details before sending it to dispatch.
  *
- * Pickup has two real modes, not just the fixed list of demo facilities:
+ * Pickup has two real modes, not just the fixed list of saved facilities:
  *  1. "Use my current location" — the browser's actual geolocation, reverse
  *     geocoded to a readable address. This is the one that needs a
  *     permission prompt, and the UI has to handle grant, deny, and timeout
@@ -40,13 +40,32 @@ const SUGGEST_DEBOUNCE_MS = 400;
 
 const PLACE_OPTIONS = Object.values(PLACES);
 
+function placeLine(id: string): string {
+  const p = PLACES[id];
+  return p ? `${p.name}, ${p.address}, ${p.city}` : "";
+}
+
 type Step = 1 | 2 | 3;
 type PickupMode = "saved" | "custom";
 type GeoStatus = "idle" | "locating" | "resolving" | "error";
 
+/** Lives inside MarketingShell, where the booking-modal provider is mounted. */
+function ConfirmBookingButton({ prefill }: { prefill: BookingModalPrefill }) {
+  const { open } = useBookingModal();
+  return (
+    <button
+      type="button"
+      onClick={() => open(prefill)}
+      className="w-full rounded-full bg-green px-6 py-3.5 font-bold text-white hover:bg-[#4d8f28]"
+    >
+      Confirm booking
+    </button>
+  );
+}
+
 export default function BookPage() {
   const [step, setStep] = useState<Step>(1);
-  const [mobility, setMobility] = useState<MobilityType | null>(null);
+  const [mobility, setMobility] = useState<ServiceSlug | null>(null);
 
   const [pickupMode, setPickupMode] = useState<PickupMode>("saved");
   const [pickupId, setPickupId] = useState("");
@@ -97,8 +116,11 @@ export default function BookPage() {
   const [roundTrip, setRoundTrip] = useState(false);
   const [escort, setEscort] = useState(false);
   const [notes, setNotes] = useState("");
+  const [stat, setStat] = useState(false);
 
-  const service = SERVICES.find((s) => s.icon === mobility || s.slug === mobility) ?? null;
+  const service = SERVICES.find((s) => s.slug === mobility) ?? null;
+  // Courier moves items, not people: no escort seat, but a STAT option.
+  const isCourier = mobility === "courier";
 
   const pickupCoord: LatLng | null =
     pickupMode === "saved"
@@ -112,11 +134,11 @@ export default function BookPage() {
     if (!service || !pickupCoord || !dropoffId) return null;
     const b = PLACES[dropoffId];
     if (!b) return null;
-    return computeQuote(service, pickupCoord, b.coord, roundTrip);
+    return computeQuote(service, pickupCoord, b.coord, roundTrip, stat);
     // pickupCoord is a fresh array each render; comparing its contents (not
     // its identity) so the quote doesn't recompute needlessly.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [service, pickupCoord?.[0], pickupCoord?.[1], dropoffId, roundTrip]);
+  }, [service, pickupCoord?.[0], pickupCoord?.[1], dropoffId, roundTrip, stat]);
 
   async function useMyLocation() {
     setGeoStatus("locating");
@@ -245,7 +267,7 @@ export default function BookPage() {
 
               <div className="mt-6 grid gap-3 sm:grid-cols-2">
                 {SERVICES.map((s) => {
-                  const selected = mobility === (s.slug as MobilityType);
+                  const selected = mobility === s.slug;
                   return (
                     <label
                       key={s.slug}
@@ -258,7 +280,7 @@ export default function BookPage() {
                         name="mobility"
                         value={s.slug}
                         checked={selected}
-                        onChange={() => setMobility(s.slug as MobilityType)}
+                        onChange={() => setMobility(s.slug)}
                         className="sr-only"
                       />
                       <span className={selected ? "text-green" : "text-blue"}>
@@ -453,7 +475,9 @@ export default function BookPage() {
                     className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-[0.95rem] focus:border-blue"
                   />
                   <p className="mt-1.5 text-[0.82rem] text-slate-soft">
-                    24 hours&rsquo; notice for routine trips. Discharges: call dispatch.
+                    {isCourier
+                      ? "Routine runs are scheduled same day. Choose STAT for pickup within 30 minutes."
+                      : "24 hours’ notice for routine trips. Discharges: call dispatch."}
                   </p>
                 </div>
 
@@ -468,32 +492,50 @@ export default function BookPage() {
                     />
                     Round trip (return pickup)
                   </label>
-                  <label className="mt-2.5 flex items-center gap-2.5 text-[0.95rem] text-ink">
-                    <input
-                      type="checkbox"
-                      checked={escort}
-                      onChange={(e) => setEscort(e.target.checked)}
-                      className="h-5 w-5 rounded border-line"
-                    />
-                    One escort riding along (free)
-                  </label>
+                  {isCourier ? (
+                    <label className="mt-2.5 flex items-center gap-2.5 text-[0.95rem] text-ink">
+                      <input
+                        type="checkbox"
+                        checked={stat}
+                        onChange={(e) => setStat(e.target.checked)}
+                        className="h-5 w-5 rounded border-line"
+                      />
+                      STAT pickup within 30 minutes (+${COURIER_STAT_FEE})
+                    </label>
+                  ) : (
+                    <label className="mt-2.5 flex items-center gap-2.5 text-[0.95rem] text-ink">
+                      <input
+                        type="checkbox"
+                        checked={escort}
+                        onChange={(e) => setEscort(e.target.checked)}
+                        className="h-5 w-5 rounded border-line"
+                      />
+                      One escort riding along (free)
+                    </label>
+                  )}
                 </fieldset>
               </div>
 
               <div className="mt-5">
                 <label htmlFor="notes" className="block text-[0.92rem] font-semibold text-deep">
-                  Anything the driver should know?
+                  {isCourier ? "Handling notes" : "Anything the driver should know?"}
                 </label>
                 <textarea
                   id="notes"
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   rows={3}
-                  placeholder="Stairs at the entrance, oxygen tank, preferred door…"
+                  placeholder={
+                    isCourier
+                      ? "Refrigerated tote, loading dock entrance, who signs at drop-off…"
+                      : "Stairs at the entrance, oxygen tank, preferred door…"
+                  }
                   className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-[0.95rem] focus:border-blue"
                 />
                 <p className="mt-1.5 text-[0.82rem] text-slate-soft">
-                  Access and equipment notes only. Don&rsquo;t include diagnoses here.
+                  {isCourier
+                    ? "Use an order or specimen ID. Don’t include patient names or diagnoses."
+                    : "Access and equipment notes only. Don’t include diagnoses here."}
                 </p>
               </div>
             </div>
@@ -539,10 +581,19 @@ export default function BookPage() {
                         </dd>
                       </div>
                     )}
-                    <div className="flex justify-between gap-4">
-                      <dt className="text-slate-soft">Escort</dt>
-                      <dd className="font-semibold text-green">{escort ? "Included" : "Not added"}</dd>
-                    </div>
+                    {isCourier ? (
+                      <div className="flex justify-between gap-4">
+                        <dt className="text-slate-soft">STAT dispatch</dt>
+                        <dd className="tabular font-semibold text-deep">
+                          {stat ? `$${quote.rushFee.toFixed(2)}` : "Not added"}
+                        </dd>
+                      </div>
+                    ) : (
+                      <div className="flex justify-between gap-4">
+                        <dt className="text-slate-soft">Escort</dt>
+                        <dd className="font-semibold text-green">{escort ? "Included" : "Not added"}</dd>
+                      </div>
+                    )}
                     <div className="flex justify-between gap-4 border-t border-line pt-3">
                       <dt className="font-bold text-deep">Total</dt>
                       <dd className="tabular font-display text-[1.3rem] font-extrabold text-deep">
@@ -552,26 +603,29 @@ export default function BookPage() {
                   </dl>
 
                   <p className="mt-5 rounded-lg bg-mist px-4 py-3.5 text-[0.88rem] leading-relaxed text-deep">
-                    Covered by Medicaid managed care or an NEMT broker? Most riders pay nothing.
-                    Enter your member ID at confirmation and we verify eligibility before the trip
-                    rather than billing you after it.
+                    {isCourier
+                      ? "Facility accounts are invoiced monthly, and a signed Business Associate Agreement is available before your first run."
+                      : "Covered by Medicaid managed care or an NEMT broker? Most riders pay nothing. Enter your member ID at confirmation and we verify eligibility before the trip rather than billing you after it."}
                   </p>
 
-                  <div className="mt-6 rounded-xl border-2 border-amber/30 bg-amber-tint px-4 py-4">
-                    <p className="text-[0.9rem] font-bold text-deep">This is a demonstration</p>
-                    <p className="mt-1 text-[0.9rem] leading-relaxed text-slate-soft">
-                      Nothing is submitted and no booking is created. On a live site this button
-                      would reserve the vehicle and text you a tracking link.
-                    </p>
-                    <button
-                      type="button"
-                      disabled
-                      className="mt-4 w-full cursor-not-allowed rounded-full bg-slate-soft/30 px-6 py-3.5 font-bold text-slate-soft"
-                    >
-                      Confirm booking (disabled in demo)
-                    </button>
+                  <div className="mt-6">
+                    <ConfirmBookingButton
+                      prefill={{
+                        serviceSlug: service.slug,
+                        trip: {
+                          pickup: pickupMode === "saved" ? placeLine(pickupId) : customAddress,
+                          dropoff: placeLine(dropoffId),
+                          when,
+                          roundTrip,
+                          escort: !isCourier && escort,
+                          stat: isCourier && stat,
+                          notes,
+                        },
+                      }}
+                    />
                     <p className="mt-3 text-center text-[0.88rem] text-slate-soft">
-                      To book for real, call{" "}
+                      Next we&rsquo;ll ask where to reach you. Dispatch calls to lock in your pickup
+                      window. Prefer the phone? Call{" "}
                       <a href={`tel:${COMPANY.phoneHref}`} className="font-semibold text-blue-ink hover:underline">
                         {COMPANY.phone}
                       </a>
@@ -606,11 +660,7 @@ export default function BookPage() {
               >
                 {geoStatus === "resolving" ? "Looking up address…" : "Continue"}
               </button>
-            ) : (
-              <Link href="/track" className="font-semibold text-blue-ink hover:underline">
-                See how tracking works →
-              </Link>
-            )}
+            ) : null}
           </div>
         </div>
       </section>

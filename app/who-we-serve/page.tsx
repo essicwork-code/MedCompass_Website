@@ -6,7 +6,7 @@ import { SEGMENTS } from "@/lib/content";
 export const metadata: Metadata = {
   title: "Who we serve",
   description:
-    "NEMT for families, hospital discharge planners, dialysis centers and skilled nursing facilities across Chicagoland.",
+    "NEMT for families, hospital discharge planners, dialysis centers, skilled nursing facilities and lab/pharmacy courier accounts across Chicagoland.",
 };
 
 export default function WhoWeServePage() {
@@ -14,8 +14,8 @@ export default function WhoWeServePage() {
     <MarketingShell>
       <PageHero
         eyebrow="Who we serve"
-        title="Four people call us, and they want different things"
-        lede="A daughter wants to know her mother arrived. A discharge planner wants the bed back. A dialysis coordinator wants the chair to turn on time. We built for each of them rather than averaging them into 'patients'."
+        title="Five kinds of callers, and they all want something different"
+        lede="A daughter wants to know her mother arrived. A discharge planner wants the bed back. A dialysis coordinator wants the chair to turn on time. A lab wants the specimen there before the batch closes. We built for each of them rather than averaging them into 'patients.'"
       />
 
       <div className="mx-auto max-w-7xl space-y-6 px-4 py-14">
@@ -48,8 +48,8 @@ export default function WhoWeServePage() {
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-[1.02rem] leading-relaxed text-white/75">
             Facility accounts get a direct dispatch line, consolidated monthly invoicing, bulk
-            scheduling for recurring trips, and a portal showing every trip your unit has booked
-            today with its live status.
+            scheduling for recurring trips, and a named dispatcher who already has every trip your
+            unit has booked today.
           </p>
           <Link
             href="/facilities"

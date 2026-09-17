@@ -61,5 +61,13 @@ export default function ServiceIcon({
           <path d="M10 19l-1 9M22 19l1 9" />
         </svg>
       );
+    case "courier":
+      return (
+        <svg {...common}>
+          <path d="M4 11l12-6 12 6-12 6-12-6z" />
+          <path d="M4 11v10l12 6 12-6V11" />
+          <path d="M16 17v10" />
+        </svg>
+      );
   }
 }

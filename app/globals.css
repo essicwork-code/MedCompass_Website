@@ -122,6 +122,64 @@
   }
 }
 
+/*
+ * Scroll reveal — the one motion budget line item used site-wide (per
+ * CLAUDE.md §4, a quiet supporting moment, not the signature). Starts
+ * slightly down and transparent, settles on intersection. Transform/opacity
+ * only, per the §3 floor.
+ */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/*
+ * The signature moment: a dispatch route travelling down the hero, drawn
+ * once on load via stroke-dashoffset. Decorative only — it never implies a
+ * live vehicle position, just the idea of a confirmed route from A to B.
+ */
+@keyframes draw-route {
+  to { stroke-dashoffset: 0; }
+}
+.route-draw path {
+  stroke-dasharray: 900;
+  stroke-dashoffset: 900;
+  animation: draw-route 2.4s cubic-bezier(0.65, 0, 0.35, 1) 0.2s forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .route-draw path {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+}
+
+@keyframes route-dot-travel {
+  0% { offset-distance: 0%; opacity: 0; }
+  8% { opacity: 1; }
+  100% { offset-distance: 100%; opacity: 1; }
+}
+
+/* Hover lift used across cards — kept as one utility so the easing matches. */
+.lift-on-hover {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+}
+.lift-on-hover:hover {
+  transform: translateY(-4px);
+}
+
 /* Leaflet ships its own focus styles that fail contrast; align them to ours. */
 .leaflet-container a:focus-visible,
 .leaflet-container button:focus-visible {
@@ -151,3 +209,108 @@
   font-family: var(--font-sans);
   background: #dfe9f0;
 }
+
+/*
+ * Booking modal (components/BookingModal.tsx). Built on native <dialog> for
+ * its built-in focus trap / Escape / tab-order-when-closed behaviour — the
+ * CSS here is purely presentational. Motion is transform/opacity only, per
+ * the §3 floor, and the blanket prefers-reduced-motion rule above already
+ * neutralizes every animation in this block.
+ */
+.booking-dialog {
+  /*
+   * Tailwind's preflight reset zeroes out the margin the UA stylesheet
+   * normally uses to center a modal <dialog>, so centering is spelled out
+   * explicitly here rather than relied on implicitly.
+   */
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  border: none;
+  border-radius: 20px;
+  padding: 0;
+  width: calc(100vw - 2rem);
+  max-width: 34rem;
+  max-height: calc(100dvh - 3rem);
+  overflow: hidden;
+  color: var(--color-ink);
+  box-shadow: 0 30px 80px -20px rgb(16 34 46 / 0.45);
+}
+.booking-dialog::backdrop {
+  background: rgb(16 34 46 / 0.55);
+}
+.booking-dialog[open] {
+  animation: booking-dialog-in 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.booking-dialog[open]::backdrop {
+  animation: booking-dialog-backdrop-in 0.32s ease;
+}
+@keyframes booking-dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes booking-dialog-backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Success-state checkmark: same draw-on technique as .route-draw above. */
+@keyframes booking-check-circle-in {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.booking-check-circle {
+  transform-origin: center;
+  animation: booking-check-circle-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes booking-check-draw {
+  to { stroke-dashoffset: 0; }
+}
+.booking-check path {
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: booking-check-draw 0.45s cubic-bezier(0.65, 0, 0.35, 1) 0.15s forwards;
+}
+
+/*
+ * Chat widget: the panel rises in, new messages settle in, and the typing
+ * indicator bobs. Transform/opacity only; the blanket reduced-motion rule
+ * above flattens all three to instant, and the indicator keeps its
+ * screen-reader text either way.
+ */
+@keyframes chat-panel-in {
+  from { opacity: 0; transform: translateY(14px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.chat-panel-in {
+  transform-origin: bottom right;
+  animation: chat-panel-in 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes chat-msg-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.chat-msg-in {
+  animation: chat-msg-in 0.22s ease-out;
+}
+@keyframes chat-typing {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.45; }
+  30% { transform: translateY(-3px); opacity: 1; }
+}
+.chat-typing-dot {
+  animation: chat-typing 1s ease-in-out infinite;
+}
+.chat-typing-dot:nth-child(2) { animation-delay: 0.15s; }
+.chat-typing-dot:nth-child(3) { animation-delay: 0.3s; }

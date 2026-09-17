@@ -4,10 +4,10 @@ import Link from "next/link";
 import { useState } from "react";
 import MarketingShell, { PageHero } from "@/components/MarketingShell";
 import ServiceIcon from "@/components/ServiceIcon";
-import { SERVICES } from "@/lib/content";
+import BookARideButton from "@/components/BookARideButton";
+import { COURIER_STAT_FEE, SERVICES, type ServiceSlug } from "@/lib/content";
 import { COMPANY, PLACES } from "@/lib/demo/data";
 import { computeQuote } from "@/lib/quote";
-import type { MobilityType } from "@/lib/demo/types";
 
 /*
  * A no-commitment estimate, separate from the booking wizard.
@@ -22,15 +22,17 @@ import type { MobilityType } from "@/lib/demo/types";
 const PLACE_OPTIONS = Object.values(PLACES);
 
 export default function CostCalculatorPage() {
-  const [mobility, setMobility] = useState<MobilityType>("wheelchair");
+  const [mobility, setMobility] = useState<ServiceSlug>("wheelchair");
   const [pickupId, setPickupId] = useState("");
   const [dropoffId, setDropoffId] = useState("");
   const [roundTrip, setRoundTrip] = useState(false);
+  const [stat, setStat] = useState(false);
 
   const service = SERVICES.find((s) => s.slug === mobility)!;
+  const isCourier = mobility === "courier";
   const pickup = PLACES[pickupId];
   const dropoff = PLACES[dropoffId];
-  const quote = pickup && dropoff ? computeQuote(service, pickup.coord, dropoff.coord, roundTrip) : null;
+  const quote = pickup && dropoff ? computeQuote(service, pickup.coord, dropoff.coord, roundTrip, stat) : null;
 
   return (
     <MarketingShell>
@@ -46,7 +48,7 @@ export default function CostCalculatorPage() {
             <legend className="font-display text-[1.05rem] font-bold text-deep">Service type</legend>
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
               {SERVICES.map((s) => {
-                const selected = mobility === (s.slug as MobilityType);
+                const selected = mobility === s.slug;
                 return (
                   <label
                     key={s.slug}
@@ -59,7 +61,7 @@ export default function CostCalculatorPage() {
                       name="mobility"
                       value={s.slug}
                       checked={selected}
-                      onChange={() => setMobility(s.slug as MobilityType)}
+                      onChange={() => setMobility(s.slug)}
                       className="sr-only"
                     />
                     <span className={selected ? "text-green" : "text-blue"}>
@@ -126,6 +128,17 @@ export default function CostCalculatorPage() {
             />
             Round trip (return pickup)
           </label>
+          {isCourier && (
+            <label className="mt-3 flex items-center gap-2.5 text-[0.95rem] text-ink">
+              <input
+                type="checkbox"
+                checked={stat}
+                onChange={(e) => setStat(e.target.checked)}
+                className="h-5 w-5 rounded border-line"
+              />
+              STAT pickup within 30 minutes (+${COURIER_STAT_FEE})
+            </label>
+          )}
 
           <p className="mt-6 text-[0.85rem] leading-relaxed text-slate-soft">
             Estimates use straight-line distance between the two points with a 25% adjustment for
@@ -173,19 +186,26 @@ export default function CostCalculatorPage() {
                     <dd className="tabular font-semibold text-deep">${quote.oneWay.toFixed(2)}</dd>
                   </div>
                 )}
+                {quote.rushFee > 0 && (
+                  <div className="flex justify-between gap-3">
+                    <dt className="text-slate-soft">STAT dispatch</dt>
+                    <dd className="tabular font-semibold text-deep">${quote.rushFee.toFixed(2)}</dd>
+                  </div>
+                )}
               </dl>
 
               <p className="mt-5 rounded-lg bg-mist px-3.5 py-3 text-[0.85rem] leading-relaxed text-deep">
-                Covered by Medicaid managed care or an NEMT broker? Most riders pay nothing toward
-                this.
+                {isCourier
+                  ? "Facility accounts can run standing courier routes on a monthly invoice."
+                  : "Covered by Medicaid managed care or an NEMT broker? Most riders pay nothing toward this."}
               </p>
 
-              <Link
-                href="/book"
-                className="mt-5 block rounded-full bg-green px-5 py-3 text-center font-bold text-white hover:bg-[#4d8f28]"
+              <BookARideButton
+                serviceSlug={service.slug}
+                className="mt-5 block w-full rounded-full bg-green px-5 py-3 text-center font-bold text-white hover:bg-[#4d8f28]"
               >
-                Book this ride
-              </Link>
+                {isCourier ? "Book this pickup" : "Book this ride"}
+              </BookARideButton>
             </>
           ) : (
             <>

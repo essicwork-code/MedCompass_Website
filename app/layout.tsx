@@ -26,11 +26,11 @@ export const metadata: Metadata = {
     template: `%s · ${COMPANY.name}`,
   },
   description:
-    "Wheelchair, ambulatory, stretcher and bariatric medical transportation across Chicago and the western suburbs. Track your ride live from booking to arrival.",
+    "Wheelchair, ambulatory, stretcher and bariatric medical transportation, plus medical courier service, across Chicago and the western suburbs. Reliable, on-time, door-through-door service.",
   openGraph: {
-    title: `${COMPANY.name}. Track your ride, not just book it`,
+    title: `${COMPANY.name}. Reliable rides, booked in minutes`,
     description:
-      "Chicagoland non-emergency medical transportation with live vehicle tracking for families and facilities.",
+      "Chicagoland non-emergency medical transportation and medical courier service for families, facilities, labs and pharmacies, with on-time pickup and door-through-door service.",
     type: "website",
   },
 };

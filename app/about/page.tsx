@@ -1,13 +1,14 @@
 import Image from "next/image";
 import type { Metadata } from "next";
 import MarketingShell, { PageHero } from "@/components/MarketingShell";
-import { COMPANY, DRIVERS, VEHICLES } from "@/lib/demo/data";
+import { COMPANY } from "@/lib/demo/data";
 import { STATS } from "@/lib/content";
+import { asset } from "@/lib/asset";
 
 export const metadata: Metadata = {
   title: "About",
   description:
-    "MedCompass is a Chicagoland non-emergency medical transportation company built around live tracking and on-time arrival.",
+    "Ride MedCompass is a Chicagoland non-emergency medical transportation company built around reliable, on-time, door-through-door service.",
 };
 
 export default function AboutPage() {
@@ -28,10 +29,11 @@ export default function AboutPage() {
               actually being kept.
             </p>
             <p className="mt-5 text-[1.02rem] leading-relaxed text-slate-soft">
-              So we built the tracking first. Before the brochure, before the fleet livery, before
-              the phone system. Every MedCompass trip produces a live position and an arrival time
-              that the rider, their family, and the facility can all see at once. It turns out that
-              when everyone can see the same thing, most of the phone calls stop.
+              So we built the reliability first. Before the brochure, before the fleet livery,
+              before the phone system. Every Ride MedCompass trip runs on a confirmed pickup window and
+              a driver who calls when they're close, so the rider, their family, and the facility
+              are never left guessing. It turns out that when everyone hears the same thing, most
+              of the follow-up calls stop.
             </p>
             <p className="mt-5 text-[1.02rem] leading-relaxed text-slate-soft">
               The rest follows from that. Drivers stay with the same standing orders so riders see a
@@ -47,7 +49,7 @@ export default function AboutPage() {
                 ["Drivers, not contractors", "Every driver is an employee, background-checked, CPR/AED certified, and trained on securement for the equipment they carry."],
                 ["Same driver where we can", "Standing orders are assigned to a consistent driver and van. For a rider with dementia, a familiar face is not a nicety."],
                 ["Inspection on a schedule, not on failure", "Lifts and securement hardware are inspected monthly and logged. The dates are visible on our dispatch board."],
-                ["Privacy by construction", "Tracking links carry a van and an arrival time. They never carry a name, a condition, or a destination facility, so forwarding one gives nothing away."],
+                ["Privacy by construction", "Pickup and dropoff details stay between dispatch, the driver, and the rider. Nothing about a rider's condition or destination facility gets shared beyond what's needed to complete the trip."],
               ].map(([h, d]) => (
                 <li key={h}>
                   <h3 className="font-display text-[1.05rem] font-bold text-deep">{h}</h3>
@@ -60,8 +62,8 @@ export default function AboutPage() {
           <aside className="space-y-6">
             <div className="overflow-hidden rounded-2xl border border-line">
               <Image
-                src="/brand/van-side.jpg"
-                alt="A MedCompass wheelchair-accessible van"
+                src={asset("/brand/van-side.jpg")}
+                alt="A Ride MedCompass wheelchair-accessible van"
                 width={1156}
                 height={419}
                 className="h-auto w-full"
@@ -71,8 +73,8 @@ export default function AboutPage() {
             <dl className="grid grid-cols-2 gap-3">
               {[
                 ...STATS.slice(0, 2),
-                { value: String(VEHICLES.length), label: "vans in the fleet" },
-                { value: String(DRIVERS.length), label: "drivers on staff" },
+                { value: "6", label: "vans in the fleet" },
+                { value: "6", label: "drivers on staff" },
               ].map((s) => (
                 <div
                   key={s.label}

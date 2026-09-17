@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
 import { COMPANY } from "@/lib/demo/data";
+import { useBookingModal } from "./BookingModalProvider";
 
 const NAV = [
   { href: "/services", label: "Services" },
@@ -16,6 +17,7 @@ export default function SiteHeader() {
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { open: openBookingModal } = useBookingModal();
 
   // Sticky header that yields on scroll-down and returns on scroll-up.
   // Sanctioned in CLAUDE.md §4: cheap, reversible, useful on long pages.
@@ -38,7 +40,7 @@ export default function SiteHeader() {
         hidden ? "-translate-y-full" : "translate-y-0"
       }`}
     >
-      {/* Utility bar: the phone number stays reachable for callers who will never use the portal. */}
+      {/* Utility bar: the phone number stays reachable for callers. */}
       <div className="bg-deep text-white">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2 text-[0.8rem]">
           <p className="hidden sm:block text-white/80">{COMPANY.hours}</p>
@@ -49,12 +51,6 @@ export default function SiteHeader() {
             >
               Dispatch {COMPANY.phone}
             </a>
-            <Link
-              href="/portal"
-              className="hidden sm:inline text-[0.95rem] font-semibold text-white/90 hover:text-lime"
-            >
-              Client sign in
-            </Link>
           </div>
         </div>
       </div>
@@ -74,9 +70,13 @@ export default function SiteHeader() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="whitespace-nowrap text-[0.95rem] font-medium text-slate-soft hover:text-deep"
+                className="group relative whitespace-nowrap py-1 text-[0.95rem] font-medium text-slate-soft hover:text-deep"
               >
                 {item.label}
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-x-0 -bottom-0.5 h-0.5 origin-left scale-x-0 rounded-full bg-green transition-transform duration-200 group-hover:scale-x-100"
+                />
               </Link>
             ))}
           </nav>
@@ -88,28 +88,23 @@ export default function SiteHeader() {
             letting the row scroll or the logo yield space first.
           */}
           <div className="flex shrink-0 items-center gap-2 sm:gap-2.5">
-            <Link
-              href="/track"
-              className="hidden shrink-0 items-center gap-2 whitespace-nowrap rounded-full border-2 border-blue px-4 py-2 text-[0.9rem] font-semibold text-blue-ink hover:bg-mist sm:inline-flex"
+            <button
+              type="button"
+              onClick={() => openBookingModal()}
+              className="inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-full bg-green px-4 py-2.5 text-[0.88rem] font-bold text-white hover:bg-[#4d8f28] sm:px-5 sm:text-[0.9rem]"
             >
-              <span className="relative flex h-2 w-2">
-                <span className="pulse-ring absolute inline-flex h-2 w-2 rounded-full bg-green" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-green" />
+              {/* Under 360px the full label doesn't fit beside the logo; the
+                  accessible name stays "Book a ride" either way. */}
+              <span>
+                Book<span className="max-[359px]:sr-only"> a ride</span>
               </span>
-              Track a ride
-            </Link>
-            <Link
-              href="/book"
-              className="inline-flex shrink-0 items-center whitespace-nowrap rounded-full bg-green px-4 py-2.5 text-[0.88rem] font-bold text-white hover:bg-[#4d8f28] sm:px-5 sm:text-[0.9rem]"
-            >
-              Book a ride
-            </Link>
+            </button>
             <button
               type="button"
               onClick={() => setMenuOpen((v) => !v)}
               aria-expanded={menuOpen}
               aria-controls="mobile-nav"
-              className="lg:hidden ml-1 rounded-md p-2 text-deep"
+              className="lg:hidden grid h-11 w-11 place-items-center rounded-md text-deep"
             >
               <span className="sr-only">{menuOpen ? "Close menu" : "Open menu"}</span>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -125,7 +120,7 @@ export default function SiteHeader() {
 
         {menuOpen && (
           <nav id="mobile-nav" aria-label="Mobile" className="lg:hidden border-t border-line bg-white px-4 py-3">
-            {[...NAV, { href: "/track", label: "Track a ride" }, { href: "/portal", label: "Client sign in" }].map(
+            {NAV.map(
               (item) => (
                 <Link
                   key={item.href}

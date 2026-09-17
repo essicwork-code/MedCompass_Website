@@ -84,17 +84,9 @@ export default function HospitalDischargeGuidePage() {
 
         <h2>Once the trip starts</h2>
         <p>
-          Whoever is listed as the contact gets a live tracking link by text: the van's position, an
-          arrival estimate, and the driver's first name, updating in real time until the patient is
-          delivered. See how that actually looks on the{" "}
-          <Link href="/track" className="font-semibold text-blue-ink hover:underline">
-            tracking page
-          </Link>
-          , or read how the link is built to protect the patient's privacy on our{" "}
-          <Link href="/privacy" className="font-semibold text-blue-ink hover:underline">
-            privacy page
-          </Link>
-          .
+          Whoever is listed as the contact gets a text confirming the driver and van assigned to
+          the pickup, plus a call from the driver on approach. If the pickup runs early or late,
+          dispatch calls the listed contact directly rather than leaving them to guess.
         </p>
 
         <h2>For discharge planners booking regularly</h2>
@@ -103,8 +95,8 @@ export default function HospitalDischargeGuidePage() {
           <Link href="/facilities" className="font-semibold text-blue-ink hover:underline">
             facility account
           </Link>{" "}
-          gets you a direct dispatch line and a live board showing every trip your unit has booked
-          today, so you stop calling to ask where a van is.
+          gets you a direct dispatch line and a named dispatcher who already has every trip your
+          unit has booked today, so you stop calling to ask where a van is.
         </p>
       </Prose>
     </MarketingShell>

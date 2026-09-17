@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { asset } from "@/lib/asset";
 
 /*
  * Assets are generated from the source artwork in /Assets by
@@ -15,7 +16,7 @@ const MARK_RATIO = 320 / 258;
 export function CompassMark({ size = 40, className }: { size?: number; className?: string }) {
   return (
     <Image
-      src="/brand/compass-mark.png"
+      src={asset("/brand/compass-mark.png")}
       alt=""
       width={size}
       height={Math.round(size / MARK_RATIO)}
@@ -31,9 +32,20 @@ export function Logo({ className, invert = false }: { className?: string; invert
   return (
     <span className={`inline-flex items-center gap-1.5 sm:gap-2 ${className ?? ""}`}>
       <CompassMark size={44} className="h-8 w-auto shrink-0 sm:h-11" />
-      <span className="font-display text-[1.15rem] font-extrabold leading-none tracking-[-0.03em] sm:text-[1.4rem]">
-        <span className={invert ? "text-sky" : "text-blue"}>Med</span>
-        <span className={invert ? "text-lime" : "text-green"}>Compass</span>
+      <span className="flex flex-col leading-none">
+        {/* "Ride" is the lead-in verb — small, spaced out, lime — read first
+            like a dispatch call sign sitting above the company name. */}
+        <span
+          className={`text-[0.62rem] font-bold uppercase tracking-[0.22em] sm:text-[0.7rem] ${
+            invert ? "text-lime" : "text-moss-ink"
+          }`}
+        >
+          Ride
+        </span>
+        <span className="font-display text-[1.1rem] font-extrabold tracking-[-0.03em] sm:text-[1.32rem]">
+          <span className={invert ? "text-sky" : "text-blue"}>Med</span>
+          <span className={invert ? "text-lime" : "text-green"}>Compass</span>
+        </span>
       </span>
     </span>
   );
@@ -43,8 +55,8 @@ export function Logo({ className, invert = false }: { className?: string; invert
 export function LogoLockup({ width = 260, className }: { width?: number; className?: string }) {
   return (
     <Image
-      src="/brand/medcompass-logo.png"
-      alt="MedCompass"
+      src={asset("/brand/medcompass-logo.png")}
+      alt="Ride MedCompass"
       width={width}
       height={Math.round(width * 0.8)}
       className={className}

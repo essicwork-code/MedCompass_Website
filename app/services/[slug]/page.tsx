@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import MarketingShell, { PageHero } from "@/components/MarketingShell";
 import ServiceIcon from "@/components/ServiceIcon";
+import BookARideButton from "@/components/BookARideButton";
 import { SERVICES, SERVICE_BY_SLUG } from "@/lib/content";
 import { COMPANY } from "@/lib/demo/data";
 
@@ -18,6 +18,14 @@ const ALIASES: Record<string, { title: string; body: string; base: string }> = {
     base: "wheelchair",
   },
 };
+
+/** The default steps assume a patient is riding along; courier moves items, not people. */
+const COURIER_STEPS: [string, string][] = [
+  ["Call or fax it in", "Give dispatch the pickup, the drop-off, and whether it's routine or STAT."],
+  ["Driver signs at pickup", "Every item is logged with a signature and a time stamp before it leaves the building."],
+  ["Direct to destination", "No shared stops. The van goes straight from pickup to drop-off."],
+  ["Signed off at delivery", "A second signature closes the chain of custody, and we text the sender it arrived."],
+];
 
 export function generateStaticParams() {
   return [...SERVICES.map((s) => ({ slug: s.slug })), ...Object.keys(ALIASES).map((slug) => ({ slug }))];
@@ -48,6 +56,7 @@ export default async function ServiceDetailPage({
 
   const title = alias?.title ?? service.name;
   const body = alias?.body ?? service.description;
+  const isCourier = service.slug === "courier";
 
   return (
     <MarketingShell>
@@ -71,12 +80,15 @@ export default async function ServiceDetailPage({
             How the trip runs
           </h2>
           <ol className="mt-5 space-y-5">
-            {[
-              ["Confirmation the night before", "A text confirms the pickup window, the driver's name, and the unit number of the van."],
-              ["Driver arrives and comes to the door", "No curbside drop-offs. The driver comes to the door and walks the rider out."],
-              ["Live tracking goes out", "Whoever is on the account gets a link. Forward it to family. It shows the van and the arrival time, nothing private."],
-              ["Hand-off at the desk", "The rider is handed to reception, not left in a lobby. We text you when they're inside."],
-            ].map(([heading, detail], i) => (
+            {(isCourier
+              ? COURIER_STEPS
+              : ([
+                  ["Confirmation the night before", "A text confirms the pickup window, the driver's name, and the unit number of the van."],
+                  ["Driver arrives and comes to the door", "No curbside drop-offs. The driver comes to the door and walks the rider out."],
+                  ["Status updates as the trip runs", "Whoever is on the account gets a text when the driver is dispatched, when they arrive, and when the rider is delivered."],
+                  ["Hand-off at the desk", "The rider is handed to reception, not left in a lobby. We text you when they're inside."],
+                ] as [string, string][])
+            ).map(([heading, detail], i) => (
               <li key={heading} className="flex gap-4">
                 <span className="tabular grid h-8 w-8 shrink-0 place-items-center rounded-full bg-deep text-[0.9rem] font-bold text-white">
                   {i + 1}
@@ -104,12 +116,12 @@ export default async function ServiceDetailPage({
             plus ${service.perMile.toFixed(2)} per mile
           </p>
 
-          <Link
-            href="/book"
-            className="mt-6 block rounded-full bg-green px-5 py-3.5 text-center font-bold text-white hover:bg-[#4d8f28]"
+          <BookARideButton
+            serviceSlug={service.slug}
+            className="mt-6 block w-full rounded-full bg-green px-5 py-3.5 text-center font-bold text-white hover:bg-[#4d8f28]"
           >
             Get a quote
-          </Link>
+          </BookARideButton>
           <a
             href={`tel:${COMPANY.phoneHref}`}
             className="mt-2.5 block rounded-full border-2 border-deep px-5 py-3.5 text-center font-bold text-deep hover:bg-bone"
@@ -118,8 +130,9 @@ export default async function ServiceDetailPage({
           </a>
 
           <p className="mt-5 border-t border-line pt-5 text-[0.88rem] leading-relaxed text-slate-soft">
-            Covered by Medicaid managed care or an NEMT broker? Most riders pay nothing. We verify
-            eligibility before the trip.
+            {isCourier
+              ? "STAT pickups dispatch within 30 minutes for a $25 rush fee. Facility accounts can set up standing courier routes on an invoice."
+              : "Covered by Medicaid managed care or an NEMT broker? Most riders pay nothing. We verify eligibility before the trip."}
           </p>
         </aside>
       </div>

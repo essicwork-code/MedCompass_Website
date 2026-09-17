@@ -1,13 +1,14 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import MarketingShell, { PageHero } from "@/components/MarketingShell";
+import BookARideButton from "@/components/BookARideButton";
 import { FAQS, SERVICES } from "@/lib/content";
 import { COMPANY } from "@/lib/demo/data";
 
 export const metadata: Metadata = {
   title: "Pricing & insurance",
   description:
-    "Published NEMT rates for Chicagoland covering wheelchair, ambulatory, stretcher and bariatric transport, plus Medicaid and broker billing.",
+    "Published NEMT rates for Chicagoland covering wheelchair, ambulatory, stretcher, bariatric transport and medical courier service, plus Medicaid and broker billing.",
 };
 
 /** Representative trips so a rate table turns into a number people recognise. */
@@ -121,12 +122,9 @@ export default function PricingPage() {
           </div>
 
           <div className="mt-8 flex flex-wrap gap-3 border-t border-line pt-7">
-            <Link
-              href="/book"
-              className="rounded-full bg-green px-7 py-3.5 font-bold text-white hover:bg-[#4d8f28]"
-            >
+            <BookARideButton className="rounded-full bg-green px-7 py-3.5 font-bold text-white hover:bg-[#4d8f28]">
               Get an exact quote
-            </Link>
+            </BookARideButton>
             <a
               href={`tel:${COMPANY.phoneHref}`}
               className="rounded-full border-2 border-deep px-7 py-3.5 font-bold text-deep hover:bg-bone"

@@ -38,7 +38,10 @@ export default function CoverageMap() {
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+        // CARTO now watermarks keyless tiles "API KEY REQUIRED"; OSM's
+        // standard tiles need no key. Only z/x/y leave the browser.
+        url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+        maxZoom={19}
       />
 
       <Circle

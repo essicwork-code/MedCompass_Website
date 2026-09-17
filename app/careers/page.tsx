@@ -2,17 +2,23 @@
 
 import { useState } from "react";
 import MarketingShell, { PageHero } from "@/components/MarketingShell";
-import { COMPANY, DRIVERS } from "@/lib/demo/data";
+import { COMPANY } from "@/lib/demo/data";
+import { sendFormEmail } from "@/lib/emailjs";
+import { dispatchMailto, formValue } from "@/lib/mailto";
 
 /*
  * Driver recruitment page.
  *
  * A gap the site had until now: zero presence for the people who actually
- * drive the vans. The testimonials use two of the fixture drivers already
- * defined in lib/demo/data.ts rather than inventing new named people, so the
- * roster stays internally consistent instead of accumulating a second cast
- * of characters nobody else references.
+ * drive the vans. The testimonials below use two invented driver profiles
+ * kept local to this page rather than a shared fixture, since nothing else
+ * on the site references named drivers anymore.
  */
+
+const SPOTLIGHT_DRIVERS = [
+  { initials: "MW", name: "Marcus Whitfield", tenureYears: 6 },
+  { initials: "RD", name: "Rosa Delgado", tenureYears: 4 },
+];
 
 const REQUIREMENTS = [
   "Valid driver's license with a clean record for at least 3 years",
@@ -55,7 +61,7 @@ const JOB_POSTINGS: JobPosting[] = [
   {
     title: "Wheelchair Van Driver",
     type: "Full-time · Employee (W-2)",
-    pay: "$19–$23/hr, plus paid certification training",
+    pay: "$19-$23/hr, plus paid certification training",
     location: "Routes across Chicago and the western suburbs, based out of our Cicero facility",
     summary:
       "Drive a wheelchair-accessible van on scheduled routes, including standing dialysis and discharge trips. Most shifts follow a predictable weekly pattern rather than random on-demand pings.",
@@ -76,7 +82,7 @@ const JOB_POSTINGS: JobPosting[] = [
   {
     title: "Stretcher Attendant",
     type: "Full-time · Employee (W-2)",
-    pay: "$21–$26/hr, plus paid certification training",
+    pay: "$21-$26/hr, plus paid certification training",
     location: "Hospital and facility transfers across Chicagoland",
     summary:
       "Work as part of a two-person stretcher team handling hospital discharges and inter-facility transfers, including stair carries where building access requires it.",
@@ -97,14 +103,14 @@ const JOB_POSTINGS: JobPosting[] = [
   {
     title: "Dispatcher",
     type: "Full-time · Employee (W-2)",
-    pay: "$20–$25/hr, depending on experience",
+    pay: "$20-$25/hr, depending on experience",
     location: "Cicero dispatch desk, some remote flexibility after training",
     summary:
       "Run the live dispatch board: assign drivers and vehicles to trips, monitor the fleet map, and handle facility calls when a coordinator needs a status update.",
     responsibilities: [
       "Assign drivers and vehicles to scheduled and same-day trips",
       "Monitor the live fleet map and flag delays before a rider has to ask",
-      "Answer the facility and discharge line and update coordinators directly",
+      "Answer facility calls and update coordinators directly",
       "Escalate access or equipment issues to a supervisor",
       "Keep trip records accurate for billing and compliance",
     ],
@@ -118,15 +124,14 @@ const JOB_POSTINGS: JobPosting[] = [
 ];
 
 export default function CareersPage() {
-  const [submitted, setSubmitted] = useState(false);
-  const spotlight = DRIVERS.find((d) => d.id === "d1")!;
-  const second = DRIVERS.find((d) => d.id === "d2")!;
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "fallback">("idle");
+  const [spotlight, second] = SPOTLIGHT_DRIVERS;
 
   return (
     <MarketingShell>
       <PageHero
         eyebrow="Careers"
-        title="Drive for MedCompass"
+        title="Drive for Ride MedCompass"
         lede="We hire drivers, not contractors. Paid training, predictable routes, and work that actually matters to the people you're driving."
       />
 
@@ -158,7 +163,7 @@ export default function CareersPage() {
                 <span>
                   <span className="block font-semibold text-deep">{spotlight.name}</span>
                   <span className="tabular block text-[0.85rem] text-slate-soft">
-                    {spotlight.tenureYears} years with MedCompass
+                    {spotlight.tenureYears} years with Ride MedCompass
                   </span>
                 </span>
               </footer>
@@ -176,7 +181,7 @@ export default function CareersPage() {
                 <span>
                   <span className="block font-semibold text-deep">{second.name}</span>
                   <span className="tabular block text-[0.85rem] text-slate-soft">
-                    {second.tenureYears} years with MedCompass
+                    {second.tenureYears} years with Ride MedCompass
                   </span>
                 </span>
               </footer>
@@ -277,9 +282,32 @@ export default function CareersPage() {
             <div>
               <h2 className="font-display text-[1.4rem] font-extrabold text-deep">Tell us about yourself</h2>
               <form
-                onSubmit={(e) => {
+                onSubmit={async (e) => {
                   e.preventDefault();
-                  setSubmitted(true);
+                  const f = e.currentTarget;
+                  const subject = `Job interest: ${formValue(f, "c-role")}`;
+                  const fields: [string, string][] = [
+                    ["Name", formValue(f, "c-name")],
+                    ["Phone", formValue(f, "c-phone")],
+                    ["Email", formValue(f, "c-email")],
+                    ["Role", formValue(f, "c-role")],
+                    ["Experience", formValue(f, "c-exp")],
+                  ];
+                  setStatus("sending");
+                  try {
+                    await sendFormEmail({
+                      subject,
+                      formName: "job application",
+                      fromName: formValue(f, "c-name"),
+                      replyTo: formValue(f, "c-email"),
+                      fields,
+                    });
+                    setStatus("sent");
+                    f.reset();
+                  } catch {
+                    window.location.href = dispatchMailto(subject, fields);
+                    setStatus("fallback");
+                  }
                 }}
                 className="mt-5 space-y-4"
               >
@@ -310,6 +338,19 @@ export default function CareersPage() {
                 </div>
 
                 <div>
+                  <label htmlFor="c-email" className="block text-[0.9rem] font-semibold text-deep">
+                    Email
+                  </label>
+                  <input
+                    id="c-email"
+                    type="email"
+                    required
+                    autoComplete="email"
+                    className="mt-1.5 w-full rounded-lg border-2 border-line px-3.5 py-2.5 focus:border-blue"
+                  />
+                </div>
+
+                <div>
                   <label htmlFor="c-role" className="block text-[0.9rem] font-semibold text-deep">
                     Role you're interested in
                   </label>
@@ -337,15 +378,22 @@ export default function CareersPage() {
 
                 <button
                   type="submit"
-                  className="w-full rounded-full bg-green px-6 py-3 font-bold text-white hover:bg-[#4d8f28]"
+                  disabled={status === "sending"}
+                  className="w-full rounded-full bg-green px-6 py-3 font-bold text-white hover:bg-[#4d8f28] disabled:cursor-wait disabled:opacity-70"
                 >
-                  Submit interest
+                  {status === "sending" ? "Sending…" : "Submit interest"}
                 </button>
 
-                {submitted && (
-                  <p role="status" className="rounded-xl bg-amber-tint px-4 py-3.5 text-[0.88rem] leading-relaxed text-deep">
-                    <strong>This is a demonstration site.</strong> The form has no backend, so
-                    nothing was sent. To actually apply, call dispatch at{" "}
+                {status === "sent" && (
+                  <p role="status" className="rounded-xl bg-moss px-4 py-3.5 text-[0.88rem] leading-relaxed text-deep">
+                    <strong>Thanks, we have it.</strong> Our hiring team will call you, and
+                    we&rsquo;ve emailed you a confirmation.
+                  </p>
+                )}
+                {status === "fallback" && (
+                  <p role="status" className="rounded-xl bg-mist px-4 py-3.5 text-[0.88rem] leading-relaxed text-deep">
+                    <strong>Almost done.</strong> Your email app should have opened with your
+                    details addressed to us. Press send there. Nothing opened? Call{" "}
                     <a href={`tel:${COMPANY.phoneHref}`} className="font-semibold text-blue-ink hover:underline">
                       {COMPANY.phone}
                     </a>{" "}

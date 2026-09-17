@@ -7,8 +7,13 @@
  * can substantiate.
  */
 
+export type ServiceSlug = "wheelchair" | "ambulatory" | "stretcher" | "bariatric" | "courier";
+
+/** Published rush fee for courier pickups dispatched within 30 minutes. */
+export const COURIER_STAT_FEE = 25;
+
 export interface Service {
-  slug: string;
+  slug: ServiceSlug;
   name: string;
   short: string;
   description: string;
@@ -16,7 +21,7 @@ export interface Service {
   includes: string[];
   fromPrice: number;
   perMile: number;
-  icon: "wheelchair" | "walk" | "stretcher" | "bariatric";
+  icon: "wheelchair" | "walk" | "stretcher" | "bariatric" | "courier";
 }
 
 export const SERVICES: Service[] = [
@@ -32,8 +37,8 @@ export const SERVICES: Service[] = [
       "Door-through-door assistance",
       "Up to one escort rides free",
     ],
-    fromPrice: 55,
-    perMile: 3.25,
+    fromPrice: 68,
+    perMile: 3.85,
     icon: "wheelchair",
   },
   {
@@ -48,8 +53,8 @@ export const SERVICES: Service[] = [
       "Hand-off at the reception desk",
       "Up to one escort rides free",
     ],
-    fromPrice: 38,
-    perMile: 2.5,
+    fromPrice: 42,
+    perMile: 2.75,
     icon: "walk",
   },
   {
@@ -64,8 +69,8 @@ export const SERVICES: Service[] = [
       "Stair carry where access permits",
       "Oxygen tank securement",
     ],
-    fromPrice: 165,
-    perMile: 5.5,
+    fromPrice: 325,
+    perMile: 6.5,
     icon: "stretcher",
   },
   {
@@ -80,9 +85,26 @@ export const SERVICES: Service[] = [
       "Extended appointment window",
       "Access confirmed in advance",
     ],
-    fromPrice: 185,
-    perMile: 5.75,
+    fromPrice: 175,
+    perMile: 6.0,
     icon: "bariatric",
+  },
+  {
+    slug: "courier",
+    name: "Medical courier",
+    short: "Specimens, records and pharmacy runs, direct and chain-of-custody logged.",
+    description:
+      "Direct, single-stop dispatch for lab specimens, medical records, pharmaceuticals and equipment moving between facilities. No shared routes and no waiting behind other stops. Routine runs are scheduled same day; STAT pickups dispatch within 30 minutes for a $25 rush fee. Every driver is OSHA bloodborne-pathogen trained, and a signed Business Associate Agreement is available for any account handling PHI.",
+    includes: [
+      "Chain-of-custody log, signed at every pickup and drop-off",
+      "HIPAA Business Associate Agreement available for facility accounts",
+      "Ambient, refrigerated and frozen totes, plus dry ice on request",
+      "STAT dispatch within 30 minutes, or scheduled routine runs",
+      "Dispatch staffed 24/7, including weekends and holidays",
+    ],
+    fromPrice: 32,
+    perMile: 2.0,
+    icon: "courier",
   },
 ];
 
@@ -102,15 +124,15 @@ export const SEGMENTS: Segment[] = [
     name: "Patients & families",
     pain: "You put your mother in a van and then hear nothing for an hour.",
     answer:
-      "Every MedCompass trip gets a live tracking link. Watch the van approach, see the driver's name before they knock, and get a notification the moment your parent is inside the building.",
-    proof: "Share the link with anyone. No account, no app to install.",
+      "Every Ride MedCompass trip gets a confirmed pickup window and a driver who calls when they're close. You get a text when your parent is picked up and another when they're delivered.",
+    proof: "One escort always rides free, so someone can go along.",
   },
   {
     id: "hospitals",
     name: "Hospitals & discharge planning",
     pain: "A bed stays occupied because transport is three hours out.",
     answer:
-      "Facility accounts get a dispatch line that skips the queue, guaranteed discharge windows, and a portal showing every trip your unit has booked today with its current status.",
+      "Facility accounts get a dispatch line that skips the queue, guaranteed discharge windows, and a named dispatcher who already has every trip your unit has booked today.",
     proof: "Median discharge pickup: 42 minutes from call.",
   },
   {
@@ -126,8 +148,16 @@ export const SEGMENTS: Segment[] = [
     name: "Skilled nursing & assisted living",
     pain: "Staff spend the morning on hold confirming pickups.",
     answer:
-      "Book the whole week in one pass, then watch it run. Your coordinator sees every resident's trip on one board and gets alerted only when something actually needs a decision.",
+      "Book the whole week in one pass, then let it run. Your coordinator gets a single dispatch contact for every resident's trip and is only called when something actually needs a decision.",
     proof: "Bulk scheduling for up to 40 recurring trips at once.",
+  },
+  {
+    id: "labs",
+    name: "Labs, pharmacies & facilities",
+    pain: "A delayed specimen run means a redraw, a rerun, or a result the physician needed yesterday.",
+    answer:
+      "Medical courier runs are dispatched directly, not shared with other stops, with a signed chain-of-custody log at every handoff and a Business Associate Agreement on file. STAT pickups move within 30 minutes.",
+    proof: "OSHA-trained drivers, temperature-controlled totes on every run.",
   },
 ];
 
@@ -159,7 +189,7 @@ export interface Testimonial {
 export const TESTIMONIALS: Testimonial[] = [
   {
     quote:
-      "I live in Phoenix and my father is in Berwyn. The tracking link is the only reason I sleep on dialysis days. I can see he got there and I can see he got home.",
+      "I live in Phoenix and my father is in Berwyn. Knowing dispatch will call me if a pickup runs even ten minutes late is the only reason I sleep on dialysis days.",
     name: "Denise A.",
     role: "Daughter · Phoenix, AZ",
   },
@@ -174,6 +204,46 @@ export const TESTIMONIALS: Testimonial[] = [
       "The stretcher crew carried my husband down two flights because the elevator was out, and they did it without making him feel like a problem. That is the whole job, really.",
     name: "Marguerite O.",
     role: "Oak Park",
+  },
+];
+
+export interface ComparisonRow {
+  feature: string;
+  us: string;
+  them: string;
+}
+
+/**
+ * What most Chicagoland NEMT operators actually publish versus what we do —
+ * per CLAUDE.md's competitive-position note, the two reference competitors
+ * both lack pricing transparency, a coverage map, and a customer portal.
+ * Framed generically ("most providers") rather than naming a real company.
+ */
+export const COMPARISON: ComparisonRow[] = [
+  {
+    feature: "Price before you book",
+    us: "Base rate + per-mile rate published for all five services",
+    them: "“Call for a quote”",
+  },
+  {
+    feature: "Pickup window",
+    us: "Confirmed window, driver calls when close",
+    them: "A day, sometimes a four-hour block",
+  },
+  {
+    feature: "Standing dialysis orders",
+    us: "Same driver, same van, 98.6% on time",
+    them: "Whoever's on the board that day",
+  },
+  {
+    feature: "Hospital discharge dispatch",
+    us: "Dedicated line, 42 min median pickup",
+    them: "General queue, same as a routine ride",
+  },
+  {
+    feature: "Escort policy",
+    us: "One escort rides free, every trip",
+    them: "Seat availability, ask at pickup",
   },
 ];
 
@@ -192,14 +262,14 @@ export const FAQS = [
   },
   {
     q: "What if the appointment runs long?",
-    a: "Return trips are open ended by default. Call us or tap 'Ready for pickup' in the portal when you are finished, and we send the nearest available van. In our core service area that is usually 20 to 35 minutes.",
-  },
-  {
-    q: "How is the tracking link private?",
-    a: "The link carries a single use token that expires when the trip ends. It shows the vehicle position, the arrival time and the trip status. It never shows the rider's name, their condition, or the name of the facility they are visiting.",
+    a: "Return trips are open ended by default. Call dispatch when you are finished and we send the nearest available van. In our core service area that is usually 20 to 35 minutes.",
   },
   {
     q: "What areas do you cover?",
     a: "Chicago proper plus the western and northern suburbs, with regular longer runs into southeastern Wisconsin. If you are outside the map, call dispatch anyway. We quote trips outside the area one at a time rather than turning them away.",
+  },
+  {
+    q: "Is your medical courier service HIPAA compliant?",
+    a: "Yes. Drivers are OSHA bloodborne-pathogen trained, every pickup and drop-off is signed into a chain-of-custody log, and we sign a Business Associate Agreement for any lab, pharmacy or facility account that hands us protected health information.",
   },
 ];

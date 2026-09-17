@@ -1,21 +1,23 @@
 import SiteHeader from "./SiteHeader";
 import SiteFooter from "./SiteFooter";
 import ChatWidget from "./ChatWidget";
+import BookingModalProvider from "./BookingModalProvider";
 
 /**
- * Chrome shared by every public page: header, footer, chat.
- *
- * The portals deliberately don't use this — a dispatcher on the admin board
- * doesn't need a sales chat widget, and the client portal has its own header.
+ * Chrome shared by every public page: header, footer, chat, and the booking
+ * modal provider — mounted here (rather than app/layout.tsx) so it's
+ * available wherever MarketingShell wraps a page, including the header's
+ * "Book a ride" CTA, without pulling client-only context into the root
+ * server layout.
  */
 export default function MarketingShell({ children }: { children: React.ReactNode }) {
   return (
-    <>
+    <BookingModalProvider>
       <SiteHeader />
       <main id="main">{children}</main>
       <SiteFooter />
       <ChatWidget />
-    </>
+    </BookingModalProvider>
   );
 }
 

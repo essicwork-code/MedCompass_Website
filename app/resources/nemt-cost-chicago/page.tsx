@@ -51,10 +51,11 @@ export default function NemtCostChicagoPage() {
           </li>
         </ul>
         <p>
-          A wheelchair trip from Oak Park to a dialysis center four miles away runs about $68. The
-          same service level across town, twelve miles, runs closer to $94. Distance is the
-          variable; the base rate for a given service level does not change by neighborhood or time
-          of day.
+          A wheelchair trip from Oak Park to a dialysis center four miles away runs about $
+          {(wheelchair.fromPrice + 4 * wheelchair.perMile).toFixed(0)}. The same service level
+          across town, twelve miles, runs closer to $
+          {(wheelchair.fromPrice + 12 * wheelchair.perMile).toFixed(0)}. Distance is the variable;
+          the base rate for a given service level does not change by neighborhood or time of day.
         </p>
 
         <h2>Why stretcher costs so much more than wheelchair</h2>

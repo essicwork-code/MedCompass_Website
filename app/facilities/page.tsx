@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import MarketingShell, { PageHero } from "@/components/MarketingShell";
 import { COMPANY } from "@/lib/demo/data";
+import { asset } from "@/lib/asset";
 
 export const metadata: Metadata = {
   title: "Facility partnerships",
@@ -20,8 +21,8 @@ const FEATURES = [
     d: "Load up to 40 standing orders in one pass. Change one and the series updates; change the series and every future trip follows.",
   },
   {
-    h: "One board for your whole unit",
-    d: "Every trip your facility booked today, live, with status and ETA. Coordinators stop calling to ask where a van is.",
+    h: "One dispatcher for your whole unit",
+    d: "Your named dispatcher already has every trip your facility booked today, with status and pickup time on hand. Coordinators stop calling to ask where a van is.",
   },
   {
     h: "Consolidated invoicing",
@@ -50,8 +51,8 @@ export default function FacilitiesPage() {
         <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-center">
           <div className="overflow-hidden rounded-2xl">
             <Image
-              src="/photos/dispatch-desk.jpg"
-              alt="A MedCompass dispatcher in a branded polo shirt on the phone at a desk with live trip-tracking monitors, with two more dispatchers working behind her"
+              src={asset("/photos/dispatch-desk.jpg")}
+              alt="A Ride MedCompass dispatcher in a branded polo shirt on the phone at a desk with dispatch board monitors, with two more dispatchers working behind her"
               width={1296}
               height={832}
               className="h-auto w-full"
@@ -93,7 +94,7 @@ export default function FacilitiesPage() {
                 {[
                   "Intro call, where we learn your volume, mobility mix and discharge patterns",
                   "Service agreement and BAA executed",
-                  "Portal accounts created, one per coordinator",
+                  "Coordinator contacts added to your dispatch account",
                   "First week runs with a dispatcher assigned to your account",
                 ].map((s, i) => (
                   <li key={s} className="flex gap-3.5">
@@ -116,8 +117,8 @@ export default function FacilitiesPage() {
                 <div>
                   <dt className="text-slate-soft">Direct line</dt>
                   <dd className="tabular font-bold text-deep">
-                    <a href={`tel:${COMPANY.dispatchPhone.replace(/\D/g, "")}`} className="hover:text-blue">
-                      {COMPANY.dispatchPhone}
+                    <a href={`tel:${COMPANY.phoneHref}`} className="hover:text-blue">
+                      {COMPANY.phone}
                     </a>
                   </dd>
                 </div>

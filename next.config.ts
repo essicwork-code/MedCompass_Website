@@ -12,6 +12,13 @@ import type { NextConfig } from "next";
  * server target, or the API moves to a separate service the static front end
  * calls.
  */
+// GitHub Pages serves project sites from https://<user>.github.io/<repo>/, so
+// every asset and route needs that /<repo> prefix baked in at build time. The
+// deploy workflow (.github/workflows/deploy-gh-pages.yml) sets this env var
+// from the actual repo name; Cloudflare Pages and other hosts that serve from
+// the domain root leave it unset and get no prefix.
+const basePath = process.env.NEXT_BASE_PATH ?? "";
+
 const nextConfig: NextConfig = {
   output: "export",
   reactStrictMode: true,
@@ -19,8 +26,13 @@ const nextConfig: NextConfig = {
     // Next's optimizer needs a server; a static export serves the files as-is.
     unoptimized: true,
   },
-  // Cloudflare Pages serves /about as /about/index.html, so emit directories.
+  // Cloudflare Pages and GitHub Pages both serve /about as /about/index.html,
+  // so emit directories.
   trailingSlash: true,
+  basePath,
+  assetPrefix: basePath,
+  // Exposed so lib/asset.ts can prefix /public paths, which basePath skips.
+  env: { NEXT_PUBLIC_BASE_PATH: basePath },
 };
 
 export default nextConfig;
