@@ -31,7 +31,7 @@ const FEATURES = [
   },
   {
     h: "Discharge capacity held back",
-    d: "We reserve same-day capacity specifically for discharges. Median pickup is 42 minutes from the call.",
+    d: "We hold same-day capacity back specifically for discharges instead of filling every slot with scheduled trips, so a discharge call is not competing with tomorrow’s routine rides.",
   },
   {
     h: "Documentation that survives audit",

@@ -62,7 +62,7 @@ const RULES: Rule[] = [
     match: /\b(medicaid|medicare|insurance|broker|modivcare|mtm|covered|pay)\b/i,
     reply: () => ({
       text:
-        "We bill Illinois Medicaid managed care plans and the major NEMT brokers directly, and we're in-network with several Medicare Advantage plans. We verify your eligibility before the trip rather than billing you after it.\n\nIf you have your member ID handy, a dispatcher can confirm coverage in a couple of minutes.",
+        "We bill Illinois Medicaid managed care plans and the major NEMT brokers directly. We verify your eligibility before the trip rather than billing you after it.\n\nIf you have your member ID handy, a dispatcher can confirm coverage in a couple of minutes.",
       suggestions: ["Message dispatch", "Book a ride", "What areas do you cover?"],
     }),
   },
@@ -105,7 +105,7 @@ const RULES: Rule[] = [
     match: /\b(dialysis|standing order|recurring|three times|weekly)\b/i,
     reply: () => ({
       text:
-        "Standing dialysis orders are our largest service line. We lock the same driver and the same van to your schedule wherever possible, so your rider sees a familiar face each session.\n\nWe're running 98.6% on-time arrival on standing orders. Give us about a week's notice to set one up.",
+        "Standing dialysis orders are a core service line. We lock the same driver and the same van to your schedule wherever possible, so your rider sees a familiar face each session.\n\nGive us about a week's notice to set one up.",
       suggestions: ["Set up a standing order", "Book a ride"],
     }),
   },

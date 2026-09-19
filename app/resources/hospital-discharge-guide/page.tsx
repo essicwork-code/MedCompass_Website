@@ -58,10 +58,10 @@ export default function HospitalDischargeGuidePage() {
         <h2>How fast a van actually shows up</h2>
         <p>
           We hold same-day capacity back specifically for discharges rather than filling every slot
-          with scheduled trips, which is why our median discharge pickup runs 42 minutes from the
-          call. That is a real operational number, not a marketing one; it moves around with how
-          many discharges are happening across the city at the same hour, but it does not move
-          because of which hospital or which neighborhood.
+          with scheduled trips, so a discharge call is not queued behind tomorrow&rsquo;s routine
+          rides. How quickly a van reaches you still depends on how many discharges are happening
+          across the city at that hour, and dispatch will tell you the honest window when you
+          call rather than a number from a brochure.
         </p>
 
         <h2>What determines the right vehicle</h2>

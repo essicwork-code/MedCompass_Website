@@ -6,9 +6,10 @@ import ServiceIcon from "@/components/ServiceIcon";
 import Reveal from "@/components/Reveal";
 import StatCounter from "@/components/StatCounter";
 import BookARideButton from "@/components/BookARideButton";
+import AutoplayVideo from "@/components/AutoplayVideo";
 import { COMPANY } from "@/lib/demo/data";
 import { AREAS } from "@/lib/areas";
-import { COMPARISON, SEGMENTS, SERVICES, SERVICE_AREA, STATS, TESTIMONIALS } from "@/lib/content";
+import { COMPARISON, SEGMENTS, SERVICES, SERVICE_AREA, STATS } from "@/lib/content";
 import { asset } from "@/lib/asset";
 
 const AREA_SLUG_BY_NAME: Record<string, string> = Object.fromEntries(AREAS.map((a) => [a.name, a.slug]));
@@ -130,9 +131,9 @@ export default function HomePage() {
                     <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green" />
                   </span>
                   <p className="text-[0.85rem] font-bold leading-tight text-deep">
-                    98.6% arrive
+                    Dispatch
                     <br />
-                    on time
+                    staffed 24/7
                   </p>
                 </div>
               </div>
@@ -226,27 +227,19 @@ export default function HomePage() {
               </h2>
             </Reveal>
             {/*
-              Silent clip, with controls and no autoplay: the page must not
-              start motion on its own, and someone on a phone plan shouldn't pay
-              for a video they didn't ask for. preload="metadata" keeps the
-              initial load light; the poster reserves the space so nothing
-              shifts.
+              Plays itself while it is on screen and pauses when it scrolls
+              away. It starts muted because browsers require that for autoplay,
+              with a button to turn the sound on, and holds still for anyone
+              who asked their system for reduced motion. See AutoplayVideo.
             */}
             <Reveal delay={120} className="mt-8 overflow-hidden rounded-2xl border border-white/10">
-              <video
-                controls
-                preload="metadata"
-                playsInline
-                poster={asset("/video/brand-poster.webp")}
+              <AutoplayVideo
+                src="/video/medcompass-brand.mp4"
+                poster="/video/brand-poster.webp"
                 width={1280}
                 height={720}
-                className="h-auto w-full bg-black"
-              >
-                <source src={asset("/video/medcompass-brand.mp4")} type="video/mp4" />
-                Your browser cannot play this video. It shows a Ride MedCompass driver picking a
-                rider up at her door and helping her into the van, then the fleet ready at the
-                garage.
-              </video>
+                label="This video shows a Ride MedCompass driver picking a rider up at her door and helping her into the van, then the fleet ready at the garage."
+              />
             </Reveal>
           </div>
         </section>
@@ -409,51 +402,6 @@ export default function HomePage() {
                 ))}
               </ul>
             </div>
-          </div>
-        </section>
-
-        {/* ---- Testimonials ----------------------------------------------- */}
-        <section className="bg-white py-24">
-          <div className="mx-auto max-w-7xl px-4">
-            <Reveal>
-              <p className="text-[0.82rem] font-bold uppercase tracking-widest text-blue-ink">
-                Word of mouth
-              </p>
-              <h2 className="mt-2 font-display text-[clamp(2rem,3.6vw,2.9rem)] font-extrabold text-deep">
-                What families tell us
-              </h2>
-            </Reveal>
-            <ul className="mt-12 grid gap-5 lg:grid-cols-3">
-              {TESTIMONIALS.map((t, i) => (
-                <Reveal
-                  key={t.name}
-                  as="li"
-                  delay={i * 90}
-                  className="relative flex h-full flex-col rounded-2xl border border-line bg-bone p-7"
-                >
-                  <svg
-                    className="h-8 w-8 text-line"
-                    viewBox="0 0 32 32"
-                    fill="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path d="M9 8C5 8 2 11.5 2 16c0 4 2.5 7 6.5 7 .3 2.5-1 4.5-3.5 6l1 1.5C10.5 28 13 24.5 13 19c0-6-2-11-4-11zm15 0c-4 0-7 3.5-7 8 0 4 2.5 7 6.5 7 .3 2.5-1 4.5-3.5 6l1 1.5c4.5-1.5 7-5 7-10.5 0-6-2-11-4-11z" />
-                  </svg>
-                  <blockquote className="mt-3 flex-1 text-[1rem] leading-relaxed text-ink">
-                    &ldquo;{t.quote}&rdquo;
-                  </blockquote>
-                  <footer className="mt-5 flex items-center gap-3 border-t border-line pt-4">
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-deep font-display text-[0.9rem] font-bold text-white">
-                      {t.name.charAt(0)}
-                    </span>
-                    <span>
-                      <p className="font-semibold text-deep">{t.name}</p>
-                      <p className="text-[0.88rem] text-slate-soft">{t.role}</p>
-                    </span>
-                  </footer>
-                </Reveal>
-              ))}
-            </ul>
           </div>
         </section>
 

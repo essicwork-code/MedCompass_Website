@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 /**
  * Animates a stat value up from zero once it scrolls into view. Parses the
- * leading numeric run out of strings like "98.6%", "50,000+" or "42 min" and
+ * leading numeric run out of strings like "24/7", "40" or "5" and
  * counts that up, re-attaching the original prefix/suffix so the displayed
  * value is still exactly what was authored in lib/content.ts.
  */

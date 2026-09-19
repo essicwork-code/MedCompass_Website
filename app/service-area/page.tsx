@@ -122,7 +122,7 @@ export default function ServiceAreaPage() {
           {[
             {
               h: "Core area",
-              d: "Roughly 12 miles from downtown Chicago. Same-day discharge capacity held back daily, median pickup 42 minutes from the call.",
+              d: "Roughly 12 miles from downtown Chicago. Same-day discharge capacity is held back daily.",
             },
             {
               h: "Extended area",

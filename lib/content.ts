@@ -133,7 +133,7 @@ export const SEGMENTS: Segment[] = [
     pain: "A bed stays occupied because transport is three hours out.",
     answer:
       "Facility accounts get a dispatch line that skips the queue, guaranteed discharge windows, and a named dispatcher who already has every trip your unit has booked today.",
-    proof: "Median discharge pickup: 42 minutes from call.",
+    proof: "Same-day capacity held back for discharges, plus a dedicated facility line.",
   },
   {
     id: "dialysis",
@@ -141,7 +141,7 @@ export const SEGMENTS: Segment[] = [
     pain: "A missed ride means a missed session and a hospital admission.",
     answer:
       "Standing orders are locked to the same driver and the same van wherever possible, so your patients see a familiar face three times a week and your chairs turn on schedule.",
-    proof: "98.6% on-time arrival on standing dialysis orders.",
+    proof: "Standing orders locked to the same driver and van wherever possible.",
   },
   {
     id: "snf",
@@ -161,12 +161,6 @@ export const SEGMENTS: Segment[] = [
   },
 ];
 
-export const STATS = [
-  { value: "50,000+", label: "trips completed" },
-  { value: "98.6%", label: "on-time arrival" },
-  { value: "42 min", label: "median discharge pickup" },
-  { value: "24/7", label: "dispatch staffed" },
-];
 
 /** Municipalities in the primary service radius. */
 export const SERVICE_AREA = [
@@ -180,32 +174,24 @@ export const SERVICE_AREA = [
   "Downers Grove", "Naperville", "Aurora",
 ];
 
-export interface Testimonial {
-  quote: string;
-  name: string;
-  role: string;
-}
-
-export const TESTIMONIALS: Testimonial[] = [
-  {
-    quote:
-      "I live in Phoenix and my father is in Berwyn. Knowing dispatch will call me if a pickup runs even ten minutes late is the only reason I sleep on dialysis days.",
-    name: "Denise A.",
-    role: "Daughter · Phoenix, AZ",
-  },
-  {
-    quote:
-      "We moved our standing orders over after the third no-show from our last provider. Nine months, one late pickup. Their dispatcher calls us before we have to call them.",
-    name: "Ray Mitchell, RN",
-    role: "Charge Nurse · Westside Kidney Center",
-  },
-  {
-    quote:
-      "The stretcher crew carried my husband down two flights because the elevator was out, and they did it without making him feel like a problem. That is the whole job, really.",
-    name: "Marguerite O.",
-    role: "Oak Park",
-  },
+/*
+ * Facts about how the service is set up, not performance claims. Trip counts
+ * and on-time percentages belong here only once they come out of real dispatch
+ * records and can be shown to anyone who asks.
+ */
+export const STATS = [
+  { value: `${SERVICES.length}`, label: "services, every rate published" },
+  { value: `${SERVICE_AREA.length}`, label: "communities served" },
+  { value: "24/7", label: "dispatch staffed" },
+  { value: "1", label: "escort rides free, every trip" },
 ];
+
+/*
+ * Testimonials were removed on September 19, 2026: the previous quotes and
+ * names were invented. Add them back only with a real customer's words and
+ * their written permission, and never as schema.org Review data unless the
+ * review is genuine.
+ */
 
 export interface ComparisonRow {
   feature: string;
@@ -232,12 +218,12 @@ export const COMPARISON: ComparisonRow[] = [
   },
   {
     feature: "Standing dialysis orders",
-    us: "Same driver, same van, 98.6% on time",
+    us: "Same driver and same van wherever possible",
     them: "Whoever's on the board that day",
   },
   {
     feature: "Hospital discharge dispatch",
-    us: "Dedicated line, 42 min median pickup",
+    us: "Dedicated facility line, same-day capacity held back",
     them: "General queue, same as a routine ride",
   },
   {
@@ -250,7 +236,7 @@ export const COMPARISON: ComparisonRow[] = [
 export const FAQS = [
   {
     q: "Do you accept Medicaid or insurance?",
-    a: "We bill Illinois Medicaid managed care plans and the major NEMT brokers, and we are in-network with several Medicare Advantage plans. Bring your member ID when you book and we will verify eligibility before the trip rather than after it.",
+    a: "We bill Illinois Medicaid managed care plans and the major NEMT brokers, Bring your member ID when you book and we will verify eligibility before the trip rather than after it.",
   },
   {
     q: "How far in advance should I book?",

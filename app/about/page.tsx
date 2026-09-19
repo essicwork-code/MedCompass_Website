@@ -73,9 +73,7 @@ export default function AboutPage() {
 
             <dl className="grid grid-cols-2 gap-3">
               {[
-                ...STATS.slice(0, 2),
-                { value: "6", label: "vans in the fleet" },
-                { value: "6", label: "drivers on staff" },
+                ...STATS,
               ].map((s) => (
                 <div
                   key={s.label}

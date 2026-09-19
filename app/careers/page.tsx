@@ -15,15 +15,10 @@ import { dispatchMailto, formValue } from "@/lib/mailto";
  * Driver recruitment page.
  *
  * A gap the site had until now: zero presence for the people who actually
- * drive the vans. The testimonials below use two invented driver profiles
- * kept local to this page rather than a shared fixture, since nothing else
- * on the site references named drivers anymore.
+ * drive the vans. There are no driver testimonials here: quoting invented
+ * employees would be a fabrication, so the page describes the work instead
+ * and offers to put a candidate on the phone with a real driver.
  */
-
-const SPOTLIGHT_DRIVERS = [
-  { initials: "MW", name: "Marcus Whitfield", tenureYears: 6 },
-  { initials: "RD", name: "Rosa Delgado", tenureYears: 4 },
-];
 
 const REQUIREMENTS = [
   "Valid driver's license with a clean record for at least 3 years",
@@ -133,7 +128,6 @@ export default function CareersPage() {
   const [role, setRole] = useState(JOB_POSTINGS[0].title);
   const [formError, setFormError] = useState<string | null>(null);
   const timer = useFormTimer();
-  const [spotlight, second] = SPOTLIGHT_DRIVERS;
 
   return (
     <MarketingShell>
@@ -168,43 +162,17 @@ export default function CareersPage() {
             </ul>
           </div>
 
-          <div className="space-y-5">
-            <blockquote className="rounded-2xl border border-line bg-white p-6">
-              <p className="text-[1rem] leading-relaxed text-ink">
-                &ldquo;I've driven for two rideshare apps and neither one told me my schedule more
-                than an hour ahead. Here I know my Monday, Wednesday, Friday route by heart. My
-                riders know me too, which matters more than I expected it to.&rdquo;
-              </p>
-              <footer className="mt-4 flex items-center gap-3 border-t border-line pt-4">
-                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-deep text-[0.85rem] font-bold text-white">
-                  {spotlight.initials}
-                </span>
-                <span>
-                  <span className="block font-semibold text-deep">{spotlight.name}</span>
-                  <span className="tabular block text-[0.85rem] text-slate-soft">
-                    {spotlight.tenureYears} years with Ride MedCompass
-                  </span>
-                </span>
-              </footer>
-            </blockquote>
-
-            <blockquote className="rounded-2xl border border-line bg-white p-6">
-              <p className="text-[1rem] leading-relaxed text-ink">
-                &ldquo;The stretcher training was paid, hands-on, and actually thorough. I didn't
-                feel like I was figuring it out on my first real transfer.&rdquo;
-              </p>
-              <footer className="mt-4 flex items-center gap-3 border-t border-line pt-4">
-                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-deep text-[0.85rem] font-bold text-white">
-                  {second.initials}
-                </span>
-                <span>
-                  <span className="block font-semibold text-deep">{second.name}</span>
-                  <span className="tabular block text-[0.85rem] text-slate-soft">
-                    {second.tenureYears} years with Ride MedCompass
-                  </span>
-                </span>
-              </footer>
-            </blockquote>
+          <div className="rounded-2xl border border-line bg-white p-6">
+            <h3 className="font-display text-[1.1rem] font-bold text-deep">What the job actually is</h3>
+            <p className="mt-3 text-[1rem] leading-relaxed text-slate-soft">
+              Most routes are standing orders: the same riders, on the same days, at the same
+              times, so you learn a route instead of chasing a queue. You are paid for training,
+              you drive a van we maintain, and dispatch backs you up when a pickup runs long.
+            </p>
+            <p className="mt-3 text-[1rem] leading-relaxed text-slate-soft">
+              If you want to hear it from the drivers themselves, ask us at the interview and we
+              will put you on the phone with one.
+            </p>
           </div>
         </div>
 
