@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import MarketingShell, { PageHero } from "@/components/MarketingShell";
 import { COMPANY } from "@/lib/demo/data";
 import { asset } from "@/lib/asset";
+import { PHOTOS } from "@/lib/photos";
 
 export const metadata: Metadata = {
   title: "Facility partnerships",
@@ -51,10 +52,10 @@ export default function FacilitiesPage() {
         <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-center">
           <div className="overflow-hidden rounded-2xl">
             <Image
-              src={asset("/photos/dispatch-desk.jpg")}
-              alt="A Ride MedCompass dispatcher in a branded polo shirt on the phone at a desk with dispatch board monitors, with two more dispatchers working behind her"
-              width={1296}
-              height={832}
+              src={asset(PHOTOS.dispatchDesk.src)}
+              alt={PHOTOS.dispatchDesk.alt}
+              width={PHOTOS.dispatchDesk.width}
+              height={PHOTOS.dispatchDesk.height}
               className="h-auto w-full"
             />
           </div>

@@ -6,6 +6,9 @@ import { COMPANY } from "@/lib/demo/data";
 import { sendFormEmail } from "@/lib/emailjs";
 import { useFormTimer } from "@/lib/spam";
 import Honeypot from "@/components/Honeypot";
+import Image from "next/image";
+import { PHOTOS } from "@/lib/photos";
+import { asset } from "@/lib/asset";
 import { dispatchMailto, formValue } from "@/lib/mailto";
 
 /*
@@ -141,6 +144,17 @@ export default function CareersPage() {
       />
 
       <div className="mx-auto max-w-7xl px-4 py-14">
+        <div className="mb-12 overflow-hidden rounded-2xl">
+          <Image
+            src={asset(PHOTOS.crewTeam.src)}
+            alt={PHOTOS.crewTeam.alt}
+            width={PHOTOS.crewTeam.width}
+            height={PHOTOS.crewTeam.height}
+            className="h-auto w-full"
+            priority
+          />
+        </div>
+
         <div className="grid gap-9 lg:grid-cols-2">
           <div>
             <h2 className="font-display text-[1.4rem] font-extrabold text-deep">Why drive with us</h2>
@@ -273,6 +287,16 @@ export default function CareersPage() {
           <div className="grid gap-9 lg:grid-cols-2">
             <div>
               <h2 className="font-display text-[1.4rem] font-extrabold text-deep">What we require</h2>
+              <div className="mt-5 overflow-hidden rounded-xl">
+                <Image
+                  src={asset(PHOTOS.pretripCheck.src)}
+                  alt={PHOTOS.pretripCheck.alt}
+                  width={PHOTOS.pretripCheck.width}
+                  height={PHOTOS.pretripCheck.height}
+                  loading="lazy"
+                  className="h-auto w-full"
+                />
+              </div>
               <ul className="mt-5 space-y-3">
                 {REQUIREMENTS.map((r) => (
                   <li key={r} className="flex items-start gap-3 text-[0.97rem] text-ink">

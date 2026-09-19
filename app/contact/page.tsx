@@ -6,6 +6,9 @@ import { COMPANY } from "@/lib/demo/data";
 import { sendFormEmail } from "@/lib/emailjs";
 import { dispatchMailto, formValue } from "@/lib/mailto";
 import { useFormTimer } from "@/lib/spam";
+import Image from "next/image";
+import { PHOTOS } from "@/lib/photos";
+import { asset } from "@/lib/asset";
 import Honeypot from "@/components/Honeypot";
 
 /*
@@ -72,6 +75,17 @@ export default function ContactPage() {
               <dd className="mt-1 text-[1.02rem] leading-relaxed text-ink">{COMPANY.hours}</dd>
             </div>
           </dl>
+
+          <div className="mt-8 overflow-hidden rounded-2xl">
+            <Image
+              src={asset(PHOTOS.dispatchDesk.src)}
+              alt={PHOTOS.dispatchDesk.alt}
+              width={PHOTOS.dispatchDesk.width}
+              height={PHOTOS.dispatchDesk.height}
+              loading="lazy"
+              className="h-auto w-full"
+            />
+          </div>
 
           <p className="mt-8 rounded-xl bg-alert-tint px-5 py-4 text-[0.95rem] leading-relaxed text-alert">
             <strong>Medical emergency?</strong> Call 911. Ride MedCompass provides non-emergency

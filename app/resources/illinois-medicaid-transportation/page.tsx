@@ -4,6 +4,9 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import JsonLd from "@/components/JsonLd";
 import MarketingShell, { PageHero } from "@/components/MarketingShell";
 import Prose from "@/components/Prose";
+import Image from "next/image";
+import { PHOTOS } from "@/lib/photos";
+import { asset } from "@/lib/asset";
 import { COMPANY } from "@/lib/demo/data";
 import { RESOURCES } from "@/lib/resources";
 import { SITE_URL } from "@/lib/site";
@@ -24,6 +27,19 @@ export default function IllinoisMedicaidTransportationPage() {
     <MarketingShell>
       <Breadcrumbs items={[{ label: "Resources", href: "/resources/" }, { label: "Illinois Medicaid rides" }]} />
       <PageHero eyebrow={resource.readTime} title={resource.title} lede={resource.description} />
+
+      <div className="mx-auto max-w-4xl px-4 pt-8">
+        <div className="overflow-hidden rounded-2xl">
+          <Image
+            src={asset(PHOTOS.clinicHandoff.src)}
+            alt={PHOTOS.clinicHandoff.alt}
+            width={PHOTOS.clinicHandoff.width}
+            height={PHOTOS.clinicHandoff.height}
+            loading="lazy"
+            className="h-auto w-full"
+          />
+        </div>
+      </div>
 
       <Prose>
         <p>

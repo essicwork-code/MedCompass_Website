@@ -4,6 +4,9 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import JsonLd from "@/components/JsonLd";
 import MarketingShell, { PageHero } from "@/components/MarketingShell";
 import Prose from "@/components/Prose";
+import Image from "next/image";
+import { PHOTOS } from "@/lib/photos";
+import { asset } from "@/lib/asset";
 import { RESOURCES } from "@/lib/resources";
 import { SERVICES } from "@/lib/content";
 import { COMPANY } from "@/lib/demo/data";
@@ -26,6 +29,19 @@ export default function NemtCostChicagoPage() {
     <MarketingShell>
       <Breadcrumbs items={[{ label: "Resources", href: "/resources/" }, { label: "NEMT costs in Chicago" }]} />
       <PageHero eyebrow={resource.readTime} title={resource.title} lede={resource.description} />
+
+      <div className="mx-auto max-w-4xl px-4 pt-8">
+        <div className="overflow-hidden rounded-2xl">
+          <Image
+            src={asset(PHOTOS.familyBooking.src)}
+            alt={PHOTOS.familyBooking.alt}
+            width={PHOTOS.familyBooking.width}
+            height={PHOTOS.familyBooking.height}
+            loading="lazy"
+            className="h-auto w-full"
+          />
+        </div>
+      </div>
 
       <Prose>
         <p>

@@ -1,7 +1,10 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import MarketingShell, { PageHero } from "@/components/MarketingShell";
+import Image from "next/image";
 import ServiceIcon from "@/components/ServiceIcon";
+import { SERVICE_PHOTOS } from "@/lib/photos";
+import { asset } from "@/lib/asset";
 import BookARideButton from "@/components/BookARideButton";
 import { SERVICES } from "@/lib/content";
 
@@ -57,6 +60,17 @@ export default function ServicesPage() {
                     </li>
                   ))}
                 </ul>
+              </div>
+
+              <div className="mt-7 overflow-hidden rounded-xl lg:col-span-2">
+                <Image
+                  src={asset(SERVICE_PHOTOS[s.slug].src)}
+                  alt={SERVICE_PHOTOS[s.slug].alt}
+                  width={SERVICE_PHOTOS[s.slug].width}
+                  height={SERVICE_PHOTOS[s.slug].height}
+                  loading="lazy"
+                  className="aspect-[16/9] w-full object-cover"
+                />
               </div>
 
               <aside className="self-start rounded-xl border border-line bg-bone p-6">

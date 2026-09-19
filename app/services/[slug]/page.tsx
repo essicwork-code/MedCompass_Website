@@ -6,7 +6,10 @@ import Link from "next/link";
 import BookARideButton from "@/components/BookARideButton";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import JsonLd from "@/components/JsonLd";
+import Image from "next/image";
 import { SERVICES, SERVICE_BY_SLUG } from "@/lib/content";
+import { SERVICE_PHOTOS } from "@/lib/photos";
+import { asset } from "@/lib/asset";
 import { AREAS } from "@/lib/areas";
 import { COMPANY } from "@/lib/demo/data";
 import { SITE_URL } from "@/lib/site";
@@ -73,11 +76,27 @@ export default async function ServiceDetailPage({
   const title = alias?.title ?? service.name;
   const body = alias?.body ?? service.description;
   const isCourier = service.slug === "courier";
+  const photo = SERVICE_PHOTOS[service.slug];
 
   return (
     <MarketingShell>
       <Breadcrumbs items={[{ label: "Services", href: "/services/" }, { label: title }]} />
       <PageHero eyebrow="Service" title={title} lede={body} />
+
+      {photo && (
+        <div className="mx-auto max-w-7xl px-4 pt-10">
+          <div className="overflow-hidden rounded-2xl">
+            <Image
+              src={asset(photo.src)}
+              alt={photo.alt}
+              width={photo.width}
+              height={photo.height}
+              className="aspect-[16/9] w-full object-cover"
+              priority
+            />
+          </div>
+        </div>
+      )}
 
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 lg:grid-cols-[1fr_340px]">
         <div>

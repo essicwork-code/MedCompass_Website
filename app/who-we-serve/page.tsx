@@ -1,7 +1,18 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import MarketingShell, { PageHero } from "@/components/MarketingShell";
+import Image from "next/image";
 import { SEGMENTS } from "@/lib/content";
+import { PHOTOS } from "@/lib/photos";
+import { asset } from "@/lib/asset";
+
+/** One photograph per caller type; segments without one simply have none. */
+const SEGMENT_PHOTOS = {
+  families: PHOTOS.familyBooking,
+  hospitals: PHOTOS.dischargePlanner,
+  dialysis: PHOTOS.dialysisArrival,
+  labs: PHOTOS.courierHandoff,
+} as const;
 
 export const metadata: Metadata = {
   title: "Who we serve",
@@ -39,6 +50,19 @@ export default function WhoWeServePage() {
                 </p>
               </div>
             </div>
+
+            {SEGMENT_PHOTOS[seg.id as keyof typeof SEGMENT_PHOTOS] && (
+              <div className="mt-8 overflow-hidden rounded-xl">
+                <Image
+                  src={asset(SEGMENT_PHOTOS[seg.id as keyof typeof SEGMENT_PHOTOS].src)}
+                  alt={SEGMENT_PHOTOS[seg.id as keyof typeof SEGMENT_PHOTOS].alt}
+                  width={SEGMENT_PHOTOS[seg.id as keyof typeof SEGMENT_PHOTOS].width}
+                  height={SEGMENT_PHOTOS[seg.id as keyof typeof SEGMENT_PHOTOS].height}
+                  loading="lazy"
+                  className="h-auto w-full"
+                />
+              </div>
+            )}
           </section>
         ))}
 

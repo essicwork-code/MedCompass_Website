@@ -26,3 +26,6 @@ next-env.d.ts
 __pycache__/
 *.pyc
 .coverage
+
+# Full-size generated photo sources (mirrored to gs://medcompass-media-926590854262/sources/)
+Assets/generated/

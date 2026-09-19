@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { PHOTOS } from "@/lib/photos";
 import Link from "next/link";
 import MarketingShell from "@/components/MarketingShell";
 import ServiceIcon from "@/components/ServiceIcon";
@@ -104,10 +105,10 @@ export default function HomePage() {
               <div className="relative">
                 <div className="lift-on-hover overflow-hidden rounded-2xl border border-white/10 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.6)]">
                   <Image
-                    src={asset("/photos/assist-to-vehicle.jpg")}
-                    alt="A Ride MedCompass driver helping a rider into a wheelchair-accessible van"
-                    width={1100}
-                    height={900}
+                    src={asset(PHOTOS.homeHero.src)}
+                    alt={PHOTOS.homeHero.alt}
+                    width={PHOTOS.homeHero.width}
+                    height={PHOTOS.homeHero.height}
                     className="h-auto w-full"
                     priority
                   />
@@ -115,10 +116,10 @@ export default function HomePage() {
 
                 <div className="absolute -bottom-8 -left-8 hidden w-44 overflow-hidden rounded-xl border-4 border-deep shadow-[0_20px_50px_-20px_rgba(0,0,0,0.7)] sm:block">
                   <Image
-                    src={asset("/photos/companion-ride.jpg")}
-                    alt="A rider and their escort riding together"
-                    width={480}
-                    height={480}
+                    src={asset(PHOTOS.homeSecure.src)}
+                    alt={PHOTOS.homeSecure.alt}
+                    width={PHOTOS.homeSecure.width}
+                    height={PHOTOS.homeSecure.height}
                     className="h-auto w-full"
                   />
                 </div>
@@ -159,10 +160,10 @@ export default function HomePage() {
           <div className="mx-auto grid max-w-7xl items-center gap-14 px-4 lg:grid-cols-[1.1fr_1fr]">
             <Reveal className="overflow-hidden rounded-2xl">
               <Image
-                src={asset("/photos/stretcher-loading.jpg")}
-                alt="Two Ride MedCompass crew members loading a patient on a stretcher into a branded van on a Chicago street, with the downtown skyline in the background"
-                width={1296}
-                height={832}
+                src={asset(PHOTOS.stretcherLoading.src)}
+                alt={PHOTOS.stretcherLoading.alt}
+                width={PHOTOS.stretcherLoading.width}
+                height={PHOTOS.stretcherLoading.height}
                 className="h-auto w-full"
                 priority
               />
@@ -209,6 +210,43 @@ export default function HomePage() {
                   </li>
                 ))}
               </ul>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* ---- Film ------------------------------------------------------- */}
+        <section className="bg-deep py-20">
+          <div className="mx-auto max-w-5xl px-4">
+            <Reveal className="max-w-2xl">
+              <p className="text-[0.82rem] font-bold uppercase tracking-widest text-lime">
+                See a ride
+              </p>
+              <h2 className="mt-2 font-display text-[clamp(1.8rem,3.2vw,2.6rem)] font-extrabold leading-tight text-white">
+                A pickup, start to finish.
+              </h2>
+            </Reveal>
+            {/*
+              Silent clip, with controls and no autoplay: the page must not
+              start motion on its own, and someone on a phone plan shouldn't pay
+              for a video they didn't ask for. preload="metadata" keeps the
+              initial load light; the poster reserves the space so nothing
+              shifts.
+            */}
+            <Reveal delay={120} className="mt-8 overflow-hidden rounded-2xl border border-white/10">
+              <video
+                controls
+                preload="metadata"
+                playsInline
+                poster={asset("/video/brand-poster.webp")}
+                width={1280}
+                height={720}
+                className="h-auto w-full bg-black"
+              >
+                <source src={asset("/video/medcompass-brand.mp4")} type="video/mp4" />
+                Your browser cannot play this video. It shows a Ride MedCompass driver picking a
+                rider up at her door and helping her into the van, then the fleet ready at the
+                garage.
+              </video>
             </Reveal>
           </div>
         </section>
@@ -337,10 +375,10 @@ export default function HomePage() {
                 </p>
                 <div className="mt-8 overflow-hidden rounded-2xl">
                   <Image
-                    src={asset("/photos/care-handoff.jpg")}
-                    alt="A care worker laughing with an older woman during a visit"
-                    width={1100}
-                    height={778}
+                    src={asset(PHOTOS.clinicHandoff.src)}
+                    alt={PHOTOS.clinicHandoff.alt}
+                    width={PHOTOS.clinicHandoff.width}
+                    height={PHOTOS.clinicHandoff.height}
                     className="h-auto w-full"
                   />
                 </div>

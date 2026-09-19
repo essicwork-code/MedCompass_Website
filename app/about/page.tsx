@@ -4,6 +4,7 @@ import MarketingShell, { PageHero } from "@/components/MarketingShell";
 import { COMPANY } from "@/lib/demo/data";
 import { STATS } from "@/lib/content";
 import { asset } from "@/lib/asset";
+import { PHOTOS } from "@/lib/photos";
 
 export const metadata: Metadata = {
   title: "About",
@@ -62,10 +63,10 @@ export default function AboutPage() {
           <aside className="space-y-6">
             <div className="overflow-hidden rounded-2xl border border-line">
               <Image
-                src={asset("/brand/van-side.jpg")}
-                alt="A Ride MedCompass wheelchair-accessible van"
-                width={1156}
-                height={419}
+                src={asset(PHOTOS.fleetLineup.src)}
+                alt={PHOTOS.fleetLineup.alt}
+                width={PHOTOS.fleetLineup.width}
+                height={PHOTOS.fleetLineup.height}
                 className="h-auto w-full"
               />
             </div>

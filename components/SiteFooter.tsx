@@ -99,6 +99,14 @@ export default function SiteFooter() {
           <p>
             © {new Date().getFullYear()} {COMPANY.name}. All rights reserved.
           </p>
+          {/*
+            Plain-language notice that the photography and video are
+            illustrative. The people in them are not photographs of named staff
+            or of identified riders, and saying so keeps the site honest.
+          */}
+          <p className="sm:text-right">
+            Photography and video on this site are illustrative and created with AI.
+          </p>
         </div>
       </div>
     </footer>

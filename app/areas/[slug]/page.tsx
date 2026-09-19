@@ -3,6 +3,9 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import BookARideButton from "@/components/BookARideButton";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import Image from "next/image";
+import { PHOTOS } from "@/lib/photos";
+import { asset } from "@/lib/asset";
 import JsonLd from "@/components/JsonLd";
 import MarketingShell from "@/components/MarketingShell";
 import ServiceIcon from "@/components/ServiceIcon";
@@ -98,6 +101,19 @@ export default async function AreaPage({ params }: { params: Promise<{ slug: str
           </div>
         </div>
       </section>
+
+      <div className="mx-auto max-w-7xl px-4 pt-12">
+        <div className="overflow-hidden rounded-2xl">
+          <Image
+            src={asset(PHOTOS.fleetLineup.src)}
+            alt={PHOTOS.fleetLineup.alt}
+            width={PHOTOS.fleetLineup.width}
+            height={PHOTOS.fleetLineup.height}
+            className="h-auto w-full"
+            priority
+          />
+        </div>
+      </div>
 
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 lg:grid-cols-[1fr_360px]">
         <div className="min-w-0 space-y-12">
