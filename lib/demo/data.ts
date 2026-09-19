@@ -15,8 +15,8 @@ export const COMPANY = {
   phone: "(773) 839-4474",
   phoneHref: "+17738394474",
   email: "dispatch@ridemedcompass.com",
-  address: "4200 W Cermak Rd, Suite 210",
-  city: "Cicero, IL 60804",
+  address: "10735 S Western Ave, Ste 6 #373",
+  city: "Chicago, IL 60643",
   hours: "Dispatch staffed 24/7 · Scheduled rides 4:00 AM to 11:00 PM daily",
 } as const;
 

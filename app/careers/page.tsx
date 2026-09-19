@@ -62,7 +62,7 @@ const JOB_POSTINGS: JobPosting[] = [
     title: "Wheelchair Van Driver",
     type: "Full-time · Employee (W-2)",
     pay: "$19-$23/hr, plus paid certification training",
-    location: "Routes across Chicago and the western suburbs, based out of our Cicero facility",
+    location: "Routes across Chicago and the western suburbs, based out of our South Side Chicago office",
     summary:
       "Drive a wheelchair-accessible van on scheduled routes, including standing dialysis and discharge trips. Most shifts follow a predictable weekly pattern rather than random on-demand pings.",
     responsibilities: [
@@ -104,7 +104,7 @@ const JOB_POSTINGS: JobPosting[] = [
     title: "Dispatcher",
     type: "Full-time · Employee (W-2)",
     pay: "$20-$25/hr, depending on experience",
-    location: "Cicero dispatch desk, some remote flexibility after training",
+    location: "Chicago dispatch desk, some remote flexibility after training",
     summary:
       "Run the live dispatch board: assign drivers and vehicles to trips, monitor the fleet map, and handle facility calls when a coordinator needs a status update.",
     responsibilities: [
