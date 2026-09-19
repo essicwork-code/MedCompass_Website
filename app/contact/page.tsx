@@ -5,6 +5,8 @@ import MarketingShell, { PageHero } from "@/components/MarketingShell";
 import { COMPANY } from "@/lib/demo/data";
 import { sendFormEmail } from "@/lib/emailjs";
 import { dispatchMailto, formValue } from "@/lib/mailto";
+import { useFormTimer } from "@/lib/spam";
+import Honeypot from "@/components/Honeypot";
 
 /*
  * Contact form.
@@ -15,6 +17,7 @@ import { dispatchMailto, formValue } from "@/lib/mailto";
  */
 export default function ContactPage() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "fallback">("idle");
+  const timer = useFormTimer();
 
   return (
     <MarketingShell>
@@ -102,6 +105,7 @@ export default function ContactPage() {
                   fromName: formValue(f, "name"),
                   replyTo: formValue(f, "email"),
                   fields,
+                  guard: { honeypot: formValue(f, "contact-website"), startedAt: timer.startedAt.current },
                 });
                 setStatus("sent");
                 f.reset();
@@ -112,6 +116,7 @@ export default function ContactPage() {
             }}
             className="mt-6 space-y-5"
           >
+            <Honeypot id="contact-website" />
             <div className="grid gap-5 sm:grid-cols-2">
               <div>
                 <label htmlFor="name" className="block text-[0.92rem] font-semibold text-deep">

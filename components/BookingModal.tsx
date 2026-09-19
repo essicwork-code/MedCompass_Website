@@ -5,6 +5,8 @@ import { COURIER_STAT_FEE, SERVICES } from "@/lib/content";
 import { COMPANY } from "@/lib/demo/data";
 import { nowForDateTimeInput } from "@/lib/datetime";
 import { sendFormEmail } from "@/lib/emailjs";
+import { RateLimitedError, useFormTimer } from "@/lib/spam";
+import Honeypot from "./Honeypot";
 import { dispatchMailto } from "@/lib/mailto";
 import type { BookingModalPrefill } from "./BookingModalProvider";
 
@@ -76,6 +78,7 @@ export default function BookingModal({
   const [status, setStatus] = useState<Status>("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const [fieldError, setFieldError] = useState<string | null>(null);
+  const timer = useFormTimer();
 
   // Open/close the native dialog in response to the isOpen prop, and reset
   // to a clean form (with any service prefill) each time it's opened.
@@ -88,6 +91,7 @@ export default function BookingModal({
       setStatus("idle");
       setErrorMessage("");
       setFieldError(null);
+      timer.restart();
       dialog.showModal();
     } else if (!isOpen && dialog.open) {
       dialog.close();
@@ -151,12 +155,6 @@ export default function BookingModal({
       return;
     }
     setFieldError(null);
-
-    // Honeypot filled: a bot. Show success and send nothing.
-    if (form.website.trim()) {
-      setStatus("success");
-      return;
-    }
     setStatus("submitting");
 
     try {
@@ -166,14 +164,19 @@ export default function BookingModal({
         fromName: form.name,
         replyTo: form.email,
         fields: bookingFields,
+        guard: { honeypot: form.website, startedAt: timer.startedAt.current },
       });
       setStatus("success");
-    } catch {
-      // Covers EmailJS being unreachable, rejecting the send, or its monthly
-      // quota running out. The error state keeps the details and offers email
-      // and phone instead.
+    } catch (err) {
+      // Covers EmailJS being unreachable, rejecting the send, its monthly
+      // quota running out, or this browser's send limit. The error state keeps
+      // the details and offers email and phone instead.
       setStatus("error");
-      setErrorMessage("We couldn't reach dispatch online right now.");
+      setErrorMessage(
+        err instanceof RateLimitedError
+          ? "You've sent several requests in the last few minutes, so we've paused online sending."
+          : "We couldn't reach dispatch online right now.",
+      );
     }
   }
 
@@ -316,19 +319,7 @@ export default function BookingModal({
             </div>
           ) : (
             <form onSubmit={handleSubmit} noValidate>
-              {/* Honeypot — hidden from sighted and AT users, visible to bots that fill every field. */}
-              <div className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
-                <label htmlFor="booking-website">Leave this field blank</label>
-                <input
-                  id="booking-website"
-                  name="website"
-                  type="text"
-                  tabIndex={-1}
-                  autoComplete="off"
-                  value={form.website}
-                  onChange={(e) => update("website", e.target.value)}
-                />
-              </div>
+              <Honeypot id="booking-website" value={form.website} onChange={(v) => update("website", v)} />
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="sm:col-span-2">

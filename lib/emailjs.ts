@@ -12,7 +12,14 @@
  *
  * If sending fails (or the key is blanked out), forms fall back to opening the
  * visitor's email app (lib/mailto.ts) and show the dispatch phone number.
+ *
+ * Every send passes the spam checks in lib/spam.ts first. The dashboard side
+ * matters more, since a script can call EmailJS without this page: keep the
+ * allowed-domain list to ridemedcompass.com and turn on rate limiting and
+ * CAPTCHA under Account > Security.
  */
+
+import { RateLimitedError, isRateLimited, looksLikeSpam, recordSend, type SpamGuard } from "./spam";
 
 const SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_9v7ommo";
 const TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "template_9v3h7rr";
@@ -29,10 +36,19 @@ export interface FormEmail {
   /** The visitor's address; replies and the auto-reply go here. */
   replyTo: string;
   fields: [label: string, value: string | undefined][];
+  guard: SpamGuard;
 }
 
-/** Resolves on success; throws if EmailJS isn't configured or rejects the send. */
+/**
+ * Resolves on success, and also when the submission looks like spam (it is
+ * dropped silently). Throws RateLimitedError after too many recent sends from
+ * this browser, or a plain Error if EmailJS isn't configured or rejects it.
+ */
 export async function sendFormEmail(email: FormEmail): Promise<void> {
+  if (looksLikeSpam(email.guard, [email.subject, email.fromName, email.replyTo, ...email.fields.map(([, v]) => v)])) {
+    return;
+  }
+  if (isRateLimited()) throw new RateLimitedError();
   if (!emailConfigured) throw new Error("Email sending is not configured.");
 
   const details = email.fields
@@ -54,4 +70,5 @@ export async function sendFormEmail(email: FormEmail): Promise<void> {
     },
     { publicKey: PUBLIC_KEY },
   );
+  recordSend();
 }

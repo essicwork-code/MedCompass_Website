@@ -6,6 +6,8 @@ import { CHIP_ACTIONS, GREETING, respond, type ChatAction } from "@/lib/chat-scr
 import { COMPANY } from "@/lib/demo/data";
 import { sendFormEmail } from "@/lib/emailjs";
 import { dispatchMailto } from "@/lib/mailto";
+import { useFormTimer } from "@/lib/spam";
+import Honeypot from "./Honeypot";
 import { useBookingModal } from "./BookingModalProvider";
 import { CompassMark } from "./Logo";
 
@@ -44,6 +46,8 @@ export default function ChatWidget() {
   ]);
   const [contact, setContact] = useState<ContactStatus>("closed");
   const [contactForm, setContactForm] = useState({ name: "", phone: "", email: "", message: "" });
+  const [honeypot, setHoneypot] = useState("");
+  const contactTimer = useFormTimer();
   const [contactError, setContactError] = useState<string | null>(null);
 
   const nextId = useRef(1);
@@ -94,6 +98,7 @@ export default function ChatWidget() {
   function openContact() {
     if (contact === "open" || contact === "sending") return;
     setContactError(null);
+    contactTimer.restart();
     setContact("open");
   }
 
@@ -171,6 +176,7 @@ export default function ChatWidget() {
           ["Message", message],
           ["Asked in chat", asked ? `\n${asked}` : undefined],
         ],
+        guard: { honeypot, startedAt: contactTimer.startedAt.current },
       });
       setContact("closed");
       setContactForm({ name: "", phone: "", email: "", message: "" });
@@ -349,6 +355,7 @@ export default function ChatWidget() {
                 className="chat-msg-in rounded-2xl border-2 border-green/40 bg-white p-4"
                 aria-label="Message dispatch"
               >
+                <Honeypot id="chat-website" value={honeypot} onChange={setHoneypot} />
                 <p className="font-display text-[1rem] font-bold text-deep">Message dispatch</p>
                 <p className="mt-0.5 text-[0.8rem] leading-relaxed text-slate-soft">
                   A dispatcher will call or email you back.

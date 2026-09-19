@@ -4,6 +4,8 @@ import { useState } from "react";
 import MarketingShell, { PageHero } from "@/components/MarketingShell";
 import { COMPANY } from "@/lib/demo/data";
 import { sendFormEmail } from "@/lib/emailjs";
+import { useFormTimer } from "@/lib/spam";
+import Honeypot from "@/components/Honeypot";
 import { dispatchMailto, formValue } from "@/lib/mailto";
 
 /*
@@ -127,6 +129,7 @@ export default function CareersPage() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "fallback">("idle");
   const [role, setRole] = useState(JOB_POSTINGS[0].title);
   const [formError, setFormError] = useState<string | null>(null);
+  const timer = useFormTimer();
   const [spotlight, second] = SPOTLIGHT_DRIVERS;
 
   return (
@@ -309,6 +312,7 @@ export default function CareersPage() {
                       fromName: formValue(f, "c-name"),
                       replyTo: formValue(f, "c-email"),
                       fields,
+                      guard: { honeypot: formValue(f, "c-website"), startedAt: timer.startedAt.current },
                     });
                     setStatus("sent");
                     f.reset();
@@ -320,6 +324,7 @@ export default function CareersPage() {
                 }}
                 className="mt-5 space-y-4"
               >
+                <Honeypot id="c-website" />
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
                     <label htmlFor="c-name" className="block text-[0.9rem] font-semibold text-deep">
