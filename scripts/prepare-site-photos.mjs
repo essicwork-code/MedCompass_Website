@@ -36,7 +36,9 @@ const WIDTHS = {
 };
 
 await mkdir(OUT, { recursive: true });
-const files = (await readdir(SRC)).filter((f) => /\.png$/i.test(f));
+// og-source.png is cropped straight into app/opengraph-image.jpg, so it is not
+// a site photo and gets no WebP of its own.
+const files = (await readdir(SRC)).filter((f) => /\.png$/i.test(f) && f !== "og-source.png");
 
 for (const file of files) {
   const name = file.replace(/\.png$/i, "");

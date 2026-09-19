@@ -29,3 +29,6 @@ __pycache__/
 
 # Full-size generated photo sources (mirrored to gs://medcompass-media-926590854262/sources/)
 Assets/generated/
+
+# Internal review notes: never commit (the repo is public)
+SITE-CONCERNS.md
