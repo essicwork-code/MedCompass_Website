@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import EmergencyNotice from "@/components/EmergencyNotice";
 import MarketingShell, { PageHero } from "@/components/MarketingShell";
 import { COMPANY } from "@/lib/demo/data";
 import { sendFormEmail } from "@/lib/emailjs";
@@ -87,10 +88,7 @@ export default function ContactPage() {
             />
           </div>
 
-          <p className="mt-8 rounded-xl bg-alert-tint px-5 py-4 text-[0.95rem] leading-relaxed text-alert">
-            <strong>Medical emergency?</strong> Call 911. MedCompass provides non-emergency
-            transport only and cannot respond to emergencies.
-          </p>
+          <EmergencyNotice className="mt-8" />
         </div>
 
         <div className="rounded-2xl border border-line bg-white p-7 lg:p-9">

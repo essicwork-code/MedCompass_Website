@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
+import EmergencyNotice from "./EmergencyNotice";
 import { AREAS } from "@/lib/areas";
 import { COMPANY } from "@/lib/demo/data";
 
@@ -95,7 +96,11 @@ export default function SiteFooter() {
           ))}
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-line pt-6 text-[0.82rem] text-slate-soft sm:flex-row sm:items-center sm:justify-between">
+        {/* Site-wide, so the 911 distinction is on every page and not only the
+            ones where we happened to think of it. */}
+        <EmergencyNotice className="mt-12" />
+
+        <div className="mt-10 flex flex-col gap-3 border-t border-line pt-6 text-[0.82rem] text-slate-soft sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {new Date().getFullYear()} {COMPANY.name}. All rights reserved.
           </p>

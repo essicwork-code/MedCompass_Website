@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { PHOTOS } from "@/lib/photos";
 import Link from "next/link";
+import { EmergencyNoticeBand } from "@/components/EmergencyNotice";
 import MarketingShell from "@/components/MarketingShell";
 import ServiceIcon from "@/components/ServiceIcon";
 import Reveal from "@/components/Reveal";
@@ -140,6 +141,9 @@ export default function HomePage() {
             </Reveal>
           </div>
         </section>
+
+        {/* ---- Emergency notice ------------------------------------------- */}
+        <EmergencyNoticeBand />
 
         {/* ---- Proof bar -------------------------------------------------- */}
         <section aria-label="Company statistics" className="border-y border-line bg-white">

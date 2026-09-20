@@ -83,6 +83,10 @@
     "created": "2026-07-30",
     "modified": "2026-09-19"
   },
+  "app/llms.txt/route.ts": {
+    "created": "2026-09-20",
+    "modified": "2026-09-20"
+  },
   "app/not-found.tsx": {
     "created": "2026-09-16",
     "modified": "2026-09-17"
@@ -109,15 +113,15 @@
   },
   "app/resources/hospital-discharge-guide/page.tsx": {
     "created": "2026-07-30",
-    "modified": "2026-09-19"
+    "modified": "2026-09-20"
   },
   "app/resources/illinois-medicaid-transportation/page.tsx": {
     "created": "2026-09-17",
-    "modified": "2026-09-19"
+    "modified": "2026-09-20"
   },
   "app/resources/nemt-cost-chicago/page.tsx": {
     "created": "2026-07-30",
-    "modified": "2026-09-19"
+    "modified": "2026-09-20"
   },
   "app/resources/page.tsx": {
     "created": "2026-07-30",
@@ -137,7 +141,7 @@
   },
   "app/services/[slug]/page.tsx": {
     "created": "2026-07-30",
-    "modified": "2026-09-19"
+    "modified": "2026-09-20"
   },
   "app/services/page.tsx": {
     "created": "2026-07-30",
@@ -145,7 +149,7 @@
   },
   "app/sitemap.ts": {
     "created": "2026-09-17",
-    "modified": "2026-09-17"
+    "modified": "2026-09-20"
   },
   "app/terms/page.tsx": {
     "created": "2026-07-30",
@@ -181,7 +185,7 @@
   },
   "lib/content.ts": {
     "created": "2026-07-30",
-    "modified": "2026-09-19"
+    "modified": "2026-09-20"
   },
   "lib/datetime.ts": {
     "created": "2026-09-17",
@@ -210,6 +214,14 @@
   "lib/geo.ts": {
     "created": "2026-07-30",
     "modified": "2026-09-17"
+  },
+  "lib/lastmod.generated.json": {
+    "created": "2026-09-20",
+    "modified": "2026-09-20"
+  },
+  "lib/lastmod.ts": {
+    "created": "2026-09-20",
+    "modified": "2026-09-20"
   },
   "lib/mailto.ts": {
     "created": "2026-09-16",
