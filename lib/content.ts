@@ -124,7 +124,7 @@ export const SEGMENTS: Segment[] = [
     name: "Patients & families",
     pain: "You put your mother in a van and then hear nothing for an hour.",
     answer:
-      "Every Ride MedCompass trip gets a confirmed pickup window and a driver who calls when they're close. You get a text when your parent is picked up and another when they're delivered.",
+      "Every MedCompass trip gets a confirmed pickup window and a driver who calls when they're close. You get a text when your parent is picked up and another when they're delivered.",
     proof: "One escort always rides free, so someone can go along.",
   },
   {

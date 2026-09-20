@@ -133,7 +133,7 @@ export default function CareersPage() {
     <MarketingShell>
       <PageHero
         eyebrow="Careers"
-        title="Drive for Ride MedCompass"
+        title="Drive for MedCompass"
         lede="We hire drivers, not contractors. Paid training, predictable routes, and work that actually matters to the people you're driving."
       />
 

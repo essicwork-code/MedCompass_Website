@@ -189,6 +189,6 @@ export function respond(input: string): ScriptedReply {
 
 export const GREETING: ScriptedReply = {
   text:
-    "Hi! I'm the Ride MedCompass assistant. Ask me about rides, medical courier pickups, pricing, coverage or insurance, or send a message straight to dispatch.",
+    "Hi! I'm the MedCompass assistant. Ask me about rides, medical courier pickups, pricing, coverage or insurance, or send a message straight to dispatch.",
   suggestions: ["What does a ride cost?", "Do you take Medicaid?", "Book a ride", "Message dispatch"],
 };

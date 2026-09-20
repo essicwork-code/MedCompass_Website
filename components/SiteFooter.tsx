@@ -36,7 +36,7 @@ const COLUMNS = [
   {
     heading: "Company",
     links: [
-      { href: "/about", label: "About Ride MedCompass" },
+      { href: "/about", label: "About MedCompass" },
       { href: "/service-area", label: "Service area" },
       { href: "/areas", label: "Areas we serve" },
       { href: "/pricing", label: "Pricing & insurance" },

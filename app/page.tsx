@@ -79,7 +79,7 @@ export default function HomePage() {
 
               <p className="mt-6 max-w-xl text-[1.15rem] leading-relaxed text-white/80">
                 With most transport companies, you help your mother into a van and then wait by a
-                window hoping it shows up when it said it would. Ride MedCompass runs on a
+                window hoping it shows up when it said it would. MedCompass runs on a
                 different promise: a confirmed pickup window, a driver who calls ahead, and help
                 from door to door on both ends of the trip, not just curb to curb.
               </p>
@@ -238,7 +238,7 @@ export default function HomePage() {
                 poster="/video/brand-poster.webp"
                 width={1280}
                 height={720}
-                label="This video shows a Ride MedCompass driver picking a rider up at her door and helping her into the van, then the fleet ready at the garage."
+                label="This video shows a MedCompass driver picking a rider up at her door and helping her into the van, then the fleet ready at the garage."
               />
             </Reveal>
           </div>
@@ -322,7 +322,7 @@ export default function HomePage() {
               <div className="grid grid-cols-1 divide-y divide-line">
                 <div className="hidden bg-deep px-6 py-4 text-[0.85rem] font-bold uppercase tracking-wide text-white/85 sm:grid sm:grid-cols-[1.2fr_1fr_1fr]">
                   <span>What matters</span>
-                  <span className="text-lime">Ride MedCompass</span>
+                  <span className="text-lime">MedCompass</span>
                   <span className="text-white/60">Most other providers</span>
                 </div>
                 {COMPARISON.map((row) => (

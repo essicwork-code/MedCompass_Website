@@ -9,7 +9,7 @@ import { PHOTOS } from "@/lib/photos";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Ride MedCompass is a Chicagoland non-emergency medical transportation company built around reliable, on-time, door-through-door service.",
+    "MedCompass is a Chicagoland non-emergency medical transportation company built around reliable, on-time, door-through-door service.",
 };
 
 export default function AboutPage() {
@@ -31,7 +31,7 @@ export default function AboutPage() {
             </p>
             <p className="mt-5 text-[1.02rem] leading-relaxed text-slate-soft">
               So we built the reliability first. Before the brochure, before the fleet livery,
-              before the phone system. Every Ride MedCompass trip runs on a confirmed pickup window and
+              before the phone system. Every MedCompass trip runs on a confirmed pickup window and
               a driver who calls when they're close, so the rider, their family, and the facility
               are never left guessing. It turns out that when everyone hears the same thing, most
               of the follow-up calls stop.

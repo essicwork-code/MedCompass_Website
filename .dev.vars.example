@@ -7,7 +7,7 @@
 RESEND_API_KEY=
 
 # Optional. Overrides the "from" address on both booking emails. Falls back
-# to Resend's shared sandbox sender ("Ride MedCompass <onboarding@resend.dev>")
+# to Resend's shared sandbox sender ("MedCompass <onboarding@resend.dev>")
 # if unset, which works without domain verification but can only deliver to
 # the Resend account owner's own address — a verified sending domain is
 # needed to email arbitrary riders in production.

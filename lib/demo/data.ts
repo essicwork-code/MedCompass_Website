@@ -10,7 +10,7 @@ import type { LatLng, Place } from "./types";
 export const SERVICE_CENTER: LatLng = [41.8781, -87.6298];
 
 export const COMPANY = {
-  name: "Ride MedCompass",
+  name: "MedCompass",
   tagline: "Safe · Reliable · On-Time Transportation",
   phone: "(773) 839-4474",
   phoneHref: "+17738394474",

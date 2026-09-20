@@ -41,7 +41,7 @@ const SERVICE_SLUGS = new Set<string>(SERVICES.map((s) => s.slug));
 // it can only deliver to the Resend account owner's own verified email —
 // broad delivery to arbitrary riders' inboxes requires verifying a real
 // sending domain in the Resend dashboard and pointing RESEND_FROM_EMAIL at it.
-const DEFAULT_FROM = "Ride MedCompass <onboarding@resend.dev>";
+const DEFAULT_FROM = "MedCompass <onboarding@resend.dev>";
 
 const MAX_BODY_BYTES = 20_000;
 
@@ -183,13 +183,13 @@ function confirmationEmail(payload: BookingPayload) {
     "",
     `Need to reach us sooner? Call dispatch at ${COMPANY.phone}, staffed 24/7.`,
     "",
-    `Ride MedCompass`,
+    `MedCompass`,
   ].join("\n");
 
   const html = `
     <div style="font-family:sans-serif;max-width:560px;color:#10222e">
       <div style="background:#0f4c75;padding:20px 24px;border-radius:12px 12px 0 0">
-        <p style="color:#8dc63f;font-weight:bold;font-size:13px;letter-spacing:0.06em;text-transform:uppercase;margin:0">Ride MedCompass</p>
+        <p style="color:#8dc63f;font-weight:bold;font-size:13px;letter-spacing:0.06em;text-transform:uppercase;margin:0">MedCompass</p>
         <h2 style="color:#fff;margin:6px 0 0">We&rsquo;ve got your request</h2>
       </div>
       <div style="border:1px solid #d9e5ee;border-top:none;padding:24px;border-radius:0 0 12px 12px">
@@ -209,14 +209,14 @@ function confirmationEmail(payload: BookingPayload) {
           Need to reach us sooner? Dispatch is staffed 24/7 at
           <a href="tel:${COMPANY.phoneHref}" style="color:#146a9f;font-weight:bold">${COMPANY.phone}</a>.
         </p>
-        <p style="color:#5a7183;font-size:0.9em;margin-top:24px">Ride MedCompass</p>
+        <p style="color:#5a7183;font-size:0.9em;margin-top:24px">MedCompass</p>
       </div>
     </div>
   `;
 
   return {
     to: payload.email,
-    subject: "Ride MedCompass: we got your booking request",
+    subject: "MedCompass: we got your booking request",
     text,
     html,
   };

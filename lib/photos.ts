@@ -29,7 +29,7 @@ export const PHOTOS = {
     "home-hero",
     1800,
     1450,
-    "A Ride MedCompass driver guiding an older woman in her wheelchair up the ramp into a wheelchair-accessible van outside a Chicago two-flat",
+    "A MedCompass driver guiding an older woman in her wheelchair up the ramp into a wheelchair-accessible van outside a Chicago two-flat",
   ),
   homeSecure: photo(
     "home-secure",
@@ -53,7 +53,7 @@ export const PHOTOS = {
     "stretcher-loading",
     1800,
     1208,
-    "Two Ride MedCompass crew members loading a rider on a stretcher into the van at a hospital entrance",
+    "Two MedCompass crew members loading a rider on a stretcher into the van at a hospital entrance",
   ),
   stretcherTransport: photo(
     "stretcher-transport",
@@ -71,7 +71,7 @@ export const PHOTOS = {
     "courier-handoff",
     1600,
     1073,
-    "A Ride MedCompass courier handing a sealed specimen cooler to a laboratory technician who signs for it on a tablet",
+    "A MedCompass courier handing a sealed specimen cooler to a laboratory technician who signs for it on a tablet",
   ),
   clinicHandoff: photo(
     "clinic-handoff",
@@ -83,7 +83,7 @@ export const PHOTOS = {
     "discharge-planner",
     1600,
     1073,
-    "A hospital discharge planner confirming a pickup time with a Ride MedCompass crew member at a nurses' station",
+    "A hospital discharge planner confirming a pickup time with a MedCompass crew member at a nurses' station",
   ),
   familyBooking: photo(
     "family-booking",
@@ -95,13 +95,13 @@ export const PHOTOS = {
     "fleet-lineup",
     1920,
     1072,
-    "Three Ride MedCompass wheelchair vans parked in a row outside the fleet garage at golden hour",
+    "Three MedCompass wheelchair vans parked in a row outside the fleet garage at golden hour",
   ),
   crewTeam: photo(
     "crew-team",
     1800,
     1208,
-    "Five Ride MedCompass crew members in uniform talking together beside a van",
+    "Five MedCompass crew members in uniform talking together beside a van",
   ),
   dialysisArrival: photo(
     "dialysis-arrival",
@@ -119,7 +119,7 @@ export const PHOTOS = {
     "dispatch-desk",
     1600,
     1073,
-    "A Ride MedCompass dispatcher at her desk with a live map of vehicles and the day's schedule on screen",
+    "A MedCompass dispatcher at her desk with a live map of vehicles and the day's schedule on screen",
   ),
 } as const satisfies Record<string, SitePhoto>;
 

@@ -88,7 +88,7 @@ export default function ContactPage() {
           </div>
 
           <p className="mt-8 rounded-xl bg-alert-tint px-5 py-4 text-[0.95rem] leading-relaxed text-alert">
-            <strong>Medical emergency?</strong> Call 911. Ride MedCompass provides non-emergency
+            <strong>Medical emergency?</strong> Call 911. MedCompass provides non-emergency
             transport only and cannot respond to emergencies.
           </p>
         </div>

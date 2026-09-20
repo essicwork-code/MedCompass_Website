@@ -1,8 +1,8 @@
-# Ride MedCompass Website
+# MedCompass Website
 
 ## Project context
 
-Ride MedCompass is a **non-emergency medical transportation (NEMT)** provider in the Chicago
+MedCompass is a **non-emergency medical transportation (NEMT)** provider in the Chicago
 metro — wheelchair, ambulatory, stretcher, and bariatric transport. Tagline: *Safe •
 Reliable • On-Time Transportation*. The site is a marketing front end plus two portals:
 client trip tracking and admin dispatch. A Flutter driver app will consume the same API

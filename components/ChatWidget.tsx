@@ -215,7 +215,7 @@ export default function ChatWidget() {
         }}
         className="fixed z-[60] flex h-14 w-14 items-center justify-center rounded-full bg-deep text-white shadow-[0_10px_30px_-8px_rgb(16_34_46/0.6)] transition-transform hover:scale-105 hover:bg-[#0c3e60]"
       >
-        <span className="sr-only">{open ? "Close chat" : "Open chat with Ride MedCompass"}</span>
+        <span className="sr-only">{open ? "Close chat" : "Open chat with MedCompass"}</span>
         {open ? (
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
@@ -236,7 +236,7 @@ export default function ChatWidget() {
         <div
           id="chat-panel"
           role="dialog"
-          aria-label="Chat with Ride MedCompass"
+          aria-label="Chat with MedCompass"
           style={{
             bottom: "max(6rem, calc(env(safe-area-inset-bottom) + 5.5rem))",
             right: "max(1.25rem, calc(env(safe-area-inset-right) + 0.75rem))",
@@ -252,7 +252,7 @@ export default function ChatWidget() {
               <CompassMark size={26} className="h-5 w-auto" />
             </span>
             <div className="relative min-w-0 flex-1">
-              <p className="truncate text-[0.95rem] font-bold">Ride MedCompass</p>
+              <p className="truncate text-[0.95rem] font-bold">MedCompass</p>
               <p className="truncate text-[0.76rem] text-white/80">Instant answers · Dispatch 24/7 by phone</p>
             </div>
             <a

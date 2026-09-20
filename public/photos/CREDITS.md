@@ -1,11 +1,11 @@
 # Site photography
 
-Every photograph on this site was created for Ride MedCompass with Google's
+Every photograph on this site was created for MedCompass with Google's
 Gemini image models (Nano Banana Pro on Vertex AI), using the company logo, the
 van wrap and the crew uniform as references so the fleet and uniforms match.
 
 **They are illustrative.** They do not show identified riders, and the people in
-them are not photographs of named Ride MedCompass staff. The site footer says
+them are not photographs of named MedCompass staff. The site footer says
 so. Do not caption them as specific employees, and do not pair them with named
 testimonials.
 
