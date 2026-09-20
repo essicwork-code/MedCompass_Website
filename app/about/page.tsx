@@ -45,7 +45,7 @@ export default function AboutPage() {
             <h2 className="mt-12 font-display text-[1.5rem] font-extrabold text-deep">
               How we operate
             </h2>
-            <ul className="mt-5 space-y-4">
+            <ul className="reveal mt-5 space-y-4">
               {[
                 ["Drivers, not contractors", "Every driver is an employee, background-checked, CPR/AED certified, and trained on securement for the equipment they carry."],
                 ["Same driver where we can", "Standing orders are assigned to a consistent driver and van. For a rider with dementia, a familiar face is not a nicety."],
@@ -60,7 +60,7 @@ export default function AboutPage() {
             </ul>
           </div>
 
-          <aside className="space-y-6">
+          <aside className="reveal space-y-6">
             <div className="overflow-hidden rounded-2xl border border-line">
               <Image
                 src={asset(PHOTOS.fleetLineup.src)}

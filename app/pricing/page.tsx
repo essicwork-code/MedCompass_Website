@@ -72,7 +72,7 @@ export default function PricingPage() {
         </section>
 
         {/* Worked examples */}
-        <section className="mt-14">
+        <section className="reveal mt-14">
           <h2 className="font-display text-[1.6rem] font-extrabold text-deep">Real trips, real prices</h2>
           <ul className="mt-5 grid gap-4 sm:grid-cols-2">
             {EXAMPLES.map((ex) => {
@@ -95,7 +95,7 @@ export default function PricingPage() {
         </section>
 
         {/* Coverage */}
-        <section className="mt-14 rounded-2xl border border-line bg-white p-7 lg:p-10">
+        <section className="reveal mt-14 rounded-2xl border border-line bg-white p-7 lg:p-10">
           <h2 className="font-display text-[1.6rem] font-extrabold text-deep">
             If you&rsquo;re covered, you probably pay nothing
           </h2>
@@ -135,7 +135,7 @@ export default function PricingPage() {
         </section>
 
         {/* FAQ */}
-        <section className="mt-14">
+        <section className="reveal mt-14">
           <h2 className="font-display text-[1.6rem] font-extrabold text-deep">Common questions</h2>
           <div className="mt-5 divide-y divide-line rounded-2xl border border-line bg-white">
             {FAQS.map((f) => (

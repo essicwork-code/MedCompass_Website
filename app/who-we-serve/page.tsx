@@ -34,7 +34,7 @@ export default function WhoWeServePage() {
           <section
             key={seg.id}
             id={seg.id}
-            className="scroll-mt-32 rounded-2xl border border-line bg-white p-7 lg:p-10"
+            className="reveal scroll-mt-32 rounded-2xl border border-line bg-white p-7 lg:p-10"
           >
             <div className="grid gap-8 lg:grid-cols-[1fr_1.4fr]">
               <div>

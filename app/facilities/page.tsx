@@ -80,7 +80,7 @@ export default function FacilitiesPage() {
           ))}
         </ul>
 
-        <section className="mt-12 rounded-2xl border border-line bg-white p-7 lg:p-10">
+        <section className="reveal mt-12 rounded-2xl border border-line bg-white p-7 lg:p-10">
           <div className="grid gap-9 lg:grid-cols-2">
             <div>
               <h2 className="font-display text-[1.6rem] font-extrabold text-deep">

@@ -1,16 +1,16 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
-
 /**
- * Scroll-reveal wrapper. Fades/lifts a section in once it crosses the
- * viewport, using IntersectionObserver rather than a scroll listener.
+ * Scroll reveal wrapper.
  *
- * Reduced motion is handled in CSS (see .reveal in globals.css): the
- * @media query there simply removes the transform/opacity delta, so a
- * failed observer or JS-disabled visitor still sees full content — this
- * component only ever adds an "is-visible" class, never hides content by
- * default in markup.
+ * Pure CSS: the fade-up is driven by a scroll-driven `view()` timeline (see
+ * `.reveal` in globals.css), not JavaScript. This used to be a client
+ * component running an IntersectionObserver, which meant the content was
+ * hidden by default and only revealed once a script ran — so a failed
+ * observer risked leaving a section permanently invisible.
+ *
+ * Now nothing is ever hidden by default. A browser without scroll-driven
+ * animation support, or a visitor who prefers reduced motion, lands on the
+ * same result: the fully visible content, with no animation. That also makes
+ * this a server component — no "use client", no hydration cost.
  */
 export default function Reveal({
   children,
@@ -21,39 +21,26 @@ export default function Reveal({
 }: {
   children: React.ReactNode;
   className?: string;
-  /** ms, staggers siblings without needing separate observers. */
+  /**
+   * Authored in ms by the previous implementation, where siblings were
+   * staggered with a transition-delay. A scroll-driven animation has no
+   * clock to delay against — the cascade is instead a shift in where each
+   * item's scroll range begins — so the value is reduced to a step index.
+   * Kept in ms so the call sites reading `i * 80` still make sense.
+   */
   delay?: number;
   as?: "div" | "li" | "span";
   id?: string;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const node = ref.current;
-    if (!node) return;
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          io.disconnect();
-        }
-      },
-      // threshold 0: a proportional threshold is unreachable for a section
-      // taller than the viewport divided by that fraction, which leaves long
-      // sections on narrow phones permanently hidden.
-      { threshold: 0, rootMargin: "0px 0px -8% 0px" },
-    );
-    io.observe(node);
-    return () => io.disconnect();
-  }, []);
+  // Capped so a long list can't push the last item's range past the point
+  // where it would still be mid-animation when it reaches the viewport.
+  const step = delay ? Math.min(Math.round(delay / 70), 6) : 0;
 
   return (
     <Tag
-      ref={ref as never}
       id={id}
-      className={`reveal ${visible ? "is-visible" : ""} ${className}`}
-      style={delay ? ({ transitionDelay: `${delay}ms` } as React.CSSProperties) : undefined}
+      className={`reveal ${className}`}
+      style={step ? ({ "--reveal-i": step } as React.CSSProperties) : undefined}
     >
       {children}
     </Tag>

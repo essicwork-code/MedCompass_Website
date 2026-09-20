@@ -48,7 +48,7 @@ export default function FaqPage() {
       <div className="mx-auto max-w-3xl px-4 py-14">
         <dl className="space-y-4">
           {ALL.map((f) => (
-            <div key={f.q} className="rounded-2xl border border-line bg-white p-6">
+            <div key={f.q} className="reveal rounded-2xl border border-line bg-white p-6">
               <dt className="font-display text-[1.12rem] font-bold text-deep">{f.q}</dt>
               <dd className="mt-2 text-[1rem] leading-relaxed text-slate-soft">{f.a}</dd>
             </div>

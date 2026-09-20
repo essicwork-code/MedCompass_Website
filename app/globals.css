@@ -123,28 +123,52 @@
 }
 
 /*
- * Scroll reveal — the one motion budget line item used site-wide (per
- * CLAUDE.md §4, a quiet supporting moment, not the signature). Starts
- * slightly down and transparent, settles on intersection. Transform/opacity
- * only, per the §3 floor.
+ * Scroll reveal — a quiet supporting moment per CLAUDE.md §4, not the
+ * signature. Transform/opacity only, per the §3 floor.
+ *
+ * Nothing is hidden by default. The animation is layered on only where the
+ * browser supports a scroll-driven timeline AND the visitor has not asked for
+ * reduced motion — so an unsupported browser and a reduced-motion preference
+ * both land on the same safe result, the fully visible content. This replaced
+ * an IntersectionObserver that hid content first and revealed it via script,
+ * where a failed observer could strand a section invisible.
  */
-/* Hidden only once the inline script in app/layout.tsx has tagged <html>, so
-   a page whose JS never runs still shows every section. */
-.js .reveal {
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, opacity;
-}
-.js .reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-@media (prefers-reduced-motion: reduce) {
-  .js .reveal {
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
     opacity: 1;
     transform: none;
-    transition: none;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      /*
+       * Longhands rather than the `animation` shorthand, and animation-timeline
+       * last: the shorthand resets timeline to `auto`, so declaring it above
+       * this point silently drops the scroll timeline. Duration is stated
+       * explicitly because `auto` (resolve to the timeline's length) is what a
+       * progress-based timeline needs, and being explicit keeps that from
+       * depending on which initial value the browser applies.
+       */
+      animation-name: reveal-in;
+      animation-duration: auto;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view();
+      /*
+       * Runs while the element crosses into view and finishes well before it
+       * reaches the middle of the screen, so nothing is still fading while
+       * someone is trying to read it. --reveal-i staggers siblings that share
+       * a row and would otherwise animate in unison.
+       */
+      animation-range: entry calc(2% + var(--reveal-i, 0) * 6%) entry
+        calc(50% + var(--reveal-i, 0) * 6%);
+    }
   }
 }
 
@@ -166,12 +190,6 @@
     stroke-dashoffset: 0;
     animation: none;
   }
-}
-
-@keyframes route-dot-travel {
-  0% { offset-distance: 0%; opacity: 0; }
-  8% { opacity: 1; }
-  100% { offset-distance: 100%; opacity: 1; }
 }
 
 /* Hover lift used across cards — kept as one utility so the easing matches. */

@@ -25,7 +25,7 @@ export default function ServicesPage() {
 
       <div className="mx-auto max-w-7xl space-y-6 px-4 py-14">
         {SERVICES.map((s) => (
-          <article key={s.slug} className="rounded-2xl border border-line bg-white p-7 lg:p-9">
+          <article key={s.slug} className="reveal rounded-2xl border border-line bg-white p-7 lg:p-9">
             <div className="grid gap-7 lg:grid-cols-[1fr_300px]">
               <div>
                 <div className="flex items-center gap-3">
