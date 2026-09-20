@@ -35,6 +35,27 @@ function AlertIcon() {
   );
 }
 
+/**
+ * One definition of the sentence, rendered by both shapes below. Safety copy
+ * that exists in two places is safety copy that will eventually disagree with
+ * itself.
+ *
+ * Phrased as an instruction rather than a question: "Medical emergency?" reads
+ * like marketing, and this is the register a clinician or a discharge planner
+ * expects. It avoids "scheduled" as well, which undersold the same-day
+ * discharge work, and says "non-emergency medical transportation" in full
+ * because that is the industry term the reader is checking us against.
+ */
+function Message() {
+  return (
+    <>
+      <strong>In a medical emergency, call 911.</strong> {COMPANY.name} provides non-emergency
+      medical transportation only. We are not an ambulance service and cannot respond to
+      emergency calls.
+    </>
+  );
+}
+
 export default function EmergencyNotice({ className = "" }: { className?: string }) {
   return (
     <p
@@ -42,9 +63,7 @@ export default function EmergencyNotice({ className = "" }: { className?: string
     >
       <AlertIcon />
       <span>
-        <strong>Medical emergency? Call 911.</strong> {COMPANY.name} provides scheduled,
-        non-emergency transport only. We are not an ambulance service and cannot respond to
-        emergencies.
+        <Message />
       </span>
     </p>
   );
@@ -60,9 +79,7 @@ export function EmergencyNoticeBand() {
       <div className="mx-auto flex max-w-7xl items-start gap-3 px-4 py-4 text-base leading-relaxed text-alert">
         <AlertIcon />
         <p>
-          <strong>Medical emergency? Call 911.</strong> {COMPANY.name} provides scheduled,
-          non-emergency transport only. We are not an ambulance service and cannot respond to
-          emergencies.
+          <Message />
         </p>
       </div>
     </section>

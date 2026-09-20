@@ -495,7 +495,7 @@ export default function ChatWidget() {
           </form>
 
           <p className="border-t border-line bg-white px-4 pb-3 pt-2 text-[0.72rem] leading-relaxed text-slate-soft">
-            Automated assistant. Please don&rsquo;t share medical details here. Emergency? Call 911.
+            Automated assistant. Please don&rsquo;t share medical details here. In an emergency, call 911.
           </p>
         </div>
       )}
