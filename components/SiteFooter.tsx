@@ -37,6 +37,10 @@ const COLUMNS = [
   {
     heading: "Company",
     links: [
+      // The header and hero CTAs open the booking modal rather than navigating,
+      // so without this /book/ had two inbound links site-wide despite being
+      // the page every other page is trying to funnel toward.
+      { href: "/book", label: "Book a ride" },
       { href: "/about", label: "About MedCompass" },
       { href: "/service-area", label: "Service area" },
       { href: "/areas", label: "Areas we serve" },

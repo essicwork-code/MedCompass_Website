@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { COMPANY } from "./demo/data";
 import { AREAS } from "./areas";
 import { RESOURCES } from "./resources";
 
@@ -29,3 +31,20 @@ export const SITE_ROUTES: { path: string; priority: number }[] = [
   { path: "/contact/", priority: 0.6 },
   { path: "/careers/", priority: 0.4 },
 ];
+
+/**
+ * Open Graph for the guide pages.
+ *
+ * Next replaces a parent `openGraph` object wholesale rather than merging into
+ * it, so a page that sets `type: "article"` silently drops the root's url,
+ * locale and image — the share card loses its picture and its link. This repo
+ * has already been bitten once, when the Medicaid guide lost its brand name.
+ * Stating the whole object once here means the next guide cannot repeat it.
+ */
+export const ARTICLE_OPEN_GRAPH: Metadata["openGraph"] = {
+  type: "article",
+  siteName: COMPANY.name,
+  locale: "en_US",
+  url: "./",
+  images: [{ url: "/opengraph-image.jpg", width: 1200, height: 630, type: "image/jpeg" }],
+};

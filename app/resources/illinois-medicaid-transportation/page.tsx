@@ -9,7 +9,7 @@ import { PHOTOS } from "@/lib/photos";
 import { asset } from "@/lib/asset";
 import { COMPANY } from "@/lib/demo/data";
 import { RESOURCES } from "@/lib/resources";
-import { SITE_URL } from "@/lib/site";
+import { ARTICLE_OPEN_GRAPH, SITE_URL } from "@/lib/site";
 import { firstPublished } from "@/lib/lastmod";
 
 const resource = RESOURCES.find((r) => r.slug === "illinois-medicaid-transportation")!;
@@ -18,10 +18,7 @@ const REVIEWED = "2026-09-17";
 export const metadata: Metadata = {
   title: resource.title,
   description: resource.description,
-  // A page-level openGraph replaces the root object outright rather than
-  // merging into it, so siteName has to be restated or this page ships
-  // without a brand name on shared links.
-  openGraph: { type: "article", siteName: COMPANY.name },
+  openGraph: ARTICLE_OPEN_GRAPH,
 };
 
 const link = "font-semibold text-blue-ink hover:underline";
@@ -39,6 +36,7 @@ export default function IllinoisMedicaidTransportationPage() {
             alt={PHOTOS.clinicHandoff.alt}
             width={PHOTOS.clinicHandoff.width}
             height={PHOTOS.clinicHandoff.height}
+            sizes="(min-width: 928px) 896px, 100vw"
             loading="lazy"
             className="h-auto w-full"
           />

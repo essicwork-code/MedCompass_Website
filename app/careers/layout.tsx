@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Careers",
+  title: "Driver and dispatcher jobs in Chicagoland",
   description:
     "Drive for MedCompass. W-2 wheelchair van driver, stretcher attendant and dispatcher roles in Chicagoland, with paid certification training.",
 };

@@ -9,7 +9,7 @@ import BookARideButton from "@/components/BookARideButton";
 import { SERVICES } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "Services",
+  title: "Medical transportation services in Chicago",
   description:
     "Wheelchair, ambulatory, stretcher, bariatric and medical courier service in Chicagoland, with published rates.",
 };
@@ -68,6 +68,7 @@ export default function ServicesPage() {
                   alt={SERVICE_PHOTOS[s.slug].alt}
                   width={SERVICE_PHOTOS[s.slug].width}
                   height={SERVICE_PHOTOS[s.slug].height}
+                  sizes="(min-width: 1024px) 50vw, 100vw"
                   loading="lazy"
                   className="aspect-[16/9] w-full object-cover"
                 />

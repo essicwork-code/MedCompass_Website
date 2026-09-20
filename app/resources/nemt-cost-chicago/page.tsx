@@ -10,7 +10,7 @@ import { asset } from "@/lib/asset";
 import { RESOURCES } from "@/lib/resources";
 import { SERVICES } from "@/lib/content";
 import { COMPANY } from "@/lib/demo/data";
-import { SITE_URL } from "@/lib/site";
+import { ARTICLE_OPEN_GRAPH, SITE_URL } from "@/lib/site";
 import { firstPublished, lastModified } from "@/lib/lastmod";
 
 const resource = RESOURCES.find((r) => r.slug === "nemt-cost-chicago")!;
@@ -18,6 +18,7 @@ const resource = RESOURCES.find((r) => r.slug === "nemt-cost-chicago")!;
 export const metadata: Metadata = {
   title: resource.title,
   description: resource.description,
+  openGraph: ARTICLE_OPEN_GRAPH,
 };
 
 const wheelchair = SERVICES.find((s) => s.slug === "wheelchair")!;
@@ -38,6 +39,7 @@ export default function NemtCostChicagoPage() {
             alt={PHOTOS.familyBooking.alt}
             width={PHOTOS.familyBooking.width}
             height={PHOTOS.familyBooking.height}
+            sizes="(min-width: 928px) 896px, 100vw"
             loading="lazy"
             className="h-auto w-full"
           />

@@ -15,6 +15,17 @@ import { statSync } from "node:fs";
 const SRC = "Assets/generated";
 const OUT = "public/photos";
 
+/**
+ * Narrower copies emitted beside every photo, picked by lib/image-loader.ts.
+ *
+ * Without these a phone downloaded the same 1800px file a retina desktop got:
+ * the homepage alone shipped 742 KB of photography to a 375px screen. The
+ * widths match images.deviceSizes in next.config.ts — a device size with no
+ * file behind it falls back to the full-size original, which is correct but
+ * pointless, so the two lists have to stay in step.
+ */
+const VARIANTS = [640, 1080];
+
 /** Widest the file ever needs to be, by how it is used on the page. */
 const WIDTHS = {
   "home-hero": 1800,
@@ -52,4 +63,16 @@ for (const file of files) {
   const out = await sharp(dest).metadata();
   const kb = Math.round(statSync(dest).size / 1024);
   console.log(`${file} (${meta.width}x${meta.height}) -> ${dest} (${out.width}x${out.height}, ${kb} KB)`);
+
+  for (const v of VARIANTS) {
+    // Upscaling a 1100px photo to 1080 is pointless but harmless; skipping it
+    // would leave the loader pointing at a file that does not exist.
+    if (v > width) continue;
+    const small = `${OUT}/${name}-${v}.webp`;
+    await sharp(`${SRC}/${file}`)
+      .resize({ width: v, withoutEnlargement: true })
+      .webp({ quality: 80, effort: 6 })
+      .toFile(small);
+    console.log(`    ${small} (${Math.round(statSync(small).size / 1024)} KB)`);
+  }
 }

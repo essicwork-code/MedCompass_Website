@@ -9,7 +9,7 @@ export interface ResourceSummary {
 export const RESOURCES: ResourceSummary[] = [
   {
     slug: "illinois-medicaid-transportation",
-    title: "Illinois Medicaid Transportation: How Rides Work",
+    title: "Illinois Medicaid Transportation: How It Works",
     description:
       "Who Illinois Medicaid covers for rides to medical appointments, who to call for managed care versus fee-for-service, prior approval, and what to have ready.",
     readTime: "6 min read",
@@ -18,7 +18,7 @@ export const RESOURCES: ResourceSummary[] = [
     slug: "nemt-cost-chicago",
     title: "How Much Does NEMT Cost in Chicago?",
     description:
-      "A plain breakdown of what wheelchair, ambulatory, stretcher and bariatric transport actually cost, what drives the price up or down, and when Medicaid or a broker covers it.",
+      "A plain breakdown of what wheelchair, ambulatory, stretcher and bariatric transport cost, what moves the price up or down, and when Medicaid covers it.",
     readTime: "5 min read",
   },
   {

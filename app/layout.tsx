@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     template: `%s · ${COMPANY.name}`,
   },
   description:
-    "Wheelchair, ambulatory, stretcher and bariatric medical transportation, plus medical courier service, across Chicago and the western suburbs. Published rates, on-time pickup, door-through-door service.",
+    "Wheelchair, ambulatory, stretcher and bariatric medical transport across Chicago and the western suburbs. Published rates, on-time pickup, door-through-door.",
   applicationName: COMPANY.name,
   // "./" resolves to each page's own URL, so every page declares itself canonical.
   alternates: { canonical: "./" },

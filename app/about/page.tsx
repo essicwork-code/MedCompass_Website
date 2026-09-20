@@ -7,7 +7,7 @@ import { asset } from "@/lib/asset";
 import { PHOTOS } from "@/lib/photos";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "About our Chicago medical transport service",
   description:
     "MedCompass is a Chicagoland non-emergency medical transportation company built around reliable, on-time, door-through-door service.",
 };
@@ -67,6 +67,7 @@ export default function AboutPage() {
                 alt={PHOTOS.fleetLineup.alt}
                 width={PHOTOS.fleetLineup.width}
                 height={PHOTOS.fleetLineup.height}
+                sizes="(min-width: 1024px) 40vw, 100vw"
                 className="h-auto w-full"
               />
             </div>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Cost calculator",
+  title: "NEMT cost calculator for Chicago rides",
   description:
     "Get an instant estimate for non-emergency medical transportation in Chicagoland using our published rates, with no booking required.",
 };

@@ -144,6 +144,7 @@ export default function CareersPage() {
             alt={PHOTOS.crewTeam.alt}
             width={PHOTOS.crewTeam.width}
             height={PHOTOS.crewTeam.height}
+            sizes="(min-width: 1312px) 1280px, 100vw"
             className="h-auto w-full"
             priority
           />
@@ -261,6 +262,7 @@ export default function CareersPage() {
                   alt={PHOTOS.pretripCheck.alt}
                   width={PHOTOS.pretripCheck.width}
                   height={PHOTOS.pretripCheck.height}
+                  sizes="(min-width: 1024px) 50vw, 100vw"
                   loading="lazy"
                   className="h-auto w-full"
                 />

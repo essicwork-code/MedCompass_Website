@@ -109,6 +109,7 @@ export default async function AreaPage({ params }: { params: Promise<{ slug: str
             alt={PHOTOS.fleetLineup.alt}
             width={PHOTOS.fleetLineup.width}
             height={PHOTOS.fleetLineup.height}
+            sizes="(min-width: 1312px) 1280px, 100vw"
             className="h-auto w-full"
             priority
           />

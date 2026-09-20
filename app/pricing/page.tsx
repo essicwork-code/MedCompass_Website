@@ -8,7 +8,7 @@ import { COMPANY } from "@/lib/demo/data";
 export const metadata: Metadata = {
   title: "Pricing & insurance",
   description:
-    "Published NEMT rates for Chicagoland covering wheelchair, ambulatory, stretcher, bariatric transport and medical courier service, plus Medicaid and broker billing.",
+    "Published NEMT rates for Chicagoland: wheelchair, ambulatory, stretcher and bariatric transport, medical courier, plus Medicaid and broker billing.",
 };
 
 /** Representative trips so a rate table turns into a number people recognise. */

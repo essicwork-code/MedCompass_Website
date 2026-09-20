@@ -36,7 +36,9 @@ export async function generateMetadata({
   if (service) {
     return {
       title: `${service.name} in Chicago`,
-      description: `${service.name} across Chicago and the suburbs. ${service.short} From $${service.fromPrice} plus $${service.perMile.toFixed(2)} per mile, with the price shown before you book.`,
+      // Kept under 160 characters so Google shows it whole; the longest
+      // service blurb (courier) lands at 142.
+      description: `${service.name} in Chicago and the suburbs. ${service.short} From $${service.fromPrice} plus $${service.perMile.toFixed(2)}/mile.`,
     };
   }
   const alias = SERVICE_ALIASES[slug];
@@ -78,6 +80,7 @@ export default async function ServiceDetailPage({
               alt={photo.alt}
               width={photo.width}
               height={photo.height}
+              sizes="(min-width: 1312px) 1280px, 100vw"
               className="aspect-[16/9] w-full object-cover"
               priority
             />

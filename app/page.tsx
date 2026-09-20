@@ -111,6 +111,7 @@ export default function HomePage() {
                     alt={PHOTOS.homeHero.alt}
                     width={PHOTOS.homeHero.width}
                     height={PHOTOS.homeHero.height}
+                    sizes="(min-width: 1024px) 50vw, 100vw"
                     className="h-auto w-full"
                     priority
                   />
@@ -122,6 +123,7 @@ export default function HomePage() {
                     alt={PHOTOS.homeSecure.alt}
                     width={PHOTOS.homeSecure.width}
                     height={PHOTOS.homeSecure.height}
+                    sizes="176px"
                     className="h-auto w-full"
                   />
                 </div>
@@ -169,6 +171,7 @@ export default function HomePage() {
                 alt={PHOTOS.stretcherLoading.alt}
                 width={PHOTOS.stretcherLoading.width}
                 height={PHOTOS.stretcherLoading.height}
+                sizes="(min-width: 1024px) 52vw, 100vw"
                 className="h-auto w-full"
                 loading="lazy"
               />
@@ -376,6 +379,7 @@ export default function HomePage() {
                     alt={PHOTOS.clinicHandoff.alt}
                     width={PHOTOS.clinicHandoff.width}
                     height={PHOTOS.clinicHandoff.height}
+                    sizes="(min-width: 1024px) 50vw, 100vw"
                     className="h-auto w-full"
                   />
                 </div>

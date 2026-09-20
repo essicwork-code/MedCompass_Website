@@ -5,7 +5,7 @@ import MarketingShell, { PageHero } from "@/components/MarketingShell";
 import { RESOURCES } from "@/lib/resources";
 
 export const metadata: Metadata = {
-  title: "Resources",
+  title: "NEMT guides for families and care teams",
   description: "Plain-language guides to non-emergency medical transportation costs, coverage and what to expect.",
 };
 

@@ -8,7 +8,7 @@ import { SERVICE_AREA } from "@/lib/content";
 export const metadata: Metadata = {
   title: "Areas We Serve in Chicagoland",
   description:
-    "Medical transportation across Chicago and the suburbs, including Cicero, Berwyn, Oak Park, Evanston, Oak Lawn, Park Ridge, Elmhurst and Naperville. Find prices and nearby hospitals for your town.",
+    "Medical transportation across Chicago and the suburbs, from Cicero and Oak Park to Evanston and Naperville. Prices and nearby hospitals for your town.",
 };
 
 const TIERS: CoverageTier[] = ["core", "extended", "scheduled"];

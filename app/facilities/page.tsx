@@ -9,7 +9,7 @@ import { PHOTOS } from "@/lib/photos";
 export const metadata: Metadata = {
   title: "Facility partnerships",
   description:
-    "Corporate NEMT accounts for Chicagoland hospitals, dialysis centers and skilled nursing facilities, with direct dispatch, bulk scheduling and consolidated invoicing.",
+    "NEMT accounts for Chicagoland hospitals, dialysis centers and skilled nursing facilities: direct dispatch, bulk scheduling and consolidated invoicing.",
 };
 
 const FEATURES = [
@@ -56,6 +56,7 @@ export default function FacilitiesPage() {
               alt={PHOTOS.dispatchDesk.alt}
               width={PHOTOS.dispatchDesk.width}
               height={PHOTOS.dispatchDesk.height}
+              sizes="(min-width: 1024px) 48vw, 100vw"
               className="h-auto w-full"
             />
           </div>

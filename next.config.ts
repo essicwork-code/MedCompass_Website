@@ -23,8 +23,16 @@ const nextConfig: NextConfig = {
   output: "export",
   reactStrictMode: true,
   images: {
-    // Next's optimizer needs a server; a static export serves the files as-is.
-    unoptimized: true,
+    /*
+     * Next's optimizer needs a server, so a static export cannot resize on the
+     * fly. Instead scripts/prepare-site-photos.mjs writes the narrow copies at
+     * build time and lib/image-loader.ts points each requested width at one.
+     * deviceSizes matches the widths that script emits, plus the full size.
+     */
+    loader: "custom",
+    loaderFile: "./lib/image-loader.ts",
+    deviceSizes: [640, 1080, 1920],
+    imageSizes: [176, 256],
   },
   // Cloudflare Pages and GitHub Pages both serve /about as /about/index.html,
   // so emit directories.

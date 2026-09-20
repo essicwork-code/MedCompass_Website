@@ -9,7 +9,7 @@ import { PHOTOS } from "@/lib/photos";
 import { asset } from "@/lib/asset";
 import { RESOURCES } from "@/lib/resources";
 import { COMPANY } from "@/lib/demo/data";
-import { SITE_URL } from "@/lib/site";
+import { ARTICLE_OPEN_GRAPH, SITE_URL } from "@/lib/site";
 import { firstPublished, lastModified } from "@/lib/lastmod";
 
 const resource = RESOURCES.find((r) => r.slug === "hospital-discharge-guide")!;
@@ -17,6 +17,7 @@ const resource = RESOURCES.find((r) => r.slug === "hospital-discharge-guide")!;
 export const metadata: Metadata = {
   title: resource.title,
   description: resource.description,
+  openGraph: ARTICLE_OPEN_GRAPH,
 };
 
 export default function HospitalDischargeGuidePage() {
@@ -32,6 +33,7 @@ export default function HospitalDischargeGuidePage() {
             alt={PHOTOS.stretcherTransport.alt}
             width={PHOTOS.stretcherTransport.width}
             height={PHOTOS.stretcherTransport.height}
+            sizes="(min-width: 928px) 896px, 100vw"
             loading="lazy"
             className="h-auto w-full"
           />

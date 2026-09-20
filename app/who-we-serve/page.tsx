@@ -15,7 +15,7 @@ const SEGMENT_PHOTOS = {
 } as const;
 
 export const metadata: Metadata = {
-  title: "Who we serve",
+  title: "Who we serve: families, hospitals, dialysis",
   description:
     "NEMT for families, hospital discharge planners, dialysis centers, skilled nursing facilities and lab/pharmacy courier accounts across Chicagoland.",
 };
@@ -58,6 +58,7 @@ export default function WhoWeServePage() {
                   alt={SEGMENT_PHOTOS[seg.id as keyof typeof SEGMENT_PHOTOS].alt}
                   width={SEGMENT_PHOTOS[seg.id as keyof typeof SEGMENT_PHOTOS].width}
                   height={SEGMENT_PHOTOS[seg.id as keyof typeof SEGMENT_PHOTOS].height}
+                  sizes="(min-width: 1024px) 50vw, 100vw"
                   loading="lazy"
                   className="h-auto w-full"
                 />
