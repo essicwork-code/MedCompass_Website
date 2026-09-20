@@ -65,7 +65,7 @@ export default function PricingPage() {
           </p>
           <Link
             href="/cost-calculator"
-            className="mt-4 inline-flex items-center gap-2 font-semibold text-blue-ink hover:underline"
+            className="mt-4 inline-flex min-h-11 items-center gap-2 font-semibold text-blue-ink hover:underline"
           >
             Try the cost calculator for your own trip →
           </Link>

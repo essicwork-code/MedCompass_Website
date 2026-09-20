@@ -70,7 +70,7 @@ export default function CostCalculatorPage() {
                     </span>
                     <span>
                       <span className="block text-[0.95rem] font-bold text-deep">{s.name}</span>
-                      <span className="tabular block text-[0.82rem] text-slate-soft">
+                      <span className="tabular block text-[0.85rem] text-slate-soft">
                         ${s.fromPrice} + ${s.perMile.toFixed(2)}/mi
                       </span>
                     </span>

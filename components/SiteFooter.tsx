@@ -72,10 +72,10 @@ export default function SiteFooter() {
               {COMPANY.address}
               <br />
               {COMPANY.city}
-              <a href={`tel:${COMPANY.phoneHref}`} className="flex min-h-11 w-fit items-center font-semibold text-deep hover:text-blue">
+              <a href={`tel:${COMPANY.phoneHref}`} className="mt-2 flex min-h-11 w-fit items-center font-semibold text-deep hover:text-blue">
                 {COMPANY.phone}
               </a>
-              <a href={`mailto:${COMPANY.email}`} className="flex min-h-11 w-fit items-center break-all hover:text-blue">
+              <a href={`mailto:${COMPANY.email}`} className="mt-2 flex min-h-11 w-fit items-center break-all hover:text-blue">
                 {COMPANY.email}
               </a>
             </address>
@@ -84,12 +84,12 @@ export default function SiteFooter() {
           {COLUMNS.map((col) => (
             <nav key={col.heading} aria-label={col.heading}>
               <h2 className="font-display text-[0.95rem] font-bold text-deep">{col.heading}</h2>
-              <ul className="mt-2">
+              <ul className="mt-2 space-y-2">
                 {col.links.map((l) => (
                   <li key={l.href}>
                     <Link
                       href={l.href}
-                      className="inline-flex min-h-11 items-center text-[0.92rem] text-slate-soft transition-transform duration-150 hover:translate-x-0.5 hover:text-blue"
+                      className="inline-flex min-h-11 min-w-11 items-center text-[0.92rem] text-slate-soft transition-transform duration-150 hover:translate-x-0.5 hover:text-blue"
                     >
                       {l.label}
                     </Link>

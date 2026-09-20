@@ -276,7 +276,7 @@ export default function HomePage() {
                   >
                     <span className="route-gradient absolute inset-x-0 top-0 h-1.5" aria-hidden="true" />
                     {s.slug === "courier" && (
-                      <span className="absolute right-4 top-5 rounded-full bg-moss px-2.5 py-1 text-[0.68rem] font-bold uppercase tracking-wide text-moss-ink">
+                      <span className="absolute right-4 top-5 rounded-full bg-moss px-2.5 py-1 text-[0.78rem] font-bold uppercase tracking-wide text-moss-ink">
                         New
                       </span>
                     )}
@@ -426,7 +426,7 @@ export default function HomePage() {
                   into southeastern Wisconsin. If you do not see your town, call us anyway. We
                   quote trips outside the area rather than turning them away.
                 </p>
-                <div className="mt-6 flex flex-wrap gap-x-6">
+                <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
                   <Link
                     href="/service-area"
                     className="inline-flex min-h-11 items-center gap-2 font-bold text-blue-ink hover:underline"

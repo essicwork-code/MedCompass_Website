@@ -119,7 +119,7 @@ export default function FacilitiesPage() {
                 <div>
                   <dt className="text-slate-soft">Direct line</dt>
                   <dd className="tabular font-bold text-deep">
-                    <a href={`tel:${COMPANY.phoneHref}`} className="hover:text-blue">
+                    <a href={`tel:${COMPANY.phoneHref}`} className="inline-flex min-h-11 items-center hover:text-blue">
                       {COMPANY.phone}
                     </a>
                   </dd>
@@ -127,7 +127,7 @@ export default function FacilitiesPage() {
                 <div>
                   <dt className="text-slate-soft">Email</dt>
                   <dd className="font-bold text-deep">
-                    <a href={`mailto:${COMPANY.email}`} className="break-all hover:text-blue">
+                    <a href={`mailto:${COMPANY.email}`} className="inline-flex min-h-11 items-center break-all hover:text-blue">
                       {COMPANY.email}
                     </a>
                   </dd>

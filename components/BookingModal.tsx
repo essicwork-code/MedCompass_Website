@@ -100,6 +100,27 @@ export default function BookingModal({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, serviceSlug]);
 
+  /*
+   * showModal() makes the rest of the page inert but does not stop it
+   * scrolling, so on a phone a swipe that starts outside the form still drags
+   * the page behind the dialog and you close it somewhere else entirely.
+   * The padding compensates for the scrollbar the lock removes on desktop,
+   * which would otherwise shift the whole layout sideways.
+   */
+  useEffect(() => {
+    if (!isOpen) return;
+    const { body } = document;
+    const gap = window.innerWidth - document.documentElement.clientWidth;
+    const prevOverflow = body.style.overflow;
+    const prevPadding = body.style.paddingRight;
+    body.style.overflow = "hidden";
+    if (gap > 0) body.style.paddingRight = `${gap}px`;
+    return () => {
+      body.style.overflow = prevOverflow;
+      body.style.paddingRight = prevPadding;
+    };
+  }, [isOpen]);
+
   // Escape and other native dismissals fire "close" on the dialog itself —
   // sync that back into the parent's isOpen state either way.
   useEffect(() => {
@@ -204,7 +225,7 @@ export default function BookingModal({
           />
           <div className="relative flex items-start justify-between gap-4">
             <div>
-              <p className="text-[0.78rem] font-bold uppercase tracking-widest text-lime">
+              <p className="text-[0.82rem] font-bold uppercase tracking-widest text-lime">
                 {COMPANY.name}
               </p>
               <h2
@@ -217,7 +238,7 @@ export default function BookingModal({
             <button
               type="button"
               onClick={() => dialogRef.current?.close()}
-              className="shrink-0 rounded-full p-2 text-white/80 hover:bg-white/10 hover:text-white"
+              className="grid h-11 w-11 shrink-0 place-items-center rounded-full text-white/80 hover:bg-white/10 hover:text-white"
             >
               <span className="sr-only">Close</span>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -386,7 +407,7 @@ export default function BookingModal({
                     ))}
                   </select>
                   {selectedService && (
-                    <p className="tabular mt-1.5 text-[0.82rem] text-slate-soft">
+                    <p className="tabular mt-1.5 text-[0.85rem] text-slate-soft">
                       From ${selectedService.fromPrice} + ${selectedService.perMile.toFixed(2)}/mi
                     </p>
                   )}
@@ -505,7 +526,7 @@ export default function BookingModal({
               >
                 {status === "submitting" ? "Sending…" : isCourier ? "Request this pickup" : "Request this ride"}
               </button>
-              <p className="mt-3 text-center text-[0.82rem] text-slate-soft">
+              <p className="mt-3 text-center text-[0.85rem] text-slate-soft">
                 No card needed. Dispatch confirms price before the trip.
               </p>
             </form>

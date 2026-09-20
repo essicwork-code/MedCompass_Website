@@ -90,6 +90,10 @@
   .skip-link:focus {
     left: 1rem;
     top: 1rem;
+    /* Keyboard-only, but it is still a control: 44px tall like every other. */
+    display: flex;
+    align-items: center;
+    min-height: 44px;
     padding: 0.75rem 1.25rem;
     background: #fff;
     border-radius: 8px;

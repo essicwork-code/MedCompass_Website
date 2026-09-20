@@ -14,7 +14,7 @@ export default function Breadcrumbs({ items }: { items: Crumb[] }) {
   return (
     <>
       <nav aria-label="Breadcrumb" className="border-b border-line bg-white">
-        <ol className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-2 px-4 text-[0.88rem] text-slate-soft">
+        <ol className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-2 gap-y-1 px-4 text-[0.88rem] text-slate-soft">
           {trail.map((c, i) => {
             const last = i === trail.length - 1;
             return (
@@ -24,7 +24,7 @@ export default function Breadcrumbs({ items }: { items: Crumb[] }) {
                     {c.label}
                   </span>
                 ) : (
-                  <Link href={c.href} className="flex min-h-11 items-center hover:text-blue-ink hover:underline">
+                  <Link href={c.href} className="flex min-h-11 min-w-11 items-center hover:text-blue-ink hover:underline">
                     {c.label}
                   </Link>
                 )}

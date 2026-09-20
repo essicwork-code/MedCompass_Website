@@ -239,7 +239,7 @@ export default function BookPage() {
                       That time has already passed. Choose a later one.
                     </p>
                   )}
-                  <p className="mt-1.5 text-[0.82rem] text-slate-soft">
+                  <p className="mt-1.5 text-[0.9rem] text-slate-soft">
                     {isCourier
                       ? "Routine runs are scheduled same day. Choose STAT for pickup within 30 minutes."
                       : "24 hours’ notice for routine trips. Discharges: call dispatch."}
@@ -297,7 +297,7 @@ export default function BookPage() {
                   }
                   className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-base focus:border-blue"
                 />
-                <p className="mt-1.5 text-[0.82rem] text-slate-soft">
+                <p className="mt-1.5 text-[0.9rem] text-slate-soft">
                   {isCourier
                     ? "Use an order or specimen ID. Don’t include patient names or diagnoses."
                     : "Access and equipment notes only. Don’t include diagnoses here."}

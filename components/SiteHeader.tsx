@@ -119,7 +119,7 @@ export default function SiteHeader() {
         </div>
 
         {menuOpen && (
-          <nav id="mobile-nav" aria-label="Mobile" className="lg:hidden border-t border-line bg-white px-4 py-3">
+          <nav id="mobile-nav" aria-label="Mobile" className="lg:hidden space-y-1 border-t border-line bg-white px-4 py-3">
             {NAV.map(
               (item) => (
                 <Link

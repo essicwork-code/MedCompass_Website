@@ -253,7 +253,7 @@ export default function ChatWidget() {
             </span>
             <div className="relative min-w-0 flex-1">
               <p className="truncate text-[0.95rem] font-bold">MedCompass</p>
-              <p className="truncate text-[0.76rem] text-white/80">Instant answers · Dispatch 24/7 by phone</p>
+              <p className="truncate text-[0.82rem] text-white/80">Instant answers · Dispatch 24/7 by phone</p>
             </div>
             <a
               href={`tel:${COMPANY.phoneHref}`}
@@ -278,7 +278,7 @@ export default function ChatWidget() {
                 return (
                   <p
                     key={m.id}
-                    className="chat-msg-in mx-auto flex w-fit items-center gap-1.5 rounded-full bg-moss px-3 py-1 text-[0.78rem] font-semibold text-moss-ink"
+                    className="chat-msg-in mx-auto flex w-fit items-center gap-1.5 rounded-full bg-moss px-3 py-1 text-[0.85rem] font-semibold text-moss-ink"
                   >
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                       <path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
@@ -396,7 +396,7 @@ export default function ChatWidget() {
                       placeholder="Trip date, pickup area, questions…"
                       className="mt-1 w-full rounded-lg border-2 border-line px-3 py-2 text-base focus:border-blue"
                     />
-                    <p className="mt-1 text-[0.72rem] text-slate-soft">No diagnoses or medical records, please.</p>
+                    <p className="mt-1 text-[0.9rem] text-slate-soft">No diagnoses or medical records, please.</p>
                   </div>
                 </div>
 
@@ -494,7 +494,7 @@ export default function ChatWidget() {
             </button>
           </form>
 
-          <p className="border-t border-line bg-white px-4 pb-3 pt-2 text-[0.72rem] leading-relaxed text-slate-soft">
+          <p className="border-t border-line bg-white px-4 pb-3 pt-2 text-[0.9rem] leading-relaxed text-slate-soft">
             Automated assistant. Please don&rsquo;t share medical details here. In an emergency, call 911.
           </p>
         </div>

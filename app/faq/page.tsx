@@ -57,7 +57,7 @@ export default function FaqPage() {
 
         <div className="mt-10 rounded-2xl bg-mist p-6">
           <h2 className="font-display text-[1.2rem] font-bold text-deep">Keep reading</h2>
-          <ul className="mt-2">
+          <ul className="mt-2 space-y-2">
             <li>
               <Link href="/resources/illinois-medicaid-transportation/" className="flex min-h-11 items-center font-semibold text-blue-ink hover:underline">
                 How Illinois Medicaid rides work

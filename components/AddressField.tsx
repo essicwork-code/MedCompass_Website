@@ -195,7 +195,7 @@ export default function AddressField({
 
   return (
     <div>
-      <div className="flex flex-wrap items-center justify-between gap-x-3">
+      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
         <label htmlFor={value.mode === "saved" ? selectId : inputId} className="block text-[0.92rem] font-semibold text-deep">
           {label}
         </label>
@@ -217,7 +217,7 @@ export default function AddressField({
           id={selectId}
           value={value.placeId}
           onChange={(e) => onChange({ mode: "saved", placeId: e.target.value })}
-          className="w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-base focus:border-blue"
+          className="mt-2 w-full rounded-lg border-2 border-line bg-white px-3.5 py-3 text-base focus:border-blue"
         >
           <option value="">Select a hospital…</option>
           {PLACE_OPTIONS.map((p) => (
@@ -227,7 +227,7 @@ export default function AddressField({
           ))}
         </select>
       ) : (
-        <div className="relative">
+        <div className="relative mt-2">
           <input
             ref={inputRef}
             id={inputId}
@@ -281,9 +281,9 @@ export default function AddressField({
             </ul>
           )}
 
-          {checking && <p className="mt-1.5 text-[0.82rem] text-slate-soft">Checking address…</p>}
+          {checking && <p className="mt-1.5 text-[0.85rem] text-slate-soft">Checking address…</p>}
           {confirmed && (
-            <p className="mt-1.5 flex items-center gap-1.5 text-[0.82rem] font-semibold text-moss-ink">
+            <p className="mt-1.5 flex items-center gap-1.5 text-[0.85rem] font-semibold text-moss-ink">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
               </svg>

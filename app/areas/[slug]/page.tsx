@@ -267,7 +267,7 @@ export default async function AreaPage({ params }: { params: Promise<{ slug: str
 
           <div className="rounded-2xl border border-line bg-white p-6">
             <h2 className="font-display text-[1.1rem] font-bold text-deep">Nearby communities</h2>
-            <ul className="mt-2">
+            <ul className="mt-2 space-y-2">
               {nearby.map((a) => (
                 <li key={a.slug}>
                   <Link

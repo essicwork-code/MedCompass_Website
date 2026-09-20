@@ -41,7 +41,7 @@ export default function ContactPage() {
                 Ride bookings
               </dt>
               <dd className="tabular mt-1 font-display text-[1.6rem] font-extrabold text-deep">
-                <a href={`tel:${COMPANY.phoneHref}`} className="hover:text-blue">
+                <a href={`tel:${COMPANY.phoneHref}`} className="inline-flex min-h-11 items-center hover:text-blue">
                   {COMPANY.phone}
                 </a>
               </dd>
@@ -52,7 +52,7 @@ export default function ContactPage() {
                 Email
               </dt>
               <dd className="mt-1 text-[1.05rem] font-semibold text-deep">
-                <a href={`mailto:${COMPANY.email}`} className="break-all hover:text-blue">
+                <a href={`mailto:${COMPANY.email}`} className="inline-flex min-h-11 items-center break-all hover:text-blue">
                   {COMPANY.email}
                 </a>
               </dd>
@@ -199,7 +199,7 @@ export default function ContactPage() {
                 required
                 className="mt-2 w-full rounded-lg border-2 border-line px-3.5 py-3 focus:border-blue"
               />
-              <p className="mt-1.5 text-[0.82rem] text-slate-soft">
+              <p className="mt-1.5 text-[0.9rem] text-slate-soft">
                 Please don&rsquo;t include diagnoses or medical records here.
               </p>
             </div>
