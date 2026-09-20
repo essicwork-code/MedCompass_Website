@@ -17,7 +17,10 @@ const REVIEWED = "2026-09-17";
 export const metadata: Metadata = {
   title: resource.title,
   description: resource.description,
-  openGraph: { type: "article" },
+  // A page-level openGraph replaces the root object outright rather than
+  // merging into it, so siteName has to be restated or this page ships
+  // without a brand name on shared links.
+  openGraph: { type: "article", siteName: COMPANY.name },
 };
 
 const link = "font-semibold text-blue-ink hover:underline";
