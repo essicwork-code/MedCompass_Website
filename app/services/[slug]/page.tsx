@@ -7,25 +7,12 @@ import BookARideButton from "@/components/BookARideButton";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import JsonLd from "@/components/JsonLd";
 import Image from "next/image";
-import { SERVICES, SERVICE_BY_SLUG } from "@/lib/content";
+import { SERVICES, SERVICE_ALIASES, SERVICE_BY_SLUG } from "@/lib/content";
 import { SERVICE_PHOTOS } from "@/lib/photos";
 import { asset } from "@/lib/asset";
 import { AREAS } from "@/lib/areas";
 import { COMPANY } from "@/lib/demo/data";
 import { SITE_URL } from "@/lib/site";
-
-/*
- * Static export needs the full slug list at build time. Extra slugs beyond the
- * four service types (e.g. /services/dialysis, linked from the footer) are
- * handled as aliases so those links don't 404.
- */
-const ALIASES: Record<string, { title: string; body: string; base: string }> = {
-  dialysis: {
-    title: "Dialysis standing orders",
-    body: "Three sessions a week, the same driver and the same van wherever scheduling allows. Missing a session is not an inconvenience, it is a hospital admission, so standing orders get first call on capacity and a dispatcher who knows the schedule by name.",
-    base: "wheelchair",
-  },
-};
 
 /** The default steps assume a patient is riding along; courier moves items, not people. */
 const COURIER_STEPS: [string, string][] = [
@@ -36,7 +23,7 @@ const COURIER_STEPS: [string, string][] = [
 ];
 
 export function generateStaticParams() {
-  return [...SERVICES.map((s) => ({ slug: s.slug })), ...Object.keys(ALIASES).map((slug) => ({ slug }))];
+  return [...SERVICES.map((s) => ({ slug: s.slug })), ...Object.keys(SERVICE_ALIASES).map((slug) => ({ slug }))];
 }
 
 export async function generateMetadata({
@@ -52,7 +39,7 @@ export async function generateMetadata({
       description: `${service.name} across Chicago and the suburbs. ${service.short} From $${service.fromPrice} plus $${service.perMile.toFixed(2)} per mile, with the price shown before you book.`,
     };
   }
-  const alias = ALIASES[slug];
+  const alias = SERVICE_ALIASES[slug];
   return alias
     ? {
         title: `${alias.title} in Chicago`,
@@ -68,7 +55,7 @@ export default async function ServiceDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const alias = ALIASES[slug];
+  const alias = SERVICE_ALIASES[slug];
   const service = SERVICE_BY_SLUG[slug] ?? (alias ? SERVICE_BY_SLUG[alias.base] : undefined);
 
   if (!service) notFound();

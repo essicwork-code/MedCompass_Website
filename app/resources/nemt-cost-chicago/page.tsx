@@ -11,6 +11,7 @@ import { RESOURCES } from "@/lib/resources";
 import { SERVICES } from "@/lib/content";
 import { COMPANY } from "@/lib/demo/data";
 import { SITE_URL } from "@/lib/site";
+import { firstPublished, lastModified } from "@/lib/lastmod";
 
 const resource = RESOURCES.find((r) => r.slug === "nemt-cost-chicago")!;
 
@@ -138,6 +139,8 @@ export default function NemtCostChicagoPage() {
           description: resource.description,
           mainEntityOfPage: `${SITE_URL}/resources/${resource.slug}/`,
           image: `${SITE_URL}/opengraph-image.jpg`,
+          datePublished: firstPublished(`/resources/nemt-cost-chicago/`),
+          dateModified: lastModified(`/resources/nemt-cost-chicago/`),
           author: { "@id": `${SITE_URL}/#business` },
           publisher: { "@id": `${SITE_URL}/#business` },
         }}

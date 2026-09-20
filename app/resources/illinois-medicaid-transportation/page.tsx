@@ -10,6 +10,7 @@ import { asset } from "@/lib/asset";
 import { COMPANY } from "@/lib/demo/data";
 import { RESOURCES } from "@/lib/resources";
 import { SITE_URL } from "@/lib/site";
+import { firstPublished } from "@/lib/lastmod";
 
 const resource = RESOURCES.find((r) => r.slug === "illinois-medicaid-transportation")!;
 const REVIEWED = "2026-09-17";
@@ -169,9 +170,12 @@ export default function IllinoisMedicaidTransportationPage() {
           "@type": "Article",
           headline: resource.title,
           description: resource.description,
-          dateModified: REVIEWED,
           mainEntityOfPage: `${SITE_URL}/resources/${resource.slug}/`,
           image: `${SITE_URL}/opengraph-image.jpg`,
+          datePublished: firstPublished(`/resources/illinois-medicaid-transportation/`),
+          // The editorial review date the page shows, not the git date: schema
+          // dates have to match what the reader sees.
+          dateModified: REVIEWED,
           author: { "@id": `${SITE_URL}/#business` },
           publisher: { "@id": `${SITE_URL}/#business` },
         }}

@@ -163,6 +163,30 @@ export const SEGMENTS: Segment[] = [
 
 
 /** Municipalities in the primary service radius. */
+/**
+ * Landing pages that sit under /services/ but are not their own service type:
+ * a use case served by an existing vehicle. /services/dialysis/ is a
+ * wheelchair van on a standing order, and ranks for a query nobody would
+ * phrase as "wheelchair transport".
+ */
+export interface ServiceAlias {
+  title: string;
+  /** One line for listings and link descriptions. */
+  short: string;
+  body: string;
+  /** The service whose vehicle, rate and imagery the page borrows. */
+  base: ServiceSlug;
+}
+
+export const SERVICE_ALIASES: Record<string, ServiceAlias> = {
+  dialysis: {
+    title: "Dialysis standing orders",
+    short: "Three sessions a week, same driver and van wherever scheduling allows.",
+    body: "Three sessions a week, the same driver and the same van wherever scheduling allows. Missing a session is not an inconvenience, it is a hospital admission, so standing orders get first call on capacity and a dispatcher who knows the schedule by name.",
+    base: "wheelchair",
+  },
+};
+
 export const SERVICE_AREA = [
   "Chicago", "Cicero", "Berwyn", "Oak Park", "Forest Park", "Maywood",
   "Melrose Park", "Elmwood Park", "River Forest", "Broadview", "Bellwood",
