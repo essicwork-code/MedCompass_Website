@@ -11,9 +11,6 @@ out/
 next-env.d.ts
 *.tsbuildinfo
 
-# Cloudflare Workers local state (wrangler.jsonc itself is committed)
-.wrangler/
-.dev.vars
 
 # Claude Code: track shared skills and commands, ignore local/session state
 .claude/*
