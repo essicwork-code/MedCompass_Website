@@ -166,7 +166,7 @@ export default function HomePage() {
                 width={PHOTOS.stretcherLoading.width}
                 height={PHOTOS.stretcherLoading.height}
                 className="h-auto w-full"
-                priority
+                loading="lazy"
               />
             </Reveal>
 

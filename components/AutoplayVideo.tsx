@@ -27,6 +27,17 @@ export default function AutoplayVideo({
   const ref = useRef<HTMLVideoElement>(null);
   const [muted, setMuted] = useState(true);
   const [reduced, setReduced] = useState(false);
+  /*
+   * A `poster` is fetched the moment it is set, no matter where the video sits
+   * on the page — this one is roughly three viewports down, so its 90KB was
+   * landing on the critical path and competing with the hero image. It is now
+   * held back until the video is nearly in view. Space is reserved by
+   * width/height either way, so nothing shifts; the element is just black
+   * until it is close enough to matter. preload stays "metadata": that is a
+   * small range request, and withholding it left the autoplay observer with
+   * no ready source to play.
+   */
+  const [nearViewport, setNearViewport] = useState(false);
 
   useEffect(() => {
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -34,6 +45,23 @@ export default function AutoplayVideo({
     sync();
     query.addEventListener("change", sync);
     return () => query.removeEventListener("change", sync);
+  }, []);
+
+  useEffect(() => {
+    const video = ref.current;
+    if (!video) return;
+    // Generous margin so the poster is decoded before it is actually on screen.
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setNearViewport(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "400px 0px" },
+    );
+    observer.observe(video);
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -65,7 +93,7 @@ export default function AutoplayVideo({
         muted={muted}
         playsInline
         preload="metadata"
-        poster={asset(poster)}
+        poster={nearViewport ? asset(poster) : undefined}
         width={width}
         height={height}
         className="h-auto w-full bg-black"

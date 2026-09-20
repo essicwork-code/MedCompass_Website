@@ -13,7 +13,20 @@ import { asset } from "@/lib/asset";
 /** Actual pixel ratio of compass-mark.png (320x258). Keep width/height props in sync with this. */
 const MARK_RATIO = 320 / 258;
 
-export function CompassMark({ size = 40, className }: { size?: number; className?: string }) {
+export function CompassMark({
+  size = 40,
+  className,
+  priority = false,
+}: {
+  size?: number;
+  className?: string;
+  /**
+   * Only the header mark is above the fold. This used to be hardcoded on, so
+   * the footer mark — seven thousand pixels down the homepage — was preloaded
+   * at high priority alongside the hero image it was competing with.
+   */
+  priority?: boolean;
+}) {
   return (
     <Image
       src={asset("/brand/compass-mark.png")}
@@ -23,15 +36,25 @@ export function CompassMark({ size = 40, className }: { size?: number; className
       // Constrain height only and let width track it (w-auto). Constraining
       // both independently, e.g. h-8 w-8, would squash this non-square mark.
       className={className ?? "h-9 w-auto"}
-      priority
+      priority={priority}
+      loading={priority ? undefined : "lazy"}
     />
   );
 }
 
-export function Logo({ className, invert = false }: { className?: string; invert?: boolean }) {
+export function Logo({
+  className,
+  invert = false,
+  priority = false,
+}: {
+  className?: string;
+  invert?: boolean;
+  /** True only for the header, which is the one instance above the fold. */
+  priority?: boolean;
+}) {
   return (
     <span className={`inline-flex items-center gap-2 sm:gap-2.5 ${className ?? ""}`}>
-      <CompassMark size={44} className="h-8 w-auto shrink-0 sm:h-11" />
+      <CompassMark size={44} className="h-8 w-auto shrink-0 sm:h-11" priority={priority} />
       {/* Mark plus wordmark on one baseline — the same two-tone split the
           supplied lockup uses, so header and artwork read as one name. */}
       <span className="font-display text-[1.22rem] font-extrabold leading-none tracking-[-0.03em] sm:text-[1.5rem]">

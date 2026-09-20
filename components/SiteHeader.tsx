@@ -62,7 +62,7 @@ export default function SiteHeader() {
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 py-3 sm:gap-6">
           <Link href="/" aria-label={`${COMPANY.name} home`} className="flex min-h-11 shrink-0 items-center">
-            <Logo />
+            <Logo priority />
           </Link>
 
           <nav aria-label="Primary" className="hidden lg:flex items-center gap-7">
