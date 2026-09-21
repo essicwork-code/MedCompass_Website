@@ -27,7 +27,7 @@ export function WeatherCard() {
   return (
     <div className="rounded-2xl border border-line bg-white p-5">
       <div className="flex items-center gap-4">
-        <span className={data.adverse ? "text-amber" : "text-blue"}>
+        <span className={data.adverse ? "text-amber" : "text-blue-ink"}>
           <WeatherIcon category={data.category} className="h-9 w-9" />
         </span>
         <div className="min-w-0">

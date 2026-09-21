@@ -75,7 +75,7 @@ export default function SiteHeader() {
                 {item.label}
                 <span
                   aria-hidden="true"
-                  className="absolute inset-x-0 -bottom-0.5 h-0.5 origin-left scale-x-0 rounded-full bg-green transition-transform duration-200 group-hover:scale-x-100"
+                  className="absolute inset-x-0 -bottom-0.5 h-0.5 origin-left scale-x-0 rounded-full bg-green-ink transition-transform duration-200 group-hover:scale-x-100"
                 />
               </Link>
             ))}
@@ -91,7 +91,7 @@ export default function SiteHeader() {
             <button
               type="button"
               onClick={() => openBookingModal()}
-              className="inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-full bg-green px-4 py-2.5 text-[0.88rem] font-bold text-white hover:bg-[#4d8f28] sm:px-5 sm:text-[0.9rem]"
+              className="inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-full bg-green-ink px-4 py-2.5 text-[0.88rem] font-bold text-white hover:bg-green-ink-hover sm:px-5 sm:text-[0.9rem]"
             >
               {/* Under 360px the full label doesn't fit beside the logo; the
                   accessible name stays "Book a ride" either way. */}

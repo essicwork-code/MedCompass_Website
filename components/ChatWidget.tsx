@@ -410,7 +410,7 @@ export default function ChatWidget() {
                   <button
                     type="submit"
                     disabled={contact === "sending"}
-                    className="min-h-11 flex-1 rounded-full bg-green px-4 font-bold text-white hover:bg-[#4d8f28] disabled:cursor-wait disabled:opacity-70"
+                    className="min-h-11 flex-1 rounded-full bg-green-ink px-4 font-bold text-white hover:bg-green-ink-hover disabled:cursor-wait disabled:opacity-70"
                   >
                     {contact === "sending" ? "Sending…" : "Send to dispatch"}
                   </button>
@@ -440,7 +440,7 @@ export default function ChatWidget() {
                       ["Email", contactForm.email],
                       ["Message", contactForm.message],
                     ])}
-                    className="inline-flex min-h-11 items-center rounded-full bg-green px-4 text-[0.85rem] font-bold text-white hover:bg-[#4d8f28]"
+                    className="inline-flex min-h-11 items-center rounded-full bg-green-ink px-4 text-[0.85rem] font-bold text-white hover:bg-green-ink-hover"
                   >
                     Email it instead
                   </a>
@@ -485,7 +485,7 @@ export default function ChatWidget() {
             <button
               type="submit"
               disabled={!draft.trim()}
-              className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-green text-white transition-opacity disabled:opacity-40"
+              className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-green-ink text-white transition-opacity disabled:opacity-40"
             >
               <span className="sr-only">Send question</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">

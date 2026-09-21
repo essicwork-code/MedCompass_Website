@@ -29,7 +29,7 @@ export default function ServicesPage() {
             <div className="grid gap-7 lg:grid-cols-[1fr_300px]">
               <div>
                 <div className="flex items-center gap-3">
-                  <span className="text-blue">
+                  <span className="text-blue-ink">
                     <ServiceIcon kind={s.icon} className="h-8 w-8" />
                   </span>
                   <h2 className="font-display text-[1.5rem] font-extrabold text-deep">{s.name}</h2>
@@ -43,7 +43,7 @@ export default function ServicesPage() {
                   {s.includes.map((inc) => (
                     <li key={inc} className="flex items-start gap-2.5 text-[0.95rem] text-ink">
                       <svg
-                        className="mt-1 h-4 w-4 shrink-0 text-green"
+                        className="mt-1 h-4 w-4 shrink-0 text-green-ink"
                         viewBox="0 0 24 24"
                         fill="none"
                         aria-hidden="true"
@@ -86,7 +86,7 @@ export default function ServicesPage() {
                 </p>
                 <BookARideButton
                   serviceSlug={s.slug}
-                  className="mt-5 block w-full rounded-full bg-green px-5 py-3 text-center font-bold text-white hover:bg-[#4d8f28]"
+                  className="mt-5 block w-full rounded-full bg-green-ink px-5 py-3 text-center font-bold text-white hover:bg-green-ink-hover"
                 >
                   Get a quote
                 </BookARideButton>

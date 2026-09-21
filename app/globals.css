@@ -25,8 +25,18 @@
    */
   --color-blue-ink: #146a9f; /* body-copy links on white: --color-blue is 4.34:1, this is 5.85:1 */
   --color-amber-ink: #6b4a0a; /* text on amber-tint / amber-tint bg: --color-amber is 3.87:1, this is 8.05:1 */
-  --color-moss-ink: #3f7f22; /* text on moss / bg-moss badges */
+  --color-moss-ink: #3c7a20; /* text on moss / bg-moss badges: was #3f7f22, which read 4.36:1 on moss */
   --color-lime-ink: #22400f; /* text on lime buttons */
+  /*
+   * --color-green is a 3.02:1 swatch: too weak for text on white, and too weak
+   * under white as a button fill. One value fixes both, because "green on
+   * white" and "white on green" are the same ratio. 4.82:1 on white, 4.56:1 on
+   * bone -- the lightest step that clears the floor on both, so it stays as
+   * close to the brand mark as the floor allows.
+   */
+  --color-green-ink: #448023;
+  --color-green-ink-hover: #3a7320; /* 5.75:1; replaces the ad hoc #4d8f28 that was pasted into 18 call sites */
+  --color-lime-on-deep: #9ad155; /* small text on --color-deep: --color-lime is 4.45:1, this is 5.03:1 */
   --color-lime-hover: #9ed352; /* lime button hover */
   --color-amber-tint: #fff3d6;
   --color-alert-tint: #fdeaea;

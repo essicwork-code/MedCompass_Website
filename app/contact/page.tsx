@@ -41,7 +41,7 @@ export default function ContactPage() {
                 Ride bookings
               </dt>
               <dd className="tabular mt-1 font-display text-[1.6rem] font-extrabold text-deep">
-                <a href={`tel:${COMPANY.phoneHref}`} className="inline-flex min-h-11 items-center hover:text-blue">
+                <a href={`tel:${COMPANY.phoneHref}`} className="inline-flex min-h-11 items-center hover:text-blue-ink">
                   {COMPANY.phone}
                 </a>
               </dd>
@@ -52,7 +52,7 @@ export default function ContactPage() {
                 Email
               </dt>
               <dd className="mt-1 text-[1.05rem] font-semibold text-deep">
-                <a href={`mailto:${COMPANY.email}`} className="inline-flex min-h-11 items-center break-all hover:text-blue">
+                <a href={`mailto:${COMPANY.email}`} className="inline-flex min-h-11 items-center break-all hover:text-blue-ink">
                   {COMPANY.email}
                 </a>
               </dd>
@@ -207,7 +207,7 @@ export default function ContactPage() {
             <button
               type="submit"
               disabled={status === "sending"}
-              className="w-full rounded-full bg-green px-6 py-3.5 font-bold text-white hover:bg-[#4d8f28] disabled:cursor-wait disabled:opacity-70"
+              className="w-full rounded-full bg-green-ink px-6 py-3.5 font-bold text-white hover:bg-green-ink-hover disabled:cursor-wait disabled:opacity-70"
             >
               {status === "sending" ? "Sending…" : "Send message"}
             </button>

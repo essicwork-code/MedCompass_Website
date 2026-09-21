@@ -96,7 +96,7 @@ export default async function ServiceDetailPage({
           <ul className="mt-5 space-y-3.5">
             {service.includes.map((inc) => (
               <li key={inc} className="flex items-start gap-3 text-[1rem] text-ink">
-                <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-green" aria-hidden="true" />
+                <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-green-ink" aria-hidden="true" />
                 {inc}
               </li>
             ))}
@@ -148,7 +148,7 @@ export default async function ServiceDetailPage({
         </div>
 
         <aside className="self-start rounded-2xl border border-line bg-white p-7">
-          <span className="text-blue">
+          <span className="text-blue-ink">
             <ServiceIcon kind={service.icon} className="h-9 w-9" />
           </span>
           <p className="mt-4 text-[0.85rem] font-semibold uppercase tracking-wide text-slate-soft">
@@ -163,7 +163,7 @@ export default async function ServiceDetailPage({
 
           <BookARideButton
             serviceSlug={service.slug}
-            className="mt-6 block w-full rounded-full bg-green px-5 py-3.5 text-center font-bold text-white hover:bg-[#4d8f28]"
+            className="mt-6 block w-full rounded-full bg-green-ink px-5 py-3.5 text-center font-bold text-white hover:bg-green-ink-hover"
           >
             Get a quote
           </BookARideButton>

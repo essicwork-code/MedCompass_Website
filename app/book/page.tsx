@@ -42,7 +42,7 @@ function ConfirmBookingButton({ prefill }: { prefill: BookingModalPrefill }) {
     <button
       type="button"
       onClick={() => open(prefill)}
-      className="w-full rounded-full bg-green px-6 py-3.5 font-bold text-white hover:bg-[#4d8f28]"
+      className="w-full rounded-full bg-green-ink px-6 py-3.5 font-bold text-white hover:bg-green-ink-hover"
     >
       Confirm booking
     </button>
@@ -81,6 +81,22 @@ export default function BookPage() {
   const whenInPast = Boolean(when) && when < nowForDateTimeInput();
   const canAdvanceStep2 = addressFilled(pickup) && addressFilled(dropoff) && Boolean(when) && !whenInPast;
   const canAdvance = step === 1 ? Boolean(mobility) : step === 2 ? canAdvanceStep2 : true;
+
+  /*
+   * A greyed-out Continue with no reason is a dead end: the rider can see the
+   * button refuse and cannot tell what it wants. This says so, and the button
+   * points at it with aria-describedby so it is not a visual-only cue.
+   */
+  const blockedReason = (): string | null => {
+    if (canAdvance) return null;
+    if (step === 1) return "Choose the kind of transport to continue.";
+    if (!addressFilled(pickup)) return "Add a pickup address to continue.";
+    if (!addressFilled(dropoff)) return "Add a destination to continue.";
+    if (!when) return "Choose a pickup date and time to continue.";
+    if (whenInPast) return "That pickup time has already passed. Pick a later one.";
+    return null;
+  };
+  const blocked = blockedReason();
 
   async function handleContinue() {
     if (step !== 2) {
@@ -128,7 +144,7 @@ export default function BookPage() {
                 </span>
                 <span
                   aria-hidden="true"
-                  className={`block h-1.5 rounded-full ${step >= n ? "bg-green" : "bg-line"}`}
+                  className={`block h-1.5 rounded-full ${step >= n ? "bg-green-ink" : "bg-line"}`}
                 />
                 <span
                   aria-hidden="true"
@@ -172,7 +188,7 @@ export default function BookPage() {
                         onChange={() => setMobility(s.slug)}
                         className="sr-only"
                       />
-                      <span className={selected ? "text-green" : "text-blue"}>
+                      <span className={selected ? "text-green-ink" : "text-blue-ink"}>
                         <ServiceIcon kind={s.icon} />
                       </span>
                       <span className="min-w-0">
@@ -357,7 +373,7 @@ export default function BookPage() {
                     ) : (
                       <div className="flex justify-between gap-4">
                         <dt className="text-slate-soft">Escort</dt>
-                        <dd className="font-semibold text-green">{escort ? "Included" : "Not added"}</dd>
+                        <dd className="font-semibold text-green-ink">{escort ? "Included" : "Not added"}</dd>
                       </div>
                     )}
                     <div className="flex justify-between gap-4 border-t border-line pt-3">
@@ -418,14 +434,22 @@ export default function BookPage() {
             </button>
 
             {step < 3 ? (
-              <button
-                type="button"
-                onClick={handleContinue}
-                disabled={!canAdvance || resolving}
-                className="rounded-full bg-green px-8 py-3 font-bold text-white disabled:opacity-40 enabled:hover:bg-[#4d8f28]"
-              >
-                {resolving ? "Looking up addresses…" : "Continue"}
-              </button>
+              <div className="flex flex-col items-end gap-1.5">
+                <button
+                  type="button"
+                  onClick={handleContinue}
+                  disabled={!canAdvance || resolving}
+                  aria-describedby={blocked ? "book-blocked" : undefined}
+                  className="rounded-full bg-green-ink px-8 py-3 font-bold text-white disabled:opacity-40 enabled:hover:bg-green-ink-hover"
+                >
+                  {resolving ? "Looking up addresses…" : "Continue"}
+                </button>
+                {blocked && (
+                  <p id="book-blocked" role="status" className="text-right text-[0.85rem] text-slate-soft">
+                    {blocked}
+                  </p>
+                )}
+              </div>
             ) : null}
           </div>
         </div>

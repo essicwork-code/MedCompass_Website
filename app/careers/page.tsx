@@ -218,7 +218,7 @@ export default function CareersPage() {
                       <ul className="mt-2.5 space-y-2">
                         {job.responsibilities.map((r) => (
                           <li key={r} className="flex items-start gap-2.5 text-[0.92rem] text-ink">
-                            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-green" aria-hidden="true" />
+                            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-green-ink" aria-hidden="true" />
                             {r}
                           </li>
                         ))}
@@ -242,7 +242,7 @@ export default function CareersPage() {
                   <a
                     href="#apply"
                     onClick={() => setRole(job.title)}
-                    className="mt-6 inline-flex items-center gap-2 rounded-full bg-green px-5 py-2.5 text-[0.9rem] font-bold text-white hover:bg-[#4d8f28]"
+                    className="mt-6 inline-flex items-center gap-2 rounded-full bg-green-ink px-5 py-2.5 text-[0.9rem] font-bold text-white hover:bg-green-ink-hover"
                   >
                     Apply for this role
                   </a>
@@ -270,7 +270,7 @@ export default function CareersPage() {
               <ul className="mt-5 space-y-3">
                 {REQUIREMENTS.map((r) => (
                   <li key={r} className="flex items-start gap-3 text-[0.97rem] text-ink">
-                    <svg className="mt-1 h-4.5 w-4.5 shrink-0 text-green" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <svg className="mt-1 h-4.5 w-4.5 shrink-0 text-green-ink" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                       <path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                     {r}
@@ -395,7 +395,7 @@ export default function CareersPage() {
                 <button
                   type="submit"
                   disabled={status === "sending"}
-                  className="w-full rounded-full bg-green px-6 py-3 font-bold text-white hover:bg-[#4d8f28] disabled:cursor-wait disabled:opacity-70"
+                  className="w-full rounded-full bg-green-ink px-6 py-3 font-bold text-white hover:bg-green-ink-hover disabled:cursor-wait disabled:opacity-70"
                 >
                   {status === "sending" ? "Sending…" : "Submit interest"}
                 </button>

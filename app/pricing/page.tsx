@@ -122,7 +122,7 @@ export default function PricingPage() {
           </div>
 
           <div className="mt-8 flex flex-wrap gap-3 border-t border-line pt-7">
-            <BookARideButton className="rounded-full bg-green px-7 py-3.5 font-bold text-white hover:bg-[#4d8f28]">
+            <BookARideButton className="rounded-full bg-green-ink px-7 py-3.5 font-bold text-white hover:bg-green-ink-hover">
               Get an exact quote
             </BookARideButton>
             <a
@@ -144,7 +144,7 @@ export default function PricingPage() {
                   {f.q}
                   <span
                     aria-hidden="true"
-                    className="shrink-0 text-[1.4rem] leading-none text-blue transition-transform group-open:rotate-45"
+                    className="shrink-0 text-[1.4rem] leading-none text-blue-ink transition-transform group-open:rotate-45"
                   >
                     +
                   </span>

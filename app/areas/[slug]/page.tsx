@@ -78,7 +78,7 @@ export default async function AreaPage({ params }: { params: Promise<{ slug: str
 
       <section className="border-b border-line bg-white">
         <div className="mx-auto max-w-7xl px-4 py-12 lg:py-16">
-          <p className="text-[0.82rem] font-bold uppercase tracking-widest text-green">
+          <p className="text-[0.82rem] font-bold uppercase tracking-widest text-green-ink">
             {area.name}, IL · {area.county}
           </p>
           <h1 className="mt-2 max-w-3xl font-display text-[clamp(2rem,4.6vw,3.2rem)] font-extrabold leading-[1.06] text-deep">
@@ -89,7 +89,7 @@ export default async function AreaPage({ params }: { params: Promise<{ slug: str
             and hospital discharges, with the price shown before you book. {area.context}
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
-            <BookARideButton className="inline-flex min-h-11 items-center rounded-full bg-green px-7 py-3 font-bold text-white hover:bg-[#4d8f28]">
+            <BookARideButton className="inline-flex min-h-11 items-center rounded-full bg-green-ink px-7 py-3 font-bold text-white hover:bg-green-ink-hover">
               Book a ride
             </BookARideButton>
             <a
@@ -255,7 +255,7 @@ export default async function AreaPage({ params }: { params: Promise<{ slug: str
 
         <aside className="min-w-0 space-y-6 self-start lg:sticky lg:top-24">
           <div className="rounded-2xl border border-line bg-white p-6">
-            <p className="text-[0.82rem] font-bold uppercase tracking-widest text-green">{TIER_COPY[tier].label}</p>
+            <p className="text-[0.82rem] font-bold uppercase tracking-widest text-green-ink">{TIER_COPY[tier].label}</p>
             <p className="mt-2 text-[0.98rem] leading-relaxed text-ink">{TIER_COPY[tier].notice}</p>
             <Link
               href="/service-area/"

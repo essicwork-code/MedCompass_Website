@@ -110,7 +110,7 @@ export default function ServiceAreaPage() {
             {filtered.length === 0 && (
               <a
                 href={`tel:${COMPANY.phoneHref}`}
-                className="mt-5 block rounded-full bg-green px-6 py-3.5 text-center font-bold text-white hover:bg-[#4d8f28]"
+                className="mt-5 block rounded-full bg-green-ink px-6 py-3.5 text-center font-bold text-white hover:bg-green-ink-hover"
               >
                 Call dispatch · {COMPANY.phone}
               </a>

@@ -16,7 +16,7 @@ import { asset } from "@/lib/asset";
 const AREA_SLUG_BY_NAME: Record<string, string> = Object.fromEntries(AREAS.map((a) => [a.name, a.slug]));
 
 const SEGMENT_ACCENT: Record<string, string> = {
-  families: "bg-green",
+  families: "bg-green-ink",
   hospitals: "bg-blue",
   dialysis: "bg-deep",
   snf: "bg-lime",
@@ -25,7 +25,7 @@ const SEGMENT_ACCENT: Record<string, string> = {
 const SERVICE_ACCENT: Record<string, string> = {
   wheelchair: "bg-blue text-white",
   ambulatory: "bg-sky text-white",
-  stretcher: "bg-green text-white",
+  stretcher: "bg-green-ink text-white",
   bariatric: "bg-deep text-white",
   courier: "bg-lime text-lime-ink",
 };
@@ -130,8 +130,8 @@ export default function HomePage() {
 
                 <div className="absolute -top-6 -right-4 flex items-center gap-2.5 rounded-2xl bg-white px-4 py-3 shadow-[0_16px_40px_-14px_rgba(0,0,0,0.4)] sm:right-6">
                   <span className="relative flex h-2.5 w-2.5 shrink-0">
-                    <span className="pulse-ring absolute inline-flex h-full w-full rounded-full bg-green opacity-70" />
-                    <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green" />
+                    <span className="pulse-ring absolute inline-flex h-full w-full rounded-full bg-green-ink opacity-70" />
+                    <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-ink" />
                   </span>
                   <p className="text-[0.85rem] font-bold leading-tight text-deep">
                     Dispatch
@@ -226,7 +226,7 @@ export default function HomePage() {
         <section className="bg-deep py-20">
           <div className="mx-auto max-w-5xl px-4">
             <Reveal className="max-w-2xl">
-              <p className="text-[0.82rem] font-bold uppercase tracking-widest text-lime">
+              <p className="text-[0.82rem] font-bold uppercase tracking-widest text-lime-on-deep">
                 See a ride
               </p>
               <h2 className="mt-2 font-display text-[clamp(1.8rem,3.2vw,2.6rem)] font-extrabold leading-tight text-white">
@@ -255,7 +255,7 @@ export default function HomePage() {
         <section className="bg-bone py-24">
           <div className="mx-auto max-w-7xl px-4">
             <Reveal className="max-w-2xl">
-              <p className="text-[0.82rem] font-bold uppercase tracking-widest text-green">
+              <p className="text-[0.82rem] font-bold uppercase tracking-widest text-green-ink">
                 What we run
               </p>
               <h2 className="mt-2 font-display text-[clamp(2rem,3.6vw,2.9rem)] font-extrabold leading-tight text-deep">
@@ -329,7 +329,7 @@ export default function HomePage() {
               <div className="grid grid-cols-1 divide-y divide-line">
                 <div className="hidden bg-deep px-6 py-4 text-[0.85rem] font-bold uppercase tracking-wide text-white/85 sm:grid sm:grid-cols-[1.2fr_1fr_1fr]">
                   <span>What matters</span>
-                  <span className="text-lime">MedCompass</span>
+                  <span className="text-lime-on-deep">MedCompass</span>
                   <span className="text-white/60">Most other providers</span>
                 </div>
                 {COMPARISON.map((row) => (
@@ -339,7 +339,7 @@ export default function HomePage() {
                   >
                     <p className="font-semibold text-deep">{row.feature}</p>
                     <p className="flex items-start gap-2 text-[0.95rem] text-ink">
-                      <svg className="mt-0.5 h-4 w-4 shrink-0 text-green" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <svg className="mt-0.5 h-4 w-4 shrink-0 text-green-ink" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                       {row.us}
@@ -362,7 +362,7 @@ export default function HomePage() {
           <div className="mx-auto max-w-7xl px-4">
             <div className="grid gap-12 lg:grid-cols-[1fr_1.4fr] lg:items-start">
               <Reveal className="lg:sticky lg:top-32">
-                <p className="text-[0.82rem] font-bold uppercase tracking-widest text-green">
+                <p className="text-[0.82rem] font-bold uppercase tracking-widest text-green-ink">
                   Who calls us
                 </p>
                 <h2 className="mt-2 font-display text-[clamp(2rem,3.6vw,2.9rem)] font-extrabold leading-tight text-deep">

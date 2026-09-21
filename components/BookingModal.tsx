@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { track } from "./Analytics";
 import { COURIER_STAT_FEE, SERVICES } from "@/lib/content";
 import { COMPANY } from "@/lib/demo/data";
 import { nowForDateTimeInput } from "@/lib/datetime";
@@ -62,6 +63,27 @@ const EMPTY_FORM: FormState = {
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_DIGITS_RE = /\d/g;
 
+/** The one field standing between the rider and a submitted request. */
+type BookingField = "name" | "phone" | "email" | "service" | "pickup" | "dropoff" | "when";
+type BookingFieldError = { field: BookingField; message: string } | null;
+
+/*
+ * The message sits with its field and carries an icon, because colour alone
+ * does not carry meaning (WCAG 1.4.1) and a red border says "wrong" without
+ * ever saying what to do about it.
+ */
+function FieldMessage({ id, message }: { id: string; message: string }) {
+  return (
+    <p id={id} className="mt-1.5 flex items-start gap-1.5 text-[0.85rem] font-semibold text-alert">
+      <svg viewBox="0 0 24 24" className="mt-0.5 h-4 w-4 shrink-0" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 7v6M12 16.5h.01" />
+      </svg>
+      {message}
+    </p>
+  );
+}
+
 export default function BookingModal({
   isOpen,
   onClose,
@@ -77,7 +99,7 @@ export default function BookingModal({
   const [form, setForm] = useState<FormState>(EMPTY_FORM);
   const [status, setStatus] = useState<Status>("idle");
   const [errorMessage, setErrorMessage] = useState("");
-  const [fieldError, setFieldError] = useState<string | null>(null);
+  const [fieldError, setFieldError] = useState<BookingFieldError>(null);
   const timer = useFormTimer();
 
   // Open/close the native dialog in response to the isOpen prop, and reset
@@ -131,6 +153,20 @@ export default function BookingModal({
     return () => dialog.removeEventListener("close", handleClose);
   }, [onClose]);
 
+  const invalid = (field: BookingField) => fieldError?.field === field;
+
+  /** aria-invalid plus the link from control to message, for every field. */
+  const fieldProps = (field: BookingField) =>
+    invalid(field) ? { "aria-invalid": true as const, "aria-describedby": `bm-${field}-error` } : {};
+
+  const fieldClass = (field: BookingField) =>
+    `mt-1.5 w-full rounded-lg border-2 bg-white px-3.5 py-2.5 text-base focus:border-blue ${
+      invalid(field) ? "border-alert" : "border-line"
+    }`;
+
+  const errorFor = (field: BookingField) =>
+    invalid(field) ? <FieldMessage id={`bm-${field}-error`} message={fieldError!.message} /> : null;
+
   function update<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((f) => ({ ...f, [key]: value }));
     // A validation message is stale as soon as the rider starts fixing it.
@@ -155,15 +191,24 @@ export default function BookingModal({
     ["Notes", form.notes],
   ];
 
-  function validate(): string | null {
-    if (!form.name.trim()) return "Enter your name.";
-    if ((form.phone.match(PHONE_DIGITS_RE)?.length ?? 0) < 7) return "Enter a phone number we can call back.";
-    if (!EMAIL_RE.test(form.email.trim())) return "Enter a valid email address.";
-    if (!form.service) return "Choose a service type.";
-    if (!form.pickup.trim()) return "Enter a pickup address.";
-    if (!form.dropoff.trim()) return "Enter a destination address.";
-    if (!form.when) return "Choose a pickup date and time.";
-    if (form.when < nowForDateTimeInput()) return "Choose a pickup time that hasn't passed yet.";
+  /*
+   * Returns the field at fault, not just a sentence. WCAG 3.3.1 wants the
+   * error tied to the control that caused it; knowing only that "something"
+   * failed leaves a screen reader user hunting, and leaves everyone else
+   * scrolling to the bottom of the form to find out what.
+   */
+  function validate(): BookingFieldError {
+    if (!form.name.trim()) return { field: "name", message: "Enter your name." };
+    if ((form.phone.match(PHONE_DIGITS_RE)?.length ?? 0) < 7)
+      return { field: "phone", message: "Enter a phone number we can call back." };
+    if (!EMAIL_RE.test(form.email.trim()))
+      return { field: "email", message: "Enter a valid email address, like name@example.com." };
+    if (!form.service) return { field: "service", message: "Choose a service type." };
+    if (!form.pickup.trim()) return { field: "pickup", message: "Enter a pickup address." };
+    if (!form.dropoff.trim()) return { field: "dropoff", message: "Enter a destination address." };
+    if (!form.when) return { field: "when", message: "Choose a pickup date and time." };
+    if (form.when < nowForDateTimeInput())
+      return { field: "when", message: "Choose a pickup time that hasn't passed yet." };
     return null;
   }
 
@@ -173,6 +218,8 @@ export default function BookingModal({
     const problem = validate();
     if (problem) {
       setFieldError(problem);
+      // Announcing the error is not enough if the person cannot find it.
+      document.getElementById(`bm-${problem.field}`)?.focus();
       return;
     }
     setFieldError(null);
@@ -188,6 +235,8 @@ export default function BookingModal({
         guard: { honeypot: form.website, startedAt: timer.startedAt.current },
       });
       setStatus("success");
+      // The event name only; the trip itself never leaves this page.
+      track("Booking submitted");
     } catch (err) {
       // Covers EmailJS being unreachable, rejecting the send, its monthly
       // quota running out, or this browser's send limit. The error state keeps
@@ -225,7 +274,7 @@ export default function BookingModal({
           />
           <div className="relative flex items-start justify-between gap-4">
             <div>
-              <p className="text-[0.82rem] font-bold uppercase tracking-widest text-lime">
+              <p className="text-[0.82rem] font-bold uppercase tracking-widest text-lime-on-deep">
                 {COMPANY.name}
               </p>
               <h2
@@ -297,7 +346,7 @@ export default function BookingModal({
               <button
                 type="button"
                 onClick={() => dialogRef.current?.close()}
-                className="mt-7 rounded-full bg-green px-7 py-3 font-bold text-white hover:bg-[#4d8f28]"
+                className="mt-7 rounded-full bg-green-ink px-7 py-3 font-bold text-white hover:bg-green-ink-hover"
               >
                 Done
               </button>
@@ -326,7 +375,7 @@ export default function BookingModal({
               </p>
               <a
                 href={dispatchMailto(`Booking request: ${selectedService?.name ?? "transport"}`, bookingFields)}
-                className="mt-6 inline-flex min-h-11 items-center rounded-full bg-green px-7 py-3 font-bold text-white hover:bg-[#4d8f28]"
+                className="mt-6 inline-flex min-h-11 items-center rounded-full bg-green-ink px-7 py-3 font-bold text-white hover:bg-green-ink-hover"
               >
                 Email this request
               </a>
@@ -354,8 +403,10 @@ export default function BookingModal({
                     autoComplete="name"
                     value={form.name}
                     onChange={(e) => update("name", e.target.value)}
-                    className="mt-1.5 w-full rounded-lg border-2 border-line bg-white px-3.5 py-2.5 text-base focus:border-blue"
+                    {...fieldProps("name")}
+                    className={fieldClass("name")}
                   />
+                  {errorFor("name")}
                 </div>
 
                 <div>
@@ -369,8 +420,10 @@ export default function BookingModal({
                     autoComplete="tel"
                     value={form.phone}
                     onChange={(e) => update("phone", e.target.value)}
-                    className="mt-1.5 w-full rounded-lg border-2 border-line bg-white px-3.5 py-2.5 text-base focus:border-blue"
+                    {...fieldProps("phone")}
+                    className={fieldClass("phone")}
                   />
+                  {errorFor("phone")}
                 </div>
 
                 <div>
@@ -384,8 +437,10 @@ export default function BookingModal({
                     autoComplete="email"
                     value={form.email}
                     onChange={(e) => update("email", e.target.value)}
-                    className="mt-1.5 w-full rounded-lg border-2 border-line bg-white px-3.5 py-2.5 text-base focus:border-blue"
+                    {...fieldProps("email")}
+                    className={fieldClass("email")}
                   />
+                  {errorFor("email")}
                 </div>
 
                 <div className="sm:col-span-2">
@@ -397,7 +452,8 @@ export default function BookingModal({
                     required
                     value={form.service}
                     onChange={(e) => update("service", e.target.value)}
-                    className="mt-1.5 w-full rounded-lg border-2 border-line bg-white px-3.5 py-2.5 text-base focus:border-blue"
+                    {...fieldProps("service")}
+                    className={fieldClass("service")}
                   >
                     <option value="">Select a service…</option>
                     {SERVICES.map((s) => (
@@ -406,6 +462,7 @@ export default function BookingModal({
                       </option>
                     ))}
                   </select>
+                  {errorFor("service")}
                   {selectedService && (
                     <p className="tabular mt-1.5 text-[0.85rem] text-slate-soft">
                       From ${selectedService.fromPrice} + ${selectedService.perMile.toFixed(2)}/mi
@@ -424,8 +481,10 @@ export default function BookingModal({
                     placeholder="Street address, city"
                     value={form.pickup}
                     onChange={(e) => update("pickup", e.target.value)}
-                    className="mt-1.5 w-full rounded-lg border-2 border-line bg-white px-3.5 py-2.5 text-base focus:border-blue"
+                    {...fieldProps("pickup")}
+                    className={fieldClass("pickup")}
                   />
+                  {errorFor("pickup")}
                 </div>
 
                 <div>
@@ -439,8 +498,10 @@ export default function BookingModal({
                     placeholder="Street address, city"
                     value={form.dropoff}
                     onChange={(e) => update("dropoff", e.target.value)}
-                    className="mt-1.5 w-full rounded-lg border-2 border-line bg-white px-3.5 py-2.5 text-base focus:border-blue"
+                    {...fieldProps("dropoff")}
+                    className={fieldClass("dropoff")}
                   />
+                  {errorFor("dropoff")}
                 </div>
 
                 <div className="sm:col-span-2">
@@ -454,8 +515,10 @@ export default function BookingModal({
                     min={isOpen ? nowForDateTimeInput() : undefined}
                     value={form.when}
                     onChange={(e) => update("when", e.target.value)}
-                    className="mt-1.5 w-full rounded-lg border-2 border-line bg-white px-3.5 py-2.5 text-base focus:border-blue"
+                    {...fieldProps("when")}
+                    className={fieldClass("when")}
                   />
+                  {errorFor("when")}
                 </div>
 
                 <label className="flex min-h-11 items-center gap-2.5 text-[0.95rem] text-ink">
@@ -513,16 +576,20 @@ export default function BookingModal({
                 </div>
               </div>
 
+              {/*
+                The message also appears beside its field; this summary is what
+                a screen reader announces on submit, so it stays.
+              */}
               {fieldError && (
                 <p role="alert" className="mt-4 rounded-lg bg-alert-tint px-3.5 py-2.5 text-[0.85rem] text-alert">
-                  {fieldError}
+                  {fieldError.message}
                 </p>
               )}
 
               <button
                 type="submit"
                 disabled={status === "submitting"}
-                className="lift-on-hover mt-6 w-full rounded-full bg-green px-6 py-3.5 font-bold text-white hover:bg-[#4d8f28] disabled:cursor-wait disabled:opacity-70"
+                className="lift-on-hover mt-6 w-full rounded-full bg-green-ink px-6 py-3.5 font-bold text-white hover:bg-green-ink-hover disabled:cursor-wait disabled:opacity-70"
               >
                 {status === "submitting" ? "Sending…" : isCourier ? "Request this pickup" : "Request this ride"}
               </button>

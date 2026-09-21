@@ -65,7 +65,7 @@ export default function CostCalculatorPage() {
                       onChange={() => setMobility(s.slug)}
                       className="sr-only"
                     />
-                    <span className={selected ? "text-green" : "text-blue"}>
+                    <span className={selected ? "text-green-ink" : "text-blue-ink"}>
                       <ServiceIcon kind={s.icon} className="h-6 w-6" />
                     </span>
                     <span>
@@ -183,7 +183,7 @@ export default function CostCalculatorPage() {
 
               <BookARideButton
                 serviceSlug={service.slug}
-                className="mt-5 block w-full rounded-full bg-green px-5 py-3 text-center font-bold text-white hover:bg-[#4d8f28]"
+                className="mt-5 block w-full rounded-full bg-green-ink px-5 py-3 text-center font-bold text-white hover:bg-green-ink-hover"
               >
                 {isCourier ? "Book this pickup" : "Book this ride"}
               </BookARideButton>

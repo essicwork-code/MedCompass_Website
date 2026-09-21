@@ -3,6 +3,7 @@ import { Bricolage_Grotesque, Public_Sans } from "next/font/google";
 import { COMPANY } from "@/lib/demo/data";
 import { SITE_URL } from "@/lib/site";
 import StructuredData from "@/components/StructuredData";
+import Analytics from "@/components/Analytics";
 import "./globals.css";
 
 /*
@@ -61,6 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         {children}
         <StructuredData />
+        <Analytics />
       </body>
     </html>
   );

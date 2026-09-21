@@ -48,6 +48,11 @@ jobs:
         run: npm run build
         env:
           NEXT_BASE_PATH: ${{ steps.base.outputs.path }}
+          # Set these as repository variables to turn analytics on; unset, the
+          # tag is simply not rendered. Variables rather than secrets, because
+          # NEXT_PUBLIC_* is compiled into the client bundle and is public.
+          NEXT_PUBLIC_ANALYTICS_SRC: ${{ vars.NEXT_PUBLIC_ANALYTICS_SRC }}
+          NEXT_PUBLIC_ANALYTICS_DOMAIN: ${{ vars.NEXT_PUBLIC_ANALYTICS_DOMAIN }}
 
       - uses: actions/upload-pages-artifact@v5
         with:

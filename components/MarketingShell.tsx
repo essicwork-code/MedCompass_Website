@@ -35,7 +35,7 @@ export function PageHero({
     <section className="border-b border-line bg-white">
       <div className="mx-auto max-w-7xl px-4 py-14 lg:py-16">
         {eyebrow && (
-          <p className="text-[0.82rem] font-bold uppercase tracking-widest text-green">{eyebrow}</p>
+          <p className="text-[0.82rem] font-bold uppercase tracking-widest text-green-ink">{eyebrow}</p>
         )}
         <h1 className="mt-2 max-w-3xl font-display text-[clamp(2rem,4.6vw,3.2rem)] font-extrabold leading-[1.06] text-deep">
           {title}
