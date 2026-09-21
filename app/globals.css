@@ -101,6 +101,62 @@
   }
 }
 
+/*
+ * Footer columns are a disclosure on a phone.
+ *
+ * Four lists of links stacked vertically made the mobile footer nearly three
+ * screens tall, and the 8px we owe between tap targets only made it taller.
+ * Collapsed, it is four headings.
+ *
+ * From lg the lists are always open and the summary goes back to reading as a
+ * plain heading. Forcing that open is the one modern bit: ::details-content
+ * is what lets a closed <details> render anyway. Where it is unsupported the
+ * desktop footer keeps the disclosures instead -- collapsed, but every link
+ * still one click away, which is the right way for this to fail. The cost is
+ * that a desktop screen reader hears "collapsed" on a section that is visibly
+ * open; the links themselves are in the accessibility tree either way.
+ */
+.footer-col > summary {
+  cursor: pointer;
+  list-style: none;
+}
+.footer-col > summary::-webkit-details-marker {
+  display: none;
+}
+
+/*
+ * Tailwind's group-open:rotate-180 compiles to the `rotate` property, which
+ * does not take on this SVG; `transform` does.
+ *
+ * An SVG element's transform-origin resolves against the view box and
+ * defaults to its top-left corner, so a plain rotate swings the arrow out of
+ * its own square instead of spinning it in place. fill-box plus center is
+ * what makes it turn about itself.
+ */
+.footer-col-chevron {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 200ms ease;
+}
+.footer-col[open] > summary .footer-col-chevron {
+  transform: rotate(180deg);
+}
+
+@supports selector(::details-content) {
+  @media (min-width: 1024px) {
+    .footer-col::details-content {
+      content-visibility: visible;
+      block-size: auto;
+    }
+    .footer-col > summary {
+      cursor: default;
+    }
+    .footer-col-chevron {
+      display: none;
+    }
+  }
+}
+
 /* The live pulse on an active vehicle marker. */
 @keyframes ping-soft {
   0% { transform: scale(1); opacity: 0.55; }

@@ -59,7 +59,7 @@ export default function SiteFooter() {
     <footer className="mt-24 border-t border-line bg-white">
       <div className="route-gradient h-1.5" aria-hidden="true" />
       <div className="mx-auto max-w-7xl px-4 py-14">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-6">
+        <div className="grid gap-x-10 gap-y-3 md:gap-y-10 md:grid-cols-2 lg:grid-cols-6">
           <div className="md:col-span-2">
             <Logo />
             <p className="mt-4 max-w-sm text-[0.95rem] leading-relaxed text-slate-soft">
@@ -82,21 +82,33 @@ export default function SiteFooter() {
           </div>
 
           {COLUMNS.map((col) => (
-            <nav key={col.heading} aria-label={col.heading}>
-              <h2 className="font-display text-[0.95rem] font-bold text-deep">{col.heading}</h2>
-              <ul className="mt-2 space-y-2">
-                {col.links.map((l) => (
-                  <li key={l.href}>
-                    <Link
-                      href={l.href}
-                      className="inline-flex min-h-11 min-w-11 items-center text-[0.92rem] text-slate-soft transition-transform duration-150 hover:translate-x-0.5 hover:text-blue"
-                    >
-                      {l.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
+            <details key={col.heading} className="footer-col border-t border-line lg:border-0">
+              <summary className="flex min-h-11 items-center justify-between gap-3">
+                <h2 className="font-display text-[0.95rem] font-bold text-deep">{col.heading}</h2>
+                <svg
+                  className="footer-col-chevron h-4 w-4 shrink-0 text-slate-soft"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </summary>
+              <nav aria-label={col.heading}>
+                <ul className="mt-2 space-y-2 pb-3 lg:pb-0">
+                  {col.links.map((l) => (
+                    <li key={l.href}>
+                      <Link
+                        href={l.href}
+                        className="inline-flex min-h-11 min-w-11 items-center text-[0.92rem] text-slate-soft transition-transform duration-150 hover:translate-x-0.5 hover:text-blue"
+                      >
+                        {l.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </details>
           ))}
         </div>
 
