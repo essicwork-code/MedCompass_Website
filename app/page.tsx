@@ -330,7 +330,7 @@ export default function HomePage() {
                 <div className="hidden bg-deep px-6 py-4 text-[0.85rem] font-bold uppercase tracking-wide text-white/85 sm:grid sm:grid-cols-[1.2fr_1fr_1fr]">
                   <span>What matters</span>
                   <span className="text-lime-on-deep">MedCompass</span>
-                  <span className="text-white/60">Most other providers</span>
+                  <span className="text-white/75">Most other providers</span>
                 </div>
                 {COMPARISON.map((row) => (
                   <div
