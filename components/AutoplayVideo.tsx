@@ -28,14 +28,15 @@ export default function AutoplayVideo({
   const [muted, setMuted] = useState(true);
   const [reduced, setReduced] = useState(false);
   /*
-   * A `poster` is fetched the moment it is set, no matter where the video sits
-   * on the page — this one is roughly three viewports down, so its 90KB was
-   * landing on the critical path and competing with the hero image. It is now
-   * held back until the video is nearly in view. Space is reserved by
-   * width/height either way, so nothing shifts; the element is just black
-   * until it is close enough to matter. preload stays "metadata": that is a
-   * small range request, and withholding it left the autoplay observer with
-   * no ready source to play.
+   * Nothing is fetched until the video is nearly in view. A `poster` is
+   * requested the moment it is set, and preload="metadata" is only a hint —
+   * Chrome routinely buffers megabytes of the clip under it, which put the
+   * whole 2.7MB file into the initial page load even though the video sits
+   * roughly three viewports down. So the poster and the src both wait for the
+   * observer below. Setting `src` on the element itself (not a <source>
+   * child) makes the browser start loading as soon as it arrives, and the
+   * 400px margin means that happens before the autoplay observer fires.
+   * Space is reserved by width/height either way, so nothing shifts.
    */
   const [nearViewport, setNearViewport] = useState(false);
 
@@ -94,11 +95,11 @@ export default function AutoplayVideo({
         playsInline
         preload="metadata"
         poster={nearViewport ? asset(poster) : undefined}
+        src={nearViewport ? asset(src) : undefined}
         width={width}
         height={height}
         className="h-auto w-full bg-black"
       >
-        <source src={asset(src)} type="video/mp4" />
         {label}
       </video>
 
